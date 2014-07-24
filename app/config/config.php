@@ -15,12 +15,20 @@ use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
+use Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder;
+
+require __DIR__ . '/security.php';
 
 $app['debug'] = true;
 
 $app['twig.path'] = array(
     __DIR__ . '/../../tests/src/AuthBucket/Push/Tests/TestBundle/Resources/views',
 );
+
+// Fake lib dev, simply use plain text encoder.
+$app['security.encoder.digest'] = $app->share(function ($app) {
+    return new PlaintextPasswordEncoder();
+});
 
 // Define SQLite DB path.
 $app['db.options'] = array(
