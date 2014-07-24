@@ -1,0 +1,54 @@
+{
+    "authors": [
+        {
+            "email": "hswong3i@pantarei-design.com",
+            "homepage": "http://hswong3i.net",
+            "name": "Wong Hoi Sing Edison"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "AuthBucket\\Push": "src/"
+        }
+    },
+    "description": "Push notifications for mobile devices",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "homepage": "https://github.com/authbucket/push",
+    "keywords": [
+        "push",
+        "notification",
+        "bundle",
+        "gcm",
+        "c2dm",
+        "ios",
+        "apns",
+        "blackberry"
+    ],
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "name": "authbucket/push",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/http-foundation": "~2.3",
+        "symfony/http-kernel": "~2.3"
+    },
+    "require-dev": {
+        "doctrine/data-fixtures": "~1.0",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "fabpot/php-cs-fixer": "@stable",
+        "monolog/monolog": "~1.0",
+        "phpunit/phpunit": "@stable",
+        "sami/sami": "@stable",
+        "satooshi/php-coveralls": "dev-master",
+        "silex/silex": "~1.2",
+        "symfony/browser-kit": "~2.3",
+        "symfony/twig-bridge": "~2.3",
+        "symfony/validator": "~2.3",
+        "twig/twig": "~1.8"
+    },
+    "type": "library"
+}
