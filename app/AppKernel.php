@@ -10,6 +10,7 @@
  */
 
 use AuthBucket\Push\Provider\AuthBucketPushServiceProvider;
+use AuthBucket\Push\Tests\TestBundle\TestBundleServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -23,9 +24,10 @@ $app->register(new DoctrineServiceProvider());
 $app->register(new FormServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new SessionServiceProvider());
+$app->register(new TestBundleServiceProvider());
 $app->register(new TranslationServiceProvider());
 $app->register(new TwigServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 
 require __DIR__ . '/config/config_' . $app['env'] . '.php';
-#require __DIR__ . '/config/routing_' . $app['env'] . '.php';
+require __DIR__ . '/config/routing_' . $app['env'] . '.php';

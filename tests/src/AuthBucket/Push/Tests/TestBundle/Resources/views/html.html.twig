@@ -1,0 +1,31 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        {% block head %}
+            {% embed 'head.html.twig' %}{% endembed %}
+        {% endblock %}
+
+        <title>{{ head_title }}</title>
+
+        {% block styles %}
+            {% embed 'styles.html.twig' %}{% endembed %}
+        {% endblock %}
+
+        {% block scripts %}
+            {% embed 'scripts.html.twig' %}{% endembed %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block page_top %}
+            {% embed 'page_top.html.twig' %}{% endembed %}
+        {% endblock %}
+
+        {% block page %}
+            {% embed 'page.html.twig' %}{% endembed %}
+        {% endblock %}
+
+        {% block page_bottom %}
+            {% embed 'page_bottom.html.twig' %}{% endembed %}
+        {% endblock %}
+    </body>
+</html>

@@ -18,6 +18,10 @@ use Doctrine\ORM\Tools\Setup;
 
 $app['debug'] = true;
 
+$app['twig.path'] = array(
+    __DIR__ . '/../../tests/src/AuthBucket/Push/Tests/TestBundle/Resources/views',
+);
+
 // Define SQLite DB path.
 $app['db.options'] = array(
     'driver' => 'pdo_sqlite',
