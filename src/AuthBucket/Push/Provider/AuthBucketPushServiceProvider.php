@@ -30,14 +30,14 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         // EntityRepository.
         $app['authbucket_push.model_manager.factory'] = null;
 
-#        $app['authbucket_push.exception_listener'] = $app->share(function () {
-#            return new ExceptionListener();
-#        });
+        $app['authbucket_push.exception_listener'] = $app->share(function () {
+            return new ExceptionListener();
+        });
     }
 
     public function boot(Application $app)
     {
-#        $app['dispatcher']->addListener(KernelEvents::EXCEPTION, array($app['authbucket_push.exception_listener'], 'onKernelException'), -8);
+        $app['dispatcher']->addListener(KernelEvents::EXCEPTION, array($app['authbucket_push.exception_listener'], 'onKernelException'), -8);
     }
 
     public function connect(Application $app)
