@@ -50,6 +50,6 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
             ));
         }
 
-        return new $this->classes[$type];
+        return new $this->classes[$type()];
     }
 }

@@ -15,7 +15,6 @@ use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use AuthBucket\Push\TokenType\TokenTypeHandlerFactoryInterface;
 use AuthBucket\Push\Util\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
@@ -23,7 +22,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class TokenServiceTypeHandler extends AbstractServiceTypeHandler
+class APNsServiceTypeHandler extends AbstractServiceTypeHandler
 {
     public function handle(
         SecurityContextInterface $securityContext,
