@@ -11,6 +11,7 @@
 
 namespace AuthBucket\Push\Provider;
 
+use AuthBucket\Push\Controller\ModelController;
 use AuthBucket\Push\EventListener\ExceptionListener;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
@@ -30,8 +31,21 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         // EntityRepository.
         $app['authbucket_push.model_manager.factory'] = null;
 
+        // Override the with parameter with your own user provider, e.g. using
+        // InMemoryUserProvider or a doctrine EntityReposity that implements
+        // UserProviderInterface.
+        $app['authbucket_push.user_provider'] = null;
+
         $app['authbucket_push.exception_listener'] = $app->share(function () {
             return new ExceptionListener();
+        });
+
+        $app['authbucket_push.model_controller'] = $app->share(function () use ($app) {
+            return new ModelController(
+                $app['validator'],
+                $app['serializer'],
+                $app['authbucket_push.model_manager.factory']
+            );
         });
     }
 

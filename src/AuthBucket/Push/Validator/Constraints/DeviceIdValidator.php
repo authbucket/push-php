@@ -14,12 +14,12 @@ namespace AuthBucket\Push\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\RegexValidator;
 
 /**
- * Validates whether the value is a valid access_token per RFC 6749
+ * Validates whether the value is a valid device_id per RFC 6749
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  *
  * @see http://tools.ietf.org/html/rfc6749#appendix-A.12
  */
-class AccessTokenValidator extends RegexValidator
+class DeviceIdValidator extends RegexValidator
 {
 }

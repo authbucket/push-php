@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\Regex;
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class AccessToken extends Regex
+class DeviceId extends Regex
 {
     public function __construct($options = null)
     {

@@ -12,6 +12,8 @@
 namespace AuthBucket\Push\Tests\TestBundle;
 
 use AuthBucket\Push\Tests\TestBundle\Controller\DefaultController;
+use AuthBucket\Push\Tests\TestBundle\Controller\DemoController;
+use AuthBucket\Push\Tests\TestBundle\Controller\PushController;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
@@ -26,6 +28,14 @@ class TestBundleServiceProvider implements ServiceProviderInterface
     {
         $app['authbucket_push.tests.default_controller'] = $app->share(function () {
             return new DefaultController();
+        });
+
+        $app['authbucket_push.tests.demo_controller'] = $app->share(function () {
+            return new DemoController();
+        });
+
+        $app['authbucket_push.tests.push_controller'] = $app->share(function () {
+            return new PushController();
         });
     }
 
