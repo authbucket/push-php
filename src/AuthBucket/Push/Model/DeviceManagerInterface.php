@@ -12,19 +12,10 @@
 namespace AuthBucket\Push\Model;
 
 /**
- * Push client manager interface.
+ * Push device manager interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-interface ClientManagerInterface extends ModelManagerInterface
+interface DeviceManagerInterface extends ModelManagerInterface
 {
-    public function createClient();
-
-    public function deleteClient(ClientInterface $client);
-
-    public function reloadClient(ClientInterface $client);
-
-    public function updateClient(ClientInterface $client);
-
-    public function findClientByClientId($clientId);
 }

@@ -11,9 +11,10 @@
             "AuthBucket\\Push": "src/"
         }
     },
-    "description": "Push notifications for mobile devices",
+    "description": "Push notifications for mobile devices based on the Symfony Components",
     "extra": {
         "branch-alias": {
+            "dev-develop": "1.x-dev",
             "dev-master": "1.0.x-dev"
         }
     },
@@ -21,20 +22,19 @@
     "keywords": [
         "push",
         "notification",
-        "bundle",
         "gcm",
-        "c2dm",
-        "ios",
-        "apns",
-        "blackberry"
+        "apns"
     ],
     "license": "MIT",
     "minimum-stability": "dev",
     "name": "authbucket/push",
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.3.9",
         "symfony/http-foundation": "~2.3",
-        "symfony/http-kernel": "~2.3"
+        "symfony/http-kernel": "~2.3",
+        "symfony/security": "~2.3",
+        "symfony/serializer": "~2.3",
+        "symfony/validator": "~2.3"
     },
     "require-dev": {
         "doctrine/data-fixtures": "~1.0",
@@ -46,10 +46,13 @@
         "satooshi/php-coveralls": "dev-master",
         "silex/silex": "~1.2",
         "symfony/browser-kit": "~2.3",
+        "symfony/config": "~2.3",
+        "symfony/css-selector": "~2.3",
         "symfony/form": "~2.3",
-        "symfony/security": "~2.3",
+        "symfony/locale": "~2.3",
+        "symfony/process": "~2.3",
+        "symfony/translation": "~2.3",
         "symfony/twig-bridge": "~2.3",
-        "symfony/validator": "~2.3",
         "twig/twig": "~1.8"
     },
     "type": "library"

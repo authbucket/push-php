@@ -9,6 +9,9 @@
  * file that was distributed with this source code.
  */
 
+require __DIR__ . '/routing_demo.php';
+require __DIR__ . '/routing_push.php';
+
 $app->get('/', 'authbucket_push.tests.default_controller:indexAction')
     ->bind('index');
 

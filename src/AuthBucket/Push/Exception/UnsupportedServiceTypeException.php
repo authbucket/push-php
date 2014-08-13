@@ -16,7 +16,7 @@ namespace AuthBucket\Push\Exception;
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class UnsupportedServiceTypeExceptionException extends \InvalidArgumentException implements ExceptionInterface
+class UnsupportedServiceTypeException extends \InvalidArgumentException implements ExceptionInterface
 {
     public function __construct($message = array(), $code = 400, Exception $previous = null)
     {

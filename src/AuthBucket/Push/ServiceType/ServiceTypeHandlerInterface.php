@@ -25,9 +25,9 @@ interface ServiceTypeHandlerInterface
     /**
      * Handle corresponding service type logic.
      *
-     * @param SecurityContextInterface         $securityContext         The security object that hold the current live token.
-     * @param Request                          $request                 Incoming request object.
-     * @param ModelManagerFactoryInterface     $modelManagerFactory     Model manager factory for compare with database record.
+     * @param SecurityContextInterface     $securityContext     The security object that hold the current live token.
+     * @param Request                      $request             Incoming request object.
+     * @param ModelManagerFactoryInterface $modelManagerFactory Model manager factory for compare with database record.
      *
      * @return RedirectResponse The redirect service object for authorize endpoint.
      */
