@@ -23,7 +23,7 @@ class DeviceId extends Regex
     public function __construct($options = null)
     {
         return parent::__construct(array_merge(array(
-            'message' => 'This is not a valid access_token.',
+            'message' => 'This is not a valid device_id.',
             'pattern' => '/^([\x20-\x7E]+)$/',
         ), (array) $options));
     }
