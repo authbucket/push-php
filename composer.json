@@ -20,15 +20,17 @@
     },
     "homepage": "https://github.com/authbucket/push",
     "keywords": [
-        "push",
-        "notification",
+        "apns",
         "gcm",
-        "apns"
+        "notification",
+        "oauth2",
+        "push"
     ],
     "license": "MIT",
     "minimum-stability": "dev",
     "name": "authbucket/push",
     "require": {
+        "authbucket/oauth2": "~2.1",
         "php": ">=5.3.9",
         "symfony/http-foundation": "~2.3",
         "symfony/http-kernel": "~2.3",
