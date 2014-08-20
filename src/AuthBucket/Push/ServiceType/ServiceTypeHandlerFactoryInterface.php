@@ -27,5 +27,5 @@ interface ServiceTypeHandlerFactoryInterface
      *
      * @throw UnsupportedServiceTypeException If supplied service type not found.
      */
-    public function getServiceTypeHandler($type);
+    public function getServiceTypeHandler($type = null);
 }
