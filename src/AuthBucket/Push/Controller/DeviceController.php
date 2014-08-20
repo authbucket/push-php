@@ -80,13 +80,13 @@ class DeviceController
     private function checkClientId()
     {
         // Fetch client_id from securityContext.
-        return '';
+        return $this->securityContext->getToken()->getAccessToken()->getClientId();
     }
 
     private function checkUsername()
     {
         // Fetch username from securityContext.
-        return '';
+        return $this->securityContext->getToken()->getAccessToken()->getUsername();
     }
 
     private function checkDeviceId(Request $request)
