@@ -23,11 +23,11 @@ $app['db.options'] = array(
 );
 
 // Return an instance of Doctrine ORM entity manager.
-$app['authbucket_push.orm'] = $app->share(function ($app) {
+$app['doctrine.orm.entity_manager'] = $app->share(function ($app) {
     $conn = $app['dbs']['default'];
     $em = $app['dbs.event_manager']['default'];
 
-    $driver = new AnnotationDriver(new AnnotationReader(), array(__DIR__ . '/../../tests/src/AuthBucket/Push/Tests/TestBundle/Entity'));
+    $driver = new AnnotationDriver(new AnnotationReader(), array(__DIR__ . '/../../tests/AuthBucket/Push/Tests/TestBundle/Entity'));
     $cache = new FilesystemCache(__DIR__ . '/../cache/' . $app['env']);
 
     $config = Setup::createConfiguration(false);
@@ -46,5 +46,8 @@ $app['authbucket_push.model'] = array(
 
 // Add model managers from ORM.
 $app['authbucket_push.model_manager.factory'] = $app->share(function ($app) {
-    return new ModelManagerFactory($app['authbucket_push.orm'], $app['authbucket_push.model']);
+    return new ModelManagerFactory(
+        $app['doctrine.orm.entity_manager'],
+        $app['authbucket_push.model']
+    );
 });

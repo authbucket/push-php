@@ -11,6 +11,7 @@
 
 namespace AuthBucket\Push\Provider;
 
+use AuthBucket\Push\Controller\DeviceController;
 use AuthBucket\Push\Controller\ModelController;
 use AuthBucket\Push\EventListener\ExceptionListener;
 use Silex\Application;
@@ -38,6 +39,14 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
 
         $app['authbucket_push.exception_listener'] = $app->share(function () {
             return new ExceptionListener();
+        });
+
+        $app['authbucket_push.device_controller'] = $app->share(function () use ($app) {
+            return new DeviceController(
+                $app['security'],
+                $app['validator'],
+                $app['authbucket_push.model_manager.factory']
+            );
         });
 
         $app['authbucket_push.model_controller'] = $app->share(function () use ($app) {

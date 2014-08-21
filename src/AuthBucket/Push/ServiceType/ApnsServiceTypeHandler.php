@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class APNsServiceTypeHandler extends AbstractServiceTypeHandler
+class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 {
     public function handle(
         SecurityContextInterface $securityContext,

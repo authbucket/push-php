@@ -15,6 +15,9 @@ $app->get('/push', 'authbucket_push.tests.push_controller:pushIndexAction')
 $app->get('/push/login', 'authbucket_push.tests.push_controller:pushLoginAction')
     ->bind('push_login');
 
+$app->post('/push/device', 'authbucket_push.device_controller:deviceAction')
+    ->bind('push_device');
+
 $app->post('/push/model/{type}.{_format}', 'authbucket_push.model_controller:createModelAction')
     ->bind('push_model_type_create')
     ->assert('_format', 'json|xml');

@@ -188,7 +188,7 @@ schema for:
 EOT
 )
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
-        $em = $app['authbucket_push.orm'];
+        $em = $app['doctrine.orm.entity_manager'];
 
         // Generate testing database schema.
         $classes = array();
@@ -222,7 +222,7 @@ Finally, instead of executing the SQL, you can output the SQL:
 EOT
 )
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
-        $em = $app['authbucket_push.orm'];
+        $em = $app['doctrine.orm.entity_manager'];
 
         // Generate testing database schema.
         $classes = array();
@@ -263,13 +263,13 @@ If you want to append the fixtures instead of flushing the database first you ca
 EOT
 )
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($app) {
-        $em = $app['authbucket_push.orm'];
+        $em = $app['doctrine.orm.entity_manager'];
 
         $purger = new ORMPurger();
         $executor = new ORMExecutor($em, $purger);
 
         $loader = new Loader();
-        $loader->loadFromDirectory(__DIR__ . '/../tests/src/AuthBucket/Push/Tests/TestBundle/DataFixtures/ORM');
+        $loader->loadFromDirectory(__DIR__ . '/../tests/AuthBucket/Push/Tests/TestBundle/DataFixtures/ORM');
         $executor->execute($loader->getFixtures());
     });
 
@@ -311,7 +311,7 @@ EOF
 
             $env = $input->getParameterOption(array('--env', '-e'), 'dev');
             $router = $input->getOption('router') 
-                ?: sprintf('%s/../tests/src/AuthBucket/Push/Tests/TestBundle/Resources/config/router_%s.php', __DIR__, $env);
+                ?: sprintf('%s/../tests/AuthBucket/Push/Tests/TestBundle/Resources/config/router_%s.php', __DIR__, $env);
 
             $builder = new ProcessBuilder(array(PHP_BINARY, '-S', $input->getArgument('address'), $router));
             $builder->setWorkingDirectory($input->getOption('docroot'));

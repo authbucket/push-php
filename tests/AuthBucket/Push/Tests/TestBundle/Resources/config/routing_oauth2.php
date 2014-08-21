@@ -9,4 +9,5 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__ . '/../../tests/AuthBucket/Push/Tests/TestBundle/Resources/config/routing.php';
+$app->match('/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
+    ->bind('oauth2_debug');
