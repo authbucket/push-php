@@ -8,7 +8,8 @@
     ],
     "autoload": {
         "psr-0": {
-            "AuthBucket\\Push": "src/"
+            "AuthBucket\\Push": "src/",
+            "AuthBucket\\Push\\Tests": "tests/"
         }
     },
     "description": "Push notifications for mobile devices based on the Symfony Components",
@@ -31,6 +32,7 @@
     "name": "authbucket/push",
     "require": {
         "authbucket/oauth2": "~2.1",
+        "guzzle/guzzle": "~3.9",
         "php": ">=5.3.9",
         "symfony/http-foundation": "~2.3",
         "symfony/http-kernel": "~2.3",
