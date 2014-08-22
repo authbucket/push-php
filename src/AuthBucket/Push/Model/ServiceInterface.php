@@ -12,34 +12,18 @@
 namespace AuthBucket\Push\Model;
 
 /**
- * Push device interface.
+ * Push service interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-interface DeviceInterface extends ModelInterface
+interface ServiceInterface extends ModelInterface
 {
-    /**
-     * Set device_id
-     *
-     * @param string $deviceId
-     *
-     * @return Device
-     */
-    public function setDeviceId($deviceId);
-
-    /**
-     * Get device_id
-     *
-     * @return string
-     */
-    public function getDeviceId();
-
     /**
      * Set service_type
      *
      * @param string $serviceType
      *
-     * @return Device
+     * @return Service
      */
     public function setServiceType($serviceType);
 
@@ -55,7 +39,7 @@ interface DeviceInterface extends ModelInterface
      *
      * @param string $clientId
      *
-     * @return Device
+     * @return Service
      */
     public function setClientId($clientId);
 
@@ -67,34 +51,18 @@ interface DeviceInterface extends ModelInterface
     public function getClientId();
 
     /**
-     * Set username
+     * Set options
      *
-     * @param string $username
+     * @param array $options
      *
-     * @return Device
+     * @return Service
      */
-    public function setUsername($username);
+    public function setOptions($options);
 
     /**
-     * Get username
+     * Get options
      *
-     * @return string
+     * @return array
      */
-    public function getUsername();
-
-    /**
-     * Set expires
-     *
-     * @param \DateTime $expires
-     *
-     * @return Device
-     */
-    public function setExpires($expires);
-
-    /**
-     * Get expires
-     *
-     * @return \DateTime
-     */
-    public function getExpires();
+    public function getOptions();
 }

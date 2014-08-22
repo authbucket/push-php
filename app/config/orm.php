@@ -19,7 +19,7 @@ use Doctrine\ORM\Tools\Setup;
 // Define SQLite DB path.
 $app['db.options'] = array(
     'driver' => 'pdo_sqlite',
-    'path' => __DIR__ . '/../cache/' . $app['env'] . '/.ht.sqlite',
+    'path' => __DIR__.'/../cache/'.$app['env'].'/.ht.sqlite',
 );
 
 // Return an instance of Doctrine ORM entity manager.
@@ -27,8 +27,8 @@ $app['doctrine.orm.entity_manager'] = $app->share(function ($app) {
     $conn = $app['dbs']['default'];
     $em = $app['dbs.event_manager']['default'];
 
-    $driver = new AnnotationDriver(new AnnotationReader(), array(__DIR__ . '/../../tests/AuthBucket/Push/Tests/TestBundle/Entity'));
-    $cache = new FilesystemCache(__DIR__ . '/../cache/' . $app['env']);
+    $driver = new AnnotationDriver(new AnnotationReader(), array(__DIR__.'/../../tests/AuthBucket/Push/Tests/TestBundle/Entity'));
+    $cache = new FilesystemCache(__DIR__.'/../cache/'.$app['env']);
 
     $config = Setup::createConfiguration(false);
     $config->setMetadataDriverImpl($driver);
@@ -41,6 +41,7 @@ $app['doctrine.orm.entity_manager'] = $app->share(function ($app) {
 // Return entity classes for model manager.
 $app['authbucket_push.model'] = array(
     'device' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Device',
+    'service' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Service',
     'user' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\User',
 );
 

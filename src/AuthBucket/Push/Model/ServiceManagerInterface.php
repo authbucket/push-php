@@ -9,4 +9,13 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__.'/../../tests/AuthBucket/Push/Tests/TestBundle/Resources/config/routing.php';
+namespace AuthBucket\Push\Model;
+
+/**
+ * Push service manager interface.
+ *
+ * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+ */
+interface ServiceManagerInterface extends ModelManagerInterface
+{
+}
