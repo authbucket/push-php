@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Device
  *
- * @ORM\Table(name="test_device")
+ * @ORM\Table(name="authbucket_push_device")
  * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\DeviceRepository")
  */
 class Device implements DeviceInterface

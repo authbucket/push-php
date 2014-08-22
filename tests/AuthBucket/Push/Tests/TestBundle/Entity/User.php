@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User
  *
- * @ORM\Table(name="test_user")
+ * @ORM\Table(name="authbucket_push_user")
  * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\UserRepository")
  */
 class User implements ModelInterface, UserInterface

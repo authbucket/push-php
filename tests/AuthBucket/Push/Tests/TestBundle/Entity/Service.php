@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Service
  *
- * @ORM\Table(name="test_service")
+ * @ORM\Table(name="authbucket_push_service")
  * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\ServiceRepository")
  */
 class Service implements ServiceInterface
