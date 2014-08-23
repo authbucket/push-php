@@ -11,9 +11,7 @@
 
 namespace AuthBucket\Push\ServiceType;
 
-use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Push service type handler interface.
@@ -22,18 +20,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 interface ServiceTypeHandlerInterface
 {
-    /**
-     * Handle corresponding service type logic.
-     *
-     * @param SecurityContextInterface     $securityContext     The security object that hold the current live token.
-     * @param Request                      $request             Incoming request object.
-     * @param ModelManagerFactoryInterface $modelManagerFactory Model manager factory for compare with database record.
-     *
-     * @return RedirectResponse The redirect service object for authorize endpoint.
-     */
-    public function handle(
-        SecurityContextInterface $securityContext,
-        Request $request,
-        ModelManagerFactoryInterface $modelManagerFactory
-    );
+    public function registerDeviceId(Request $request);
+
+    public function sendMessage(Request $request);
 }

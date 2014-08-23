@@ -11,15 +11,11 @@
 
 namespace AuthBucket\Push\ServiceType;
 
-use AuthBucket\Push\Exception\InvalidClientException;
 use AuthBucket\Push\Exception\InvalidRequestException;
-use AuthBucket\Push\Exception\InvalidScopeException;
-use AuthBucket\Push\Exception\ServerErrorException;
-use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\Util\Filter;
+use AuthBucket\Push\Validator\Constraints\DeviceId;
+use AuthBucket\Push\Validator\Constraints\ServiceType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Shared service type implementation.
@@ -28,187 +24,32 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
 {
-    /**
-     * Fetch username from authenticated token.
-     *
-     * @param SecurityContextInterface $securityContext Incoming request object.
-     *
-     * @return string Supplied username from authenticated token.
-     *
-     * @throw ServerErrorException If supplied token is not a standard TokenInterface instance.
-     */
-    protected function checkUsername(
-        SecurityContextInterface $securityContext
-    )
+    private function checkClientId()
     {
-        $username = $securityContext->getToken()->getUsername();
-
-        return $username;
+        // Fetch client_id from securityContext.
+        return $this->securityContext->getToken()->getAccessToken()->getClientId();
     }
 
-    /**
-     * Fetch cliend_id from GET.
-     *
-     * @param Request                      $request             Incoming request object.
-     * @param ModelManagerFactoryInterface $modelManagerFactory Model manager factory for compare with database record.
-     *
-     * @return string Supplied client_id from incoming request.
-     *
-     * @throw InvalidRequestException If supplied client_id in bad format.
-     * @throw InvalidClientException If client_id not found from database record.
-     */
-    protected function checkClientId(
-        Request $request,
-        ModelManagerFactoryInterface $modelManagerFactory
-    )
+    private function checkUsername()
     {
-        $clientId = $request->query->get('client_id');
+        // Fetch username from securityContext.
+        return $this->securityContext->getToken()->getAccessToken()->getUsername();
+    }
 
-        // client_id is required and in valid format.
-        if (!Filter::filter(array('client_id' => $clientId))) {
+    private function checkDeviceId(Request $request)
+    {
+        // Fetch device_id from POST
+        $deviceId = $request->request->get('device_id');
+        $errors = $this->validator->validateValue($deviceId, array(
+            new NotBlank(),
+            new DeviceId(),
+        ));
+        if (count($errors) > 0) {
             throw new InvalidRequestException(array(
                 'error_description' => 'The request includes an invalid parameter value.',
             ));
         }
 
-        // Compare client_id with database record.
-        $clientManager = $modelManagerFactory->getModelManager('client');
-        $result = $clientManager->findClientByClientId($clientId);
-        if ($result === null) {
-            throw new InvalidClientException(array(
-                'error_description' => 'The request includes an invalid parameter value.',
-            ));
-        }
-
-        return $clientId;
-    }
-
-    /**
-     * Fetch redirect_uri from GET.
-     *
-     * @param Request                      $request             Incoming request object.
-     * @param ModelManagerFactoryInterface $modelManagerFactory Model manager factory for compare with database record.
-     * @param string                       $clientId            Corresponding client_id that code should belongs to.
-     *
-     * @return string The supplied redirect_uri from incoming request, or from stored record.
-     *
-     * @throw InvalidRequestException If redirect_uri not exists in both incoming request and database record, or supplied value not match with stord record.
-     */
-    protected function checkRedirectUri(
-        Request $request,
-        ModelManagerFactoryInterface $modelManagerFactory,
-        $clientId
-    )
-    {
-        $clientManager = $modelManagerFactory->getModelManager('client');
-
-        $redirectUri = $request->query->get('redirect_uri');
-
-        // redirect_uri is not required if already established via other channels,
-        // check an existing redirect URI against the one supplied.
-        $stored = null;
-        $result = $clientManager->findClientByClientId($clientId);
-        if ($result !== null && $result->getRedirectUri()) {
-            $stored = $result->getRedirectUri();
-        }
-
-        // At least one of: existing redirect URI or input redirect URI must be
-        // specified.
-        if (!$stored && !$redirectUri) {
-            throw new InvalidRequestException(array(
-                'error_description' => 'The request is missing a required parameter.'
-            ));
-        }
-
-        // If there's an existing uri and one from input, verify that they match.
-        if ($stored && $redirectUri) {
-            // Ensure that the input uri starts with the stored uri.
-            if (strcasecmp(substr($redirectUri, 0, strlen($stored)), $stored) !== 0) {
-                throw new InvalidRequestException(array(
-                    'error_description' => 'The request includes an invalid parameter value',
-                ));
-            }
-        }
-
-        return $redirectUri
-            ?: $stored;
-    }
-
-    protected function checkState(
-        Request $request,
-        $redirectUri
-    )
-    {
-        $state = $request->query->get('state');
-
-        // state is required and in valid format.
-        if (!Filter::filter(array('state' => $state))) {
-            throw new InvalidRequestException(array(
-                'redirect_uri' => $redirectUri,
-                'error_description' => 'The request includes an invalid parameter value',
-            ));
-        }
-
-        return $state;
-    }
-
-    protected function checkScope(
-        Request $request,
-        ModelManagerFactoryInterface $modelManagerFactory,
-        $clientId,
-        $username,
-        $redirectUri,
-        $state
-    )
-    {
-        $scope = $request->query->get('scope', array());
-
-        // scope may not exists.
-        if ($scope) {
-            // scope must be in valid format.
-            if (!Filter::filter(array('scope' => $scope))) {
-                throw new InvalidRequestException(array(
-                    'redirect_uri' => $redirectUri,
-                    'state' => $state,
-                    'error_description' => 'The request includes an invalid parameter value.',
-                ));
-            }
-
-            $scope = preg_split('/\s+/', $scope);
-
-            // Compare if given scope within all supported scopes.
-            $scopeSupported = array();
-            $scopeManager = $modelManagerFactory->getModelManager('scope');
-            $result = $scopeManager->findScopes();
-            if ($result !== null) {
-                foreach ($result as $row) {
-                    $scopeSupported[] = $row->getScope();
-                }
-            }
-            if (array_intersect($scope, $scopeSupported) !== $scope) {
-                throw new InvalidScopeException(array(
-                    'redirect_uri' => $redirectUri,
-                    'state' => $state,
-                    'error_description' => 'The requested scope is unknown.',
-                ));
-            }
-
-            // Compare if given scope within all authorized scopes.
-            $scopeAuthorized = array();
-            $authorizeManager = $modelManagerFactory->getModelManager('authorize');
-            $result = $authorizeManager->findAuthorizeByClientIdAndUsername($clientId, $username);
-            if ($result !== null) {
-                $scopeAuthorized = $result->getScope();
-            }
-            if (array_intersect($scope, $scopeAuthorized) !== $scope) {
-                throw new InvalidScopeException(array(
-                    'redirect_uri' => $redirectUri,
-                    'state' => $state,
-                    'error_description' => 'The requested scope is invalid.',
-                ));
-            }
-        }
-
-        return $scope;
+        return $deviceId;
     }
 }

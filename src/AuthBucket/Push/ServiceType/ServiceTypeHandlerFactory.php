@@ -12,6 +12,9 @@
 namespace AuthBucket\Push\ServiceType;
 
 use AuthBucket\Push\Exception\UnsupportedServiceTypeException;
+use AuthBucket\Push\Model\ModelManagerFactoryInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Validator\ValidatorInterface;
 
 /**
  * Push service type handler factory implemention.
@@ -20,12 +23,22 @@ use AuthBucket\Push\Exception\UnsupportedServiceTypeException;
  */
 class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
 {
+    protected $securityContext;
+    protected $validator;
+    protected $modelManagerFactory;
     protected $classes;
 
     public function __construct(
+        SecurityContextInterface $securityContext,
+        ValidatorInterface $validator,
+        ModelManagerFactoryInterface $modelManagerFactory,
         array $classes = array()
     )
     {
+        $this->securityContext = $securityContext;
+        $this->validator = $validator;
+        $this->modelManagerFactory = $modelManagerFactory;
+
         foreach ($classes as $class) {
             if (!class_exists($class)) {
                 throw new UnsupportedServiceTypeException(array(
@@ -56,6 +69,10 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
 
         $class = $this->classes[$type];
 
-        return new $class();
+        return new $class(
+            $this->securityContext,
+            $this->validator,
+            $this->modelManagerFactory
+        );
     }
 }
