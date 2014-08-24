@@ -12,6 +12,9 @@
 namespace AuthBucket\Push\ServiceType;
 
 use AuthBucket\Push\Exception\UnsupportedServiceTypeException;
+use AuthBucket\Push\Model\ModelManagerFactoryInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Validator\ValidatorInterface;
 
 /**
  * Push service type handler factory implemention.
@@ -20,10 +23,22 @@ use AuthBucket\Push\Exception\UnsupportedServiceTypeException;
  */
 class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
 {
+    protected $securityContext;
+    protected $validator;
+    protected $modelManagerFactory;
     protected $classes;
 
-    public function __construct(array $classes = array())
+    public function __construct(
+        SecurityContextInterface $securityContext,
+        ValidatorInterface $validator,
+        ModelManagerFactoryInterface $modelManagerFactory,
+        array $classes = array()
+    )
     {
+        $this->securityContext = $securityContext;
+        $this->validator = $validator;
+        $this->modelManagerFactory = $modelManagerFactory;
+
         foreach ($classes as $class) {
             if (!class_exists($class)) {
                 throw new UnsupportedServiceTypeException(array(
@@ -42,14 +57,22 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
         $this->classes = $classes;
     }
 
-    public function getServiceTypeHandler($type)
+    public function getServiceTypeHandler($type = null)
     {
+        $type = $type ?: current(array_keys($this->classes));
+
         if (!isset($this->classes[$type]) || !class_exists($this->classes[$type])) {
             throw new UnsupportedServiceTypeException(array(
                 'error_description' => 'The authorization server does not support obtaining an authorization code using this method.',
             ));
         }
 
-        return new $this->classes[$type()];
+        $class = $this->classes[$type];
+
+        return new $class(
+            $this->securityContext,
+            $this->validator,
+            $this->modelManagerFactory
+        );
     }
 }

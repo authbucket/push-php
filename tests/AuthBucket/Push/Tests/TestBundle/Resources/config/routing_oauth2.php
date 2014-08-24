@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the authbucket/oauth2 package.
+ * This file is part of the authbucket/push package.
  *
  * (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  *
@@ -9,10 +9,5 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__.'/../app/bootstrap.php';
-
-$app = new Silex\Application(array('env' => 'dev'));
-
-require __DIR__.'/../app/AppKernel.php';
-
-$app->run();
+$app->match('/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
+    ->bind('oauth2_debug');

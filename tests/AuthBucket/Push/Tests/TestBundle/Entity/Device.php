@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Device
  *
- * @ORM\Table(name="test_device")
+ * @ORM\Table(name="authbucket_push_device")
  * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\DeviceRepository")
  */
 class Device implements DeviceInterface
@@ -34,9 +34,9 @@ class Device implements DeviceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="device_id", type="string", length=255)
+     * @ORM\Column(name="device_token", type="string", length=255)
      */
-    protected $deviceId;
+    protected $deviceToken;
 
     /**
      * @var string
@@ -77,27 +77,27 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set device_id
+     * Set device_token
      *
-     * @param string $deviceId
+     * @param string $deviceToken
      *
      * @return Device
      */
-    public function setDeviceId($deviceId)
+    public function setDeviceToken($deviceToken)
     {
-        $this->deviceId = $deviceId;
+        $this->deviceToken = $deviceToken;
 
         return $this;
     }
 
     /**
-     * Get device_id
+     * Get device_token
      *
      * @return string
      */
-    public function getDeviceId()
+    public function getDeviceToken()
     {
-        return $this->deviceId;
+        return $this->deviceToken;
     }
 
     /**

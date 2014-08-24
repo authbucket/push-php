@@ -29,7 +29,7 @@ class DefaultController
     public function adminRefreshDatabaseAction(Request $request, Application $app)
     {
         $conn = $app['db'];
-        $em = $app['authbucket_push.orm'];
+        $em = $app['doctrine.orm.entity_manager'];
 
         $params = $conn->getParams();
         $name = isset($params['path']) ? $params['path'] : (isset($params['dbname']) ? $params['dbname'] : false);
@@ -56,7 +56,7 @@ class DefaultController
         $executor = new ORMExecutor($em, $purger);
 
         $loader = new Loader();
-        $loader->loadFromDirectory(__DIR__ . '/../DataFixtures/ORM');
+        $loader->loadFromDirectory(__DIR__.'/../DataFixtures/ORM');
         $executor->execute($loader->getFixtures());
 
         return $app->redirect($app['url_generator']->generate('index'));

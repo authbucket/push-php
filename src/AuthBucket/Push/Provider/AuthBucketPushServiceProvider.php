@@ -11,8 +11,10 @@
 
 namespace AuthBucket\Push\Provider;
 
+use AuthBucket\Push\Controller\DeviceController;
 use AuthBucket\Push\Controller\ModelController;
 use AuthBucket\Push\EventListener\ExceptionListener;
+use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactory;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
@@ -36,8 +38,30 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         // UserProviderInterface.
         $app['authbucket_push.user_provider'] = null;
 
+        // Add default service type handler.
+        $app['authbucket_push.service_handler'] = array(
+            'apns' => 'AuthBucket\\Push\\ServiceType\\ApnsServiceTypeHandler',
+            'gcm' => 'AuthBucket\\Push\\ServiceType\\GcmServiceTypeHandler',
+        );
+
         $app['authbucket_push.exception_listener'] = $app->share(function () {
             return new ExceptionListener();
+        });
+
+        $app['authbucket_push.service_handler.factory'] = $app->share(function ($app) {
+            return new ServiceTypeHandlerFactory(
+                $app['security'],
+                $app['validator'],
+                $app['authbucket_push.model_manager.factory'],
+                $app['authbucket_push.service_handler']
+            );
+        });
+
+        $app['authbucket_push.device_controller'] = $app->share(function () use ($app) {
+            return new DeviceController(
+                $app['validator'],
+                $app['authbucket_push.service_handler.factory']
+            );
         });
 
         $app['authbucket_push.model_controller'] = $app->share(function () use ($app) {

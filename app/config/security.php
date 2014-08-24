@@ -29,4 +29,15 @@ $app['security.firewalls'] = array(
         'http' => true,
         'users' => $app['security.user_provider.admin'],
     ),
+    'push_device' => array(
+        'pattern' => '^/push/device',
+        'oauth2_resource' => array(
+            'resource_type' => 'debug_endpoint',
+            'scope' => array(),
+            'options' => array(
+                'debug_endpoint' => '/oauth2/debug',
+                'cache' => false,
+            ),
+        ),
+    ),
 );
