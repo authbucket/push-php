@@ -11,15 +11,20 @@
 
 namespace AuthBucket\Push\Validator\Constraints;
 
-use Symfony\Component\Validator\Constraints\RegexValidator;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
- * Validates whether the value is a valid device_id per RFC 6749
+ * @Annotation
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
- *
- * @see http://tools.ietf.org/html/rfc6749#appendix-A.12
  */
-class DeviceIdValidator extends RegexValidator
+class DeviceToken extends Regex
 {
+    public function __construct($options = null)
+    {
+        return parent::__construct(array_merge(array(
+            'message' => 'This is not a valid device_token.',
+            'pattern' => '/^([\x20-\x7E]+)$/',
+        ), (array) $options));
+    }
 }

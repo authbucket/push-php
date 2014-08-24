@@ -27,12 +27,12 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
         $username = $this->checkUsername();
 
-        $deviceId = $this->checkDeviceId($request);
+        $deviceToken = $this->checkDeviceToken($request);
 
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $class = $deviceManager->getClassName();
         $device = new $class();
-        $device->setDeviceId($deviceId)
+        $device->setDeviceToken($deviceToken)
             ->setServiceType('apns')
             ->setClientId($clientId)
             ->setUsername($username)
@@ -40,7 +40,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $device = $deviceManager->createModel($device);
 
         $parameters = array(
-            'device_id' => $device->getDeviceId(),
+            'device_token' => $device->getDeviceToken(),
             'service_type' => $device->getServiceType(),
             'client_id' => $device->getClientId(),
             'username' => $device->getUsername(),

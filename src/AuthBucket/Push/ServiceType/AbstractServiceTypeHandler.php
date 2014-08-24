@@ -15,7 +15,7 @@ use AuthBucket\OAuth2\Security\Authentication\Token\AccessTokenToken;
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Exception\ServerErrorException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\Validator\Constraints\DeviceId;
+use AuthBucket\Push\Validator\Constraints\DeviceToken;
 use AuthBucket\Push\Validator\Constraints\ServiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -68,13 +68,13 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
         return $token->getUsername();
     }
 
-    protected function checkDeviceId(Request $request)
+    protected function checkDeviceToken(Request $request)
     {
-        // device_id is required and in valid format.
-        $deviceId = $request->request->get('device_id');
-        $errors = $this->validator->validateValue($deviceId, array(
+        // device_token is required and in valid format.
+        $deviceToken = $request->request->get('device_token');
+        $errors = $this->validator->validateValue($deviceToken, array(
             new NotBlank(),
-            new DeviceId(),
+            new DeviceToken(),
         ));
         if (count($errors) > 0) {
             throw new InvalidRequestException(array(
@@ -82,6 +82,6 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
             ));
         }
 
-        return $deviceId;
+        return $deviceToken;
     }
 }

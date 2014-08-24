@@ -19,20 +19,20 @@ namespace AuthBucket\Push\Model;
 interface DeviceInterface extends ModelInterface
 {
     /**
-     * Set device_id
+     * Set device_token
      *
-     * @param string $deviceId
+     * @param string $deviceToken
      *
      * @return Device
      */
-    public function setDeviceId($deviceId);
+    public function setDeviceToken($deviceToken);
 
     /**
-     * Get device_id
+     * Get device_token
      *
      * @return string
      */
-    public function getDeviceId();
+    public function getDeviceToken();
 
     /**
      * Set service_type
