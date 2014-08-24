@@ -11,65 +11,49 @@
 
 namespace AuthBucket\Push\ServiceType;
 
-use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\TokenType\TokenTypeHandlerFactoryInterface;
-use AuthBucket\Push\Util\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * Code service type handler implementation.
+ * GCM service type handler implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
 class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 {
-    public function handle(
-        SecurityContextInterface $securityContext,
-        Request $request,
-        ModelManagerFactoryInterface $modelManagerFactory,
-        TokenTypeHandlerFactoryInterface $tokenTypeHandlerFactory
-    )
+    public function registerDevice(Request $request)
     {
-        // Fetch username from authenticated token.
-        $username = $this->checkUsername($securityContext);
+        $clientId = $this->checkClientId();
 
-        // Fetch and check client_id.
-        $clientId = $this->checkClientId($request, $modelManagerFactory);
+        $username = $this->checkUsername();
 
-        // Fetch and check redirect_uri.
-        $redirectUri = $this->checkRedirectUri($request, $modelManagerFactory, $clientId);
+        $deviceToken = $this->checkDeviceToken($request);
 
-        // Fetch and check state.
-        $state = $this->checkState($request, $redirectUri);
-
-        // Fetch and check scope.
-        $scope = $this->checkScope(
-            $request,
-            $modelManagerFactory,
-            $clientId,
-            $username,
-            $redirectUri,
-            $state
-        );
-
-        // Generate parameters, store to backend and set service.
-        $modelManager =  $modelManagerFactory->getModelManager('code');
-        $code = $modelManager->createCode()
-            ->setCode(md5(uniqid(null, true)))
-            ->setState($state)
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $class = $deviceManager->getClassName();
+        $device = new $class();
+        $device->setDeviceToken($deviceToken)
+            ->setServiceType('gcm')
             ->setClientId($clientId)
             ->setUsername($username)
-            ->setRedirectUri($redirectUri)
-            ->setExpires(new \DateTime('+10 minutes'))
-            ->setScope($scope);
-        $modelManager->updateCode($code);
+            ->setExpires(new \DateTime('+7 days'));
+        $device = $deviceManager->createModel($device);
 
         $parameters = array(
-            'code' => $code->getCode(),
-            'state' => $state,
+            'device_token' => $device->getDeviceToken(),
+            'service_type' => $device->getServiceType(),
+            'client_id' => $device->getClientId(),
+            'username' => $device->getUsername(),
+            'expires_in' => $device->getExpires()->getTimestamp() - time(),
         );
 
-        return RedirectResponse::create($redirectUri, $parameters);
+        return JsonResponse::create($parameters, 200, array(
+            'Cache-Control' => 'no-store',
+            'Pragma' => 'no-cache',
+        ));
+    }
+
+    public function sendMessage(Request $request)
+    {
     }
 }

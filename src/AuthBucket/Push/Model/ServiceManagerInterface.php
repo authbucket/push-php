@@ -9,17 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\Validator\Constraints;
-
-use Symfony\Component\Validator\Constraints\RegexValidator;
+namespace AuthBucket\Push\Model;
 
 /**
- * Validates whether the value is a valid device_id per RFC 6749
+ * Push service manager interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
- *
- * @see http://tools.ietf.org/html/rfc6749#appendix-A.12
  */
-class DeviceIdValidator extends RegexValidator
+interface ServiceManagerInterface extends ModelManagerInterface
 {
 }

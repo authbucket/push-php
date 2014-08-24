@@ -11,58 +11,49 @@
 
 namespace AuthBucket\Push\ServiceType;
 
-use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\TokenType\TokenTypeHandlerFactoryInterface;
-use AuthBucket\Push\Util\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * Token service type implementation.
+ * APNs service type implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
 class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 {
-    public function handle(
-        SecurityContextInterface $securityContext,
-        Request $request,
-        ModelManagerFactoryInterface $modelManagerFactory,
-        TokenTypeHandlerFactoryInterface $tokenTypeHandlerFactory
-    )
+    public function registerDevice(Request $request)
     {
-        // Fetch username from authenticated token.
-        $username = $this->checkUsername($securityContext);
+        $clientId = $this->checkClientId();
 
-        // Fetch and check client_id.
-        $clientId = $this->checkClientId($request, $modelManagerFactory);
+        $username = $this->checkUsername();
 
-        // Fetch and check redirect_uri.
-        $redirectUri = $this->checkRedirectUri($request, $modelManagerFactory, $clientId);
+        $deviceToken = $this->checkDeviceToken($request);
 
-        // Fetch and check state.
-        $state = $this->checkState($request, $redirectUri);
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $class = $deviceManager->getClassName();
+        $device = new $class();
+        $device->setDeviceToken($deviceToken)
+            ->setServiceType('apns')
+            ->setClientId($clientId)
+            ->setUsername($username)
+            ->setExpires(new \DateTime('+7 days'));
+        $device = $deviceManager->createModel($device);
 
-        // Fetch and check scope.
-        $scope = $this->checkScope(
-            $request,
-            $modelManagerFactory,
-            $clientId,
-            $username,
-            $redirectUri,
-            $state
+        $parameters = array(
+            'device_token' => $device->getDeviceToken(),
+            'service_type' => $device->getServiceType(),
+            'client_id' => $device->getClientId(),
+            'username' => $device->getUsername(),
+            'expires_in' => $device->getExpires()->getTimestamp() - time(),
         );
 
-        // Generate parameters, store to backend and set service.
-        $parameters = $tokenTypeHandlerFactory->getTokenTypeHandler()->createAccessToken(
-            $modelManagerFactory,
-            $clientId,
-            $username,
-            $scope,
-            $state,
-            $withRefreshToken = false
-        );
+        return JsonResponse::create($parameters, 200, array(
+            'Cache-Control' => 'no-store',
+            'Pragma' => 'no-cache',
+        ));
+    }
 
-        return RedirectResponse::create($redirectUri, $parameters);
+    public function sendMessage(Request $request)
+    {
     }
 }

@@ -11,16 +11,16 @@
 
 namespace AuthBucket\Push\Tests\TestBundle\Entity;
 
-use AuthBucket\Push\Model\DeviceInterface;
+use AuthBucket\Push\Model\ServiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Device
+ * Service
  *
- * @ORM\Table(name="authbucket_push_device")
- * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\DeviceRepository")
+ * @ORM\Table(name="authbucket_push_service")
+ * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\ServiceRepository")
  */
-class Device implements DeviceInterface
+class Service implements ServiceInterface
 {
     /**
      * @var integer
@@ -30,13 +30,6 @@ class Device implements DeviceInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="device_token", type="string", length=255)
-     */
-    protected $deviceToken;
 
     /**
      * @var string
@@ -53,18 +46,11 @@ class Device implements DeviceInterface
     protected $clientId;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="options", type="array")
      */
-    protected $username;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expires", type="datetime")
-     */
-    protected $expires;
+    protected $options;
 
     /**
      * Get id
@@ -77,35 +63,11 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set device_token
-     *
-     * @param string $deviceToken
-     *
-     * @return Device
-     */
-    public function setDeviceToken($deviceToken)
-    {
-        $this->deviceToken = $deviceToken;
-
-        return $this;
-    }
-
-    /**
-     * Get device_token
-     *
-     * @return string
-     */
-    public function getDeviceToken()
-    {
-        return $this->deviceToken;
-    }
-
-    /**
      * Set service_type
      *
      * @param string $serviceType
      *
-     * @return Device
+     * @return Service
      */
     public function setServiceType($serviceType)
     {
@@ -129,7 +91,7 @@ class Device implements DeviceInterface
      *
      * @param string $clientId
      *
-     * @return Device
+     * @return Service
      */
     public function setClientId($clientId)
     {
@@ -149,50 +111,26 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set username
+     * Set options
      *
-     * @param string $username
+     * @param array $options
      *
-     * @return Device
+     * @return Service
      */
-    public function setUsername($username)
+    public function setOptions($options)
     {
-        $this->username = $username;
+        $this->options = $options;
 
         return $this;
     }
 
     /**
-     * Get username
+     * Get options
      *
-     * @return string
+     * @return array
      */
-    public function getUsername()
+    public function getOptions()
     {
-        return $this->username;
-    }
-
-    /**
-     * Set expires
-     *
-     * @param \DateTime $expires
-     *
-     * @return Device
-     */
-    public function setExpires($expires)
-    {
-        $this->expires = $expires;
-
-        return $this;
-    }
-
-    /**
-     * Get expires
-     *
-     * @return \DateTime
-     */
-    public function getExpires()
-    {
-        return $this->expires;
+        return $this->options;
     }
 }
