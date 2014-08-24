@@ -11,7 +11,9 @@
 
 namespace AuthBucket\Push\ServiceType;
 
+use AuthBucket\OAuth2\Security\Authentication\Token\AccessTokenToken;
 use AuthBucket\Push\Exception\InvalidRequestException;
+use AuthBucket\Push\Exception\ServerErrorException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use AuthBucket\Push\Validator\Constraints\DeviceId;
 use AuthBucket\Push\Validator\Constraints\ServiceType;
@@ -42,21 +44,33 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
         $this->modelManagerFactory = $modelManagerFactory;
     }
 
-    private function checkClientId()
+    protected function checkClientId()
     {
-        // Fetch client_id from securityContext.
-        return $this->securityContext->getToken()->getAccessToken()->getClientId();
+        $token = $this->securityContext->getToken();
+        if ($token === null || !$token instanceof AccessTokenToken) {
+            throw new ServerErrorException(array(
+                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+            ));
+        }
+
+        return $token->getClientId();
     }
 
-    private function checkUsername()
+    protected function checkUsername()
     {
-        // Fetch username from securityContext.
-        return $this->securityContext->getToken()->getAccessToken()->getUsername();
+        $token = $this->securityContext->getToken();
+        if ($token === null || !$token instanceof AccessTokenToken) {
+            throw new ServerErrorException(array(
+                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+            ));
+        }
+
+        return $token->getUsername();
     }
 
-    private function checkDeviceId(Request $request)
+    protected function checkDeviceId(Request $request)
     {
-        // Fetch device_id from POST
+        // device_id is required and in valid format.
         $deviceId = $request->request->get('device_id');
         $errors = $this->validator->validateValue($deviceId, array(
             new NotBlank(),

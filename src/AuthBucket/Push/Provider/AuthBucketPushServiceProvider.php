@@ -59,9 +59,8 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
 
         $app['authbucket_push.device_controller'] = $app->share(function () use ($app) {
             return new DeviceController(
-                $app['security'],
                 $app['validator'],
-                $app['authbucket_push.model_manager.factory']
+                $app['authbucket_push.service_handler.factory']
             );
         });
 
