@@ -12,10 +12,13 @@
 namespace AuthBucket\Push\ServiceType;
 
 use AuthBucket\Push\Exception\InvalidRequestException;
+use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use AuthBucket\Push\Validator\Constraints\DeviceId;
 use AuthBucket\Push\Validator\Constraints\ServiceType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\ValidatorInterface;
 
 /**
  * Shared service type implementation.
@@ -24,6 +27,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
 {
+    protected $securityContext;
+    protected $validator;
+    protected $modelManagerFactory;
+
+    public function __construct(
+        SecurityContextInterface $securityContext,
+        ValidatorInterface $validator,
+        ModelManagerFactoryInterface $modelManagerFactory
+    )
+    {
+        $this->securityContext = $securityContext;
+        $this->validator = $validator;
+        $this->modelManagerFactory = $modelManagerFactory;
+    }
+
     private function checkClientId()
     {
         // Fetch client_id from securityContext.
