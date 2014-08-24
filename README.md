@@ -34,7 +34,7 @@ information.
 You may also run the demo locally. Open a console and execute the
 following command to install the latest version in the push/ directory:
 
-    $ composer create-project authbucket/push push/ dev-master
+    $ composer create-project authbucket/push push/ "~0.0"
 
 Then use the PHP built-in web server to run the demo application:
 
