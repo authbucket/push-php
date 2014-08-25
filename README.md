@@ -13,8 +13,8 @@ Version](https://poser.pugx.org/authbucket/push/v/stable.svg)](https://packagist
 Downloads](https://poser.pugx.org/authbucket/push/downloads.svg)](https://packagist.org/packages/authbucket/push)
 [![License](https://poser.pugx.org/authbucket/push/license.svg)](https://packagist.org/packages/authbucket/push)
 
-The primary goal of [AuthBucket\\Push](http://push.authbucket.com/) is
-to develop a library for sending out push notifications to mobile
+The primary goal of [AuthBucket\\Push](http://push-php.authbucket.com/)
+is to develop a library for sending out push notifications to mobile
 devices; secondary goal would be develop corresponding wrapper [Symfony2
 Bundle](http://symfony.com) and [Drupal module](https://www.drupal.org).
 
@@ -28,7 +28,7 @@ Demo
 
 The demo is based on [Silex](http://silex.sensiolabs.org/) and
 [AuthBucketPushServiceProvider](https://github.com/authbucket/push-php/blob/master/src/AuthBucket/Push/Provider/AuthBucketPushServiceProvider.php).
-Read though [Demo](http://push.authbucket.com/demo) for more
+Read though [Demo](http://push-php.authbucket.com/demo) for more
 information.
 
 You may also run the demo locally. Open a console and execute the
@@ -60,7 +60,7 @@ Documentation
 
 Push's documentation is built with
 [Sami](https://github.com/fabpot/Sami) and publicly hosted on [GitHub
-Pages](http://authbucket.github.io/push).
+Pages](http://authbucket.github.io/push-php).
 
 To built the documents locally, execute the following command:
 
@@ -85,8 +85,8 @@ Open `build/logs/html` with your browser for the coverage report.
 References
 ----------
 
--   [Demo](http://push.authbucket.com/demo)
--   [API](http://authbucket.github.io/push/)
+-   [Demo](http://push-php.authbucket.com/demo)
+-   [API](http://authbucket.github.io/push-php/)
 -   [GitHub](https://github.com/authbucket/push-php)
 -   [Packagist](https://packagist.org/packages/authbucket/push)
 -   [Travis CI](https://travis-ci.org/authbucket/push-php)
