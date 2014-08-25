@@ -2,11 +2,11 @@ AuthBucket\\Push
 ================
 
 [![Build
-Status](https://travis-ci.org/authbucket/push.svg?branch=master)](https://travis-ci.org/authbucket/push)
+Status](https://travis-ci.org/authbucket/push-php.svg?branch=master)](https://travis-ci.org/authbucket/push-php)
 [![Coverage
-Status](https://img.shields.io/coveralls/authbucket/push.svg)](https://coveralls.io/r/authbucket/push?branch=master)
+Status](https://img.shields.io/coveralls/authbucket/push-php.svg)](https://coveralls.io/r/authbucket/push-php?branch=master)
 [![Dependency
-Status](https://www.versioneye.com/php/authbucket:push/dev-master/badge.svg)](https://www.versioneye.com/php/authbucket:push/dev-master)
+Status](https://www.versioneye.com/php/authbucket:push-php/dev-master/badge.svg)](https://www.versioneye.com/php/authbucket:push-php/dev-master)
 [![Latest Stable
 Version](https://poser.pugx.org/authbucket/push/v/stable.svg)](https://packagist.org/packages/authbucket/push)
 [![Total
@@ -19,7 +19,7 @@ devices; secondary goal would be develop corresponding wrapper [Symfony2
 Bundle](http://symfony.com) and [Drupal module](https://www.drupal.org).
 
 This library bundle with a [Silex](http://silex.sensiolabs.org/) based
-[AuthBucketPushServiceProvider](https://github.com/authbucket/push/blob/master/src/AuthBucket/Push/Provider/AuthBucketPushServiceProvider.php)
+[AuthBucketPushServiceProvider](https://github.com/authbucket/push-php/blob/master/src/AuthBucket/Push/Provider/AuthBucketPushServiceProvider.php)
 for unit test and demo purpose. Installation and usage can refer as
 below.
 
@@ -27,7 +27,7 @@ Demo
 ----
 
 The demo is based on [Silex](http://silex.sensiolabs.org/) and
-[AuthBucketPushServiceProvider](https://github.com/authbucket/push/blob/master/src/AuthBucket/Push/Provider/AuthBucketPushServiceProvider.php).
+[AuthBucketPushServiceProvider](https://github.com/authbucket/push-php/blob/master/src/AuthBucket/Push/Provider/AuthBucketPushServiceProvider.php).
 Read though [Demo](http://push.authbucket.com/demo) for more
 information.
 
@@ -73,8 +73,8 @@ Tests
 
 This project is coverage with [PHPUnit](http://phpunit.de/) test cases;
 CI result can be found from [Travis
-CI](https://travis-ci.org/authbucket/push); code coverage report can be
-found from [Coveralls](https://coveralls.io/r/authbucket/push).
+CI](https://travis-ci.org/authbucket/push-php); code coverage report can
+be found from [Coveralls](https://coveralls.io/r/authbucket/push-php).
 
 To run the test suite locally, execute the following command:
 
@@ -87,15 +87,15 @@ References
 
 -   [Demo](http://push.authbucket.com/demo)
 -   [API](http://authbucket.github.io/push/)
--   [GitHub](https://github.com/authbucket/push)
+-   [GitHub](https://github.com/authbucket/push-php)
 -   [Packagist](https://packagist.org/packages/authbucket/push)
--   [Travis CI](https://travis-ci.org/authbucket/push)
--   [Coveralls](https://coveralls.io/r/authbucket/push)
+-   [Travis CI](https://travis-ci.org/authbucket/push-php)
+-   [Coveralls](https://coveralls.io/r/authbucket/push-php)
 
 License
 -------
 
 -   Code released under
-    [MIT](https://github.com/authbucket/push/blob/master/LICENSE)
+    [MIT](https://github.com/authbucket/push-php/blob/master/LICENSE)
 -   Docs released under [CC BY-NC-SA
     3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/)
