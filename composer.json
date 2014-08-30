@@ -29,7 +29,7 @@
     ],
     "license": "MIT",
     "minimum-stability": "dev",
-    "name": "authbucket/push",
+    "name": "authbucket/push-php",
     "require": {
         "authbucket/oauth2": "~2.1",
         "guzzle/guzzle": "~3.9",

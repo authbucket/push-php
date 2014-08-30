@@ -8,10 +8,10 @@ Status](https://img.shields.io/coveralls/authbucket/push-php.svg)](https://cover
 [![Dependency
 Status](https://www.versioneye.com/php/authbucket:push-php/dev-master/badge.svg)](https://www.versioneye.com/php/authbucket:push-php/dev-master)
 [![Latest Stable
-Version](https://poser.pugx.org/authbucket/push/v/stable.svg)](https://packagist.org/packages/authbucket/push)
+Version](https://poser.pugx.org/authbucket/push-php/v/stable.svg)](https://packagist.org/packages/authbucket/push-php)
 [![Total
-Downloads](https://poser.pugx.org/authbucket/push/downloads.svg)](https://packagist.org/packages/authbucket/push)
-[![License](https://poser.pugx.org/authbucket/push/license.svg)](https://packagist.org/packages/authbucket/push)
+Downloads](https://poser.pugx.org/authbucket/push-php/downloads.svg)](https://packagist.org/packages/authbucket/push-php)
+[![License](https://poser.pugx.org/authbucket/push-php/license.svg)](https://packagist.org/packages/authbucket/push-php)
 
 The primary goal of [AuthBucket\\Push](http://push-php.authbucket.com/)
 is to develop a library for sending out push notifications to mobile
@@ -34,7 +34,7 @@ information.
 You may also run the demo locally. Open a console and execute the
 following command to install the latest version in the push/ directory:
 
-    $ composer create-project authbucket/push push/ "~0.0"
+    $ composer create-project authbucket/push-php push/ "~0.0"
 
 Then use the PHP built-in web server to run the demo application:
 
@@ -88,7 +88,7 @@ References
 -   [Demo](http://push-php.authbucket.com/demo)
 -   [API](http://authbucket.github.io/push-php/)
 -   [GitHub](https://github.com/authbucket/push-php)
--   [Packagist](https://packagist.org/packages/authbucket/push)
+-   [Packagist](https://packagist.org/packages/authbucket/push-php)
 -   [Travis CI](https://travis-ci.org/authbucket/push-php)
 -   [Coveralls](https://coveralls.io/r/authbucket/push-php)
 
