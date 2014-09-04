@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DemoController
 {
-    public function demoIndexAction(Request $request, Application $app)
+    public function indexAction(Request $request, Application $app)
     {
         return $app['twig']->render('demo/index.html.twig');
     }

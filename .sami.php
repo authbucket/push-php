@@ -19,8 +19,8 @@ return new Sami($iterator, array(
     'theme' => 'enhanced',
     'versions' => $versions,
     'title' => 'AuthBucket\Push API',
-    'build_dir' => __DIR__ . '/build/push/%version%',
-    'cache_dir' => __DIR__ . '/build/cache/push/%version%',
+    'build_dir' => __DIR__ . '/build/sami/%version%',
+    'cache_dir' => __DIR__ . '/build/cache/sami/%version%',
     'include_parent_data' => false,
     'default_opened_level' => 2,
 ));

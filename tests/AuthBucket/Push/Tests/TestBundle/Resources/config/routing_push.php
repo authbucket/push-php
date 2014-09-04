@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-$app->get('/push', 'authbucket_push.tests.push_controller:pushIndexAction')
-    ->bind('push_index');
+$app->get('/push', 'authbucket_push.tests.push_controller:indexAction')
+    ->bind('push');
 
-$app->get('/push/login', 'authbucket_push.tests.push_controller:pushLoginAction')
+$app->get('/push/login', 'authbucket_push.tests.push_controller:loginAction')
     ->bind('push_login');
 
 $app->post('/push/device', 'authbucket_push.device_controller:deviceAction')

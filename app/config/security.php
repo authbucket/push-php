@@ -15,10 +15,6 @@ $app['security.encoder.digest'] = $app->share(function ($app) {
     return new PlaintextPasswordEncoder();
 });
 
-$app['security.user_provider.default'] = $app->share(function ($app) {
-    return $app['authbucket_push.model_manager.factory']->getModelManager('user');
-});
-
 $app['security.user_provider.admin'] = $app['security.user_provider.inmemory._proto'](array(
     'admin' => array('ROLE_ADMIN', 'secrete'),
 ));

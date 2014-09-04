@@ -16,12 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PushController
 {
-    public function pushIndexAction(Request $request, Application $app)
+    public function indexAction(Request $request, Application $app)
     {
         return $app['twig']->render('push/index.html.twig');
     }
 
-    public function pushLoginAction(Request $request, Application $app)
+    public function loginAction(Request $request, Application $app)
     {
         $session = $request->getSession();
 

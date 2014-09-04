@@ -32,13 +32,14 @@ Read though [Demo](http://push-php.authbucket.com/demo) for more
 information.
 
 You may also run the demo locally. Open a console and execute the
-following command to install the latest version in the push/ directory:
+following command to install the latest version in the `push-php`
+directory:
 
-    $ composer create-project authbucket/push-php push/ "~0.0"
+    $ composer create-project authbucket/push-php push-php "~0.0"
 
 Then use the PHP built-in web server to run the demo application:
 
-    $ cd push/
+    $ cd push-php
     $ php app/console server:run
 
 If you get the error
@@ -66,7 +67,7 @@ To built the documents locally, execute the following command:
 
     $ vendor/bin/sami.php update .sami.php
 
-Open `build/push/index.html` with your browser for the documents.
+Open `build/sami/index.html` with your browser for the documents.
 
 Tests
 -----

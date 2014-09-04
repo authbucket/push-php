@@ -33,11 +33,6 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         // EntityRepository.
         $app['authbucket_push.model_manager.factory'] = null;
 
-        // Override the with parameter with your own user provider, e.g. using
-        // InMemoryUserProvider or a doctrine EntityReposity that implements
-        // UserProviderInterface.
-        $app['authbucket_push.user_provider'] = null;
-
         // Add default service type handler.
         $app['authbucket_push.service_handler'] = array(
             'apns' => 'AuthBucket\\Push\\ServiceType\\ApnsServiceTypeHandler',
