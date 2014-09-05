@@ -23,7 +23,7 @@ use Symfony\Component\Validator\ValidatorInterface;
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class DeviceController
+class PushController
 {
     protected $validator;
     protected $serviceTypeHandlerFactory;
@@ -37,7 +37,7 @@ class DeviceController
         $this->serviceTypeHandlerFactory = $serviceTypeHandlerFactory;
     }
 
-    public function deviceAction(Request $request)
+    public function registerAction(Request $request)
     {
         // Fetch service_type from POST
         $serviceType = $request->request->get('service_type');
@@ -55,5 +55,15 @@ class DeviceController
         return $this->serviceTypeHandlerFactory
             ->getServiceTypeHandler($serviceType)
             ->registerDevice($request);
+    }
+
+    public function unregisterAction(Request $request)
+    {
+        return 'unregisterAction()';
+    }
+
+    public function sendAction(Request $request)
+    {
+        return 'sendAction()';
     }
 }

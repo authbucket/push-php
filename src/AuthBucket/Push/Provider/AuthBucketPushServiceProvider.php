@@ -11,8 +11,8 @@
 
 namespace AuthBucket\Push\Provider;
 
-use AuthBucket\Push\Controller\DeviceController;
-use AuthBucket\Push\Controller\ModelController;
+use AuthBucket\Push\Controller\PushController;
+use AuthBucket\Push\Controller\ServiceController;
 use AuthBucket\Push\EventListener\ExceptionListener;
 use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactory;
 use Silex\Application;
@@ -52,15 +52,15 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
             );
         });
 
-        $app['authbucket_push.device_controller'] = $app->share(function () use ($app) {
-            return new DeviceController(
+        $app['authbucket_push.push_controller'] = $app->share(function () use ($app) {
+            return new PushController(
                 $app['validator'],
                 $app['authbucket_push.service_handler.factory']
             );
         });
 
-        $app['authbucket_push.model_controller'] = $app->share(function () use ($app) {
-            return new ModelController(
+        $app['authbucket_push.service_controller'] = $app->share(function () use ($app) {
+            return new ServiceController(
                 $app['validator'],
                 $app['serializer'],
                 $app['authbucket_push.model_manager.factory']
@@ -68,12 +68,29 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         });
     }
 
+    public function connect(Application $app)
+    {
+        $controllers = $app['controllers_factory'];
+
+        foreach (array('register', 'unregister', 'send') as $endpoint) {
+            $app->match('/api/v1.0/push/'.$endpoint, 'authbucket_push.push_controller:'.$endpoint.'Action')->bind('api_push_'.$endpoint);
+        }
+
+        foreach (array('service') as $type) {
+            $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')->bind('api_'.$type.'_create')->assert('_format', 'json|xml');
+            $app->get('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:readAction')->bind('api_'.$type.'_read')->assert('_format', 'json|xml');
+            $app->put('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:updateAction')->bind('api_'.$type.'_update')->assert('_format', 'json|xml');
+            $app->delete('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:deleteAction')->bind('api_'.$type.'_delete')->assert('_format', 'json|xml');
+            $app->get('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:listAction')->bind('api_'.$type.'_list')->assert('_format', 'json|xml');
+        }
+
+        return $controllers;
+    }
+
     public function boot(Application $app)
     {
         $app['dispatcher']->addListener(KernelEvents::EXCEPTION, array($app['authbucket_push.exception_listener'], 'onKernelException'), -8);
-    }
 
-    public function connect(Application $app)
-    {
+        $app->mount('/', $this->connect($app));
     }
 }

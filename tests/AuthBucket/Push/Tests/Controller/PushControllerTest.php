@@ -14,9 +14,9 @@ namespace AuthBucket\Push\Tests\Controller;
 use AuthBucket\Push\Tests\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class DeviceControllerTest extends WebTestCase
+class PushControllerTest extends WebTestCase
 {
-    public function testExceptionUnsupportedServiceType()
+    public function testExceptionRegisterUnsupportedServiceType()
     {
         $parameters = array(
             'device_token' => 'demodevicetoken1',
@@ -26,13 +26,13 @@ class DeviceControllerTest extends WebTestCase
             'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
         );
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/push/device', $parameters, array(), $server);
+        $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
         $deviceResponse = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('unsupported_service_type', $deviceResponse['error']);
     }
 
-    public function testGoodApns()
+    public function testGoodRegisterApns()
     {
         $parameters = array(
             'device_token' => 'e2db93d13228fb7c97d3bda74a61f478',
@@ -42,14 +42,14 @@ class DeviceControllerTest extends WebTestCase
             'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
         );
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/push/device', $parameters, array(), $server);
+        $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $deviceResponse = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('e2db93d13228fb7c97d3bda74a61f478', $deviceResponse['device_token']);
         $this->assertEquals('apns', $deviceResponse['service_type']);
     }
 
-    public function testGoodGcm()
+    public function testGoodRegisterGcm()
     {
         $parameters = array(
             'device_token' => 'e2db93d13228fb7c97d3bda74a61f478',
@@ -59,7 +59,7 @@ class DeviceControllerTest extends WebTestCase
             'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
         );
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/push/device', $parameters, array(), $server);
+        $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $deviceResponse = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('e2db93d13228fb7c97d3bda74a61f478', $deviceResponse['device_token']);
