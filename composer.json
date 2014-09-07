@@ -31,7 +31,7 @@
     "minimum-stability": "dev",
     "name": "authbucket/push-php",
     "require": {
-        "authbucket/oauth2": "~2.2",
+        "authbucket/oauth2-php": "~2.2",
         "guzzle/guzzle": "~3.9",
         "php": ">=5.3.9",
         "symfony/http-foundation": "~2.3",
