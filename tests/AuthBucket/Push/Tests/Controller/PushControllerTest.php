@@ -105,4 +105,25 @@ class PushControllerTest extends WebTestCase
                 'deviceToken' => '7be07f1e5e1737f2aec000a0cc82da06',
             )));
     }
+
+    public function testGoodCron()
+    {
+        $parameters = array();
+        $server = array(
+            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+        );
+        $client = $this->createClient();
+        $crawler = $client->request('GET', '/api/v1.0/push/cron', $parameters, array(), $server);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $modelManagerFactory = $this->app['authbucket_push.model_manager.factory'];
+        $this->assertEmpty($modelManagerFactory->getModelManager('device')
+            ->readModelBy(array(
+                'deviceToken' => '0027956241e3ca5090de548fe468334d',
+            )));
+        $this->assertEmpty($modelManagerFactory->getModelManager('device')
+            ->readModelBy(array(
+                'deviceToken' => '9e0d8519fc205595bd895fbf70addcad',
+            )));
+    }
 }

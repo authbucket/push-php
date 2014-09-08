@@ -55,6 +55,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         $app['authbucket_push.push_controller'] = $app->share(function () use ($app) {
             return new PushController(
                 $app['validator'],
+                $app['authbucket_push.model_manager.factory'],
                 $app['authbucket_push.service_handler.factory']
             );
         });
@@ -80,6 +81,9 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
 
         $app->post('/api/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
             ->bind('api_push_send');
+
+        $app->get('/api/v1.0/push/cron', 'authbucket_push.push_controller:cronAction')
+            ->bind('api_push_cron');
 
         foreach (array('service') as $type) {
             $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')
