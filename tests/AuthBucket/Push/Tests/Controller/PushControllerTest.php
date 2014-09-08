@@ -65,4 +65,44 @@ class PushControllerTest extends WebTestCase
         $this->assertEquals('e2db93d13228fb7c97d3bda74a61f478', $deviceResponse['device_token']);
         $this->assertEquals('gcm', $deviceResponse['service_type']);
     }
+
+    public function testGoodUnregisterApns()
+    {
+        $parameters = array(
+            'device_token' => 'eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'service_type' => 'apns',
+        );
+        $server = array(
+            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+        );
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $modelManagerFactory = $this->app['authbucket_push.model_manager.factory'];
+        $this->assertEmpty($modelManagerFactory->getModelManager('device')
+            ->readModelBy(array(
+                'deviceToken' => 'eeb5aa92bbb4b56373b9e0d00bc02d93',
+            )));
+    }
+
+    public function testGoodUnregisterGcm()
+    {
+        $parameters = array(
+            'device_token' => '7be07f1e5e1737f2aec000a0cc82da06',
+            'service_type' => 'gcm',
+        );
+        $server = array(
+            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+        );
+        $client = $this->createClient();
+        $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $modelManagerFactory = $this->app['authbucket_push.model_manager.factory'];
+        $this->assertEmpty($modelManagerFactory->getModelManager('device')
+            ->readModelBy(array(
+                'deviceToken' => '7be07f1e5e1737f2aec000a0cc82da06',
+            )));
+    }
 }

@@ -13,6 +13,7 @@ namespace AuthBucket\Push\ServiceType;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * GCM service type handler implementation.
@@ -55,6 +56,24 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function unregister(Request $request)
     {
+        $clientId = $this->checkClientId();
+
+        $username = $this->checkUsername();
+
+        $deviceToken = $this->checkDeviceToken($request);
+
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $devices = $deviceManager->readModelBy(array(
+            'deviceToken' => $deviceToken,
+            'serviceType' => 'gcm',
+            'clientId' => $clientId,
+            'username' => $username,
+        ));
+        foreach ($devices as $device) {
+            $deviceManager->deleteModel($device);
+        }
+
+        return new Response();
     }
 
     public function send(Request $request)

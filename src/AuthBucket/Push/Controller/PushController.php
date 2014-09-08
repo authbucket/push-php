@@ -39,6 +39,39 @@ class PushController
 
     public function registerAction(Request $request)
     {
+        // Check service_type.
+        $serviceType = $this->checkServiceType($request);
+
+        // Handle action.
+        return $this->serviceTypeHandlerFactory
+            ->getServiceTypeHandler($serviceType)
+            ->register($request);
+    }
+
+    public function unregisterAction(Request $request)
+    {
+        // Check service_type.
+        $serviceType = $this->checkServiceType($request);
+
+        // Handle action.
+        return $this->serviceTypeHandlerFactory
+            ->getServiceTypeHandler($serviceType)
+            ->unregister($request);
+    }
+
+    public function sendAction(Request $request)
+    {
+        // Check service_type.
+        $serviceType = $this->checkServiceType($request);
+
+        // Handle action.
+        return $this->serviceTypeHandlerFactory
+            ->getServiceTypeHandler($serviceType)
+            ->send($request);
+    }
+
+    protected function checkServiceType(Request $request)
+    {
         // Fetch service_type from POST
         $serviceType = $request->request->get('service_type');
         $errors = $this->validator->validateValue($serviceType, array(
@@ -51,19 +84,6 @@ class PushController
             ));
         }
 
-        // Handle device endpoint response.
-        return $this->serviceTypeHandlerFactory
-            ->getServiceTypeHandler($serviceType)
-            ->register($request);
-    }
-
-    public function unregisterAction(Request $request)
-    {
-        return 'unregisterAction()';
-    }
-
-    public function sendAction(Request $request)
-    {
-        return 'sendAction()';
+        return $serviceType;
     }
 }
