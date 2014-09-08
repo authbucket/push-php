@@ -54,7 +54,7 @@ class PushController
         // Handle device endpoint response.
         return $this->serviceTypeHandlerFactory
             ->getServiceTypeHandler($serviceType)
-            ->registerDevice($request);
+            ->register($request);
     }
 
     public function unregisterAction(Request $request)

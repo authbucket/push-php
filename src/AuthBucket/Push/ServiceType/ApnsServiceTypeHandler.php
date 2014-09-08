@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 {
-    public function registerDevice(Request $request)
+    public function register(Request $request)
     {
         $clientId = $this->checkClientId();
 
@@ -53,7 +53,11 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         ));
     }
 
-    public function sendMessage(Request $request)
+    public function unregister(Request $request)
+    {
+    }
+
+    public function send(Request $request)
     {
     }
 }
