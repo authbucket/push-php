@@ -12,7 +12,6 @@
 use Symfony\Component\HttpFoundation\Request;
 
 $app->register(new AuthBucket\OAuth2\Provider\AuthBucketOAuth2ServiceProvider());
-$app->register(new AuthBucket\Push\Provider\AuthBucketPushServiceProvider());
 $app->register(new AuthBucket\Push\Tests\TestBundle\TestBundleServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider());
 $app->register(new Silex\Provider\FormServiceProvider());
@@ -24,6 +23,10 @@ $app->register(new Silex\Provider\TranslationServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
+
+$provider = new AuthBucket\Push\Provider\AuthBucketPushServiceProvider();
+$app->register($provider);
+$app->mount('/', $provider);
 
 require __DIR__.'/config/config_'.$app['env'].'.php';
 require __DIR__.'/config/routing_'.$app['env'].'.php';

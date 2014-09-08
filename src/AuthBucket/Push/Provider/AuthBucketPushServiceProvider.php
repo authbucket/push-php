@@ -72,16 +72,35 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
     {
         $controllers = $app['controllers_factory'];
 
-        foreach (array('register', 'unregister', 'send') as $endpoint) {
-            $app->match('/api/v1.0/push/'.$endpoint, 'authbucket_push.push_controller:'.$endpoint.'Action')->bind('api_push_'.$endpoint);
-        }
+        $app->post('/api/v1.0/push/register', 'authbucket_push.push_controller:registerAction')
+            ->bind('api_push_register');
+
+        $app->post('/api/v1.0/push/unregister', 'authbucket_push.push_controller:unregisterAction')
+            ->bind('api_push_unregister');
+
+        $app->post('/api/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
+            ->bind('api_push_send');
 
         foreach (array('service') as $type) {
-            $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')->bind('api_'.$type.'_create')->assert('_format', 'json|xml');
-            $app->get('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:readAction')->bind('api_'.$type.'_read')->assert('_format', 'json|xml');
-            $app->put('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:updateAction')->bind('api_'.$type.'_update')->assert('_format', 'json|xml');
-            $app->delete('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:deleteAction')->bind('api_'.$type.'_delete')->assert('_format', 'json|xml');
-            $app->get('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:listAction')->bind('api_'.$type.'_list')->assert('_format', 'json|xml');
+            $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')
+                ->bind('api_'.$type.'_create')
+                ->assert('_format', 'json|xml');
+
+            $app->get('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:readAction')
+                ->bind('api_'.$type.'_read')
+                ->assert('_format', 'json|xml');
+
+            $app->put('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:updateAction')
+                ->bind('api_'.$type.'_update')
+                ->assert('_format', 'json|xml');
+
+            $app->delete('/api/v1.0/'.$type.'/{id}.{_format}', 'authbucket_push.'.$type.'_controller:deleteAction')
+                ->bind('api_'.$type.'_delete')
+                ->assert('_format', 'json|xml');
+
+            $app->get('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:listAction')
+                ->bind('api_'.$type.'_list')
+                ->assert('_format', 'json|xml');
         }
 
         return $controllers;
@@ -90,7 +109,5 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
     public function boot(Application $app)
     {
         $app['dispatcher']->addListener(KernelEvents::EXCEPTION, array($app['authbucket_push.exception_listener'], 'onKernelException'), -8);
-
-        $app->mount('/', $this->connect($app));
     }
 }
