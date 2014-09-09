@@ -21,13 +21,13 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
      */
     public function testNonExistsServiceTypeHandler()
     {
-        $responseTypeHandlerFactory = new ServiceTypeHandlerFactory(
+        $classes = array('foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\NonExistsServiceTypeHandler');
+        $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
             $this->app['authbucket_push.model_manager.factory'],
-            array('foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\NonExistsServiceTypeHandler')
+            $classes
         );
-        $responseTypeHandlerFactory->addServiceTypeHandler('foo', $responseTypeHandler);
     }
 
     /**
@@ -35,13 +35,13 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
      */
     public function testBadAddServiceTypeHandler()
     {
-        $responseTypeHandlerFactory = new ServiceTypeHandlerFactory(
+        $classes = array('foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\FooServiceTypeHandler');
+        $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
             $this->app['authbucket_push.model_manager.factory'],
-            array('foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\FooServiceTypeHandler')
+            $classes
         );
-        $responseTypeHandlerFactory->addServiceTypeHandler('foo', $responseTypeHandler);
     }
 
     /**
@@ -49,23 +49,26 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
      */
     public function testBadGetServiceTypeHandler()
     {
-        $responseTypeHandlerFactory = new ServiceTypeHandlerFactory(
+        $classes = array('bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler');
+        $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
             $this->app['authbucket_push.model_manager.factory'],
-            array('bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler')
+            $classes
         );
-        $responseTypeHandlerFactory->getServiceTypeHandler('foo');
+        $handler = $factory->getServiceTypeHandler('foo');
     }
 
     public function testGoodGetServiceTypeHandler()
     {
-        $responseTypeHandlerFactory = new ServiceTypeHandlerFactory(
+        $classes = array('bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler');
+        $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
             $this->app['authbucket_push.model_manager.factory'],
-            array('bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler')
+            $classes
         );
-        $responseTypeHandlerFactory->getServiceTypeHandler('bar');
+        $handler = $factory->getServiceTypeHandler('bar');
+        $this->assertEquals($factory->getServiceTypeHandlers(), $classes);
     }
 }

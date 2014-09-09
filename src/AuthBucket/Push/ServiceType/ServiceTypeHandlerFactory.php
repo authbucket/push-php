@@ -75,4 +75,9 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
             $this->modelManagerFactory
         );
     }
+
+    public function getServiceTypeHandlers()
+    {
+        return $this->classes;
+    }
 }
