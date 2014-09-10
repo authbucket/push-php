@@ -28,4 +28,11 @@ interface ServiceTypeHandlerFactoryInterface
      * @throw UnsupportedServiceTypeException If supplied service type not found.
      */
     public function getServiceTypeHandler($type = null);
+
+    /**
+     * Get a list of all supported handler.
+     *
+     * @return array Supported handler in key-value pair.
+     */
+    public function getServiceTypeHandlers();
 }

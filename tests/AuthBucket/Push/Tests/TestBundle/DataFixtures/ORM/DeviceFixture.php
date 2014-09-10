@@ -30,9 +30,25 @@ class DeviceFixture implements FixtureInterface
         $model = new Device();
         $model->setDeviceToken('7be07f1e5e1737f2aec000a0cc82da06')
             ->setServiceType('gcm')
-            ->setClientId('http://democlient2.com/')
-            ->setUsername('demousername2')
+            ->setClientId('http://democlient1.com/')
+            ->setUsername('demousername1')
             ->setExpires(new \DateTime('+7 days'));
+        $manager->persist($model);
+
+        $model = new Device();
+        $model->setDeviceToken('0027956241e3ca5090de548fe468334d')
+            ->setServiceType('apns')
+            ->setClientId('http://democlient1.com/')
+            ->setUsername('demousername1')
+            ->setExpires(new \DateTime('-7 days'));
+        $manager->persist($model);
+
+        $model = new Device();
+        $model->setDeviceToken('9e0d8519fc205595bd895fbf70addcad')
+            ->setServiceType('gcm')
+            ->setClientId('http://democlient1.com/')
+            ->setUsername('demousername1')
+            ->setExpires(new \DateTime('-7 days'));
         $manager->persist($model);
 
         $manager->flush();

@@ -9,5 +9,5 @@
  * file that was distributed with this source code.
  */
 
-$app->get('/demo', 'authbucket_push.tests.demo_controller:demoIndexAction')
-    ->bind('demo_index');
+$app->get('/demo', 'authbucket_push.tests.demo_controller:indexAction')
+    ->bind('demo');

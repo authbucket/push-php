@@ -17,7 +17,3 @@ $app['debug'] = true;
 $app['twig.path'] = array(
     __DIR__.'/../../tests/AuthBucket/Push/Tests/TestBundle/Resources/views',
 );
-
-// We simply reuse the user provider that already created for authorize firewall
-// here.
-$app['authbucket_push.user_provider'] = $app['security.user_provider.default'];

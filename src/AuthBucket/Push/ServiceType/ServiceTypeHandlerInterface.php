@@ -20,7 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface ServiceTypeHandlerInterface
 {
-    public function registerDevice(Request $request);
+    public function register(Request $request);
 
-    public function sendMessage(Request $request);
+    public function unregister(Request $request);
+
+    public function send(Request $request);
 }

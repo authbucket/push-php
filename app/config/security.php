@@ -15,10 +15,6 @@ $app['security.encoder.digest'] = $app->share(function ($app) {
     return new PlaintextPasswordEncoder();
 });
 
-$app['security.user_provider.default'] = $app->share(function ($app) {
-    return $app['authbucket_push.model_manager.factory']->getModelManager('user');
-});
-
 $app['security.user_provider.admin'] = $app['security.user_provider.inmemory._proto'](array(
     'admin' => array('ROLE_ADMIN', 'secrete'),
 ));
@@ -29,13 +25,17 @@ $app['security.firewalls'] = array(
         'http' => true,
         'users' => $app['security.user_provider.admin'],
     ),
-    'push_device' => array(
-        'pattern' => '^/push/device',
+    'api_oauth2_debug' => array(
+        'pattern' => '^/api/v1.0/oauth2/debug',
+        'anonymous' => true,
+    ),
+    'api' => array(
+        'pattern' => '^/api/v1.0',
         'oauth2_resource' => array(
             'resource_type' => 'debug_endpoint',
             'scope' => array(),
             'options' => array(
-                'debug_endpoint' => '/oauth2/debug',
+                'debug_endpoint' => '/api/v1.0/oauth2/debug',
                 'cache' => false,
             ),
         ),
