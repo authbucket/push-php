@@ -84,11 +84,11 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
         return $deviceToken;
     }
 
-    protected function checkMessage(Request $request)
+    protected function checkData(Request $request)
     {
-        // message is required.
-        $message = $request->request->get('message');
+        // Fetch data from POST body.
+        $data = $request->request->all();
 
-        return $message;
+        return $data;
     }
 }

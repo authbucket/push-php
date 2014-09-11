@@ -65,13 +65,14 @@ class PushController
 
     public function sendAction(Request $request)
     {
-        foreach ($this->serviceTypeHandlerFactory->getServiceTypeHandlers() as $serviceType) {
-            $this->serviceTypeHandlerFactory
-                ->getServiceTypeHandler($serviceType)
+        $response = array();
+        foreach ($this->serviceTypeHandlerFactory->getServiceTypeHandlers() as $key => $value) {
+            $response[$key] = $this->serviceTypeHandlerFactory
+                ->getServiceTypeHandler($key)
                 ->send($request);
         }
-        
-        return new Response();
+
+        return new Response(json_encode($response));
     }
 
     public function cronAction(Request $request)

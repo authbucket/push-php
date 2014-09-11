@@ -83,7 +83,7 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 
         $username = $this->checkUsername();
 
-        $message = $this->checkMessage();
+        $data = $this->checkData($request);
 
         $serviceManager = $this->modelManagerFactory->getModelManager('service');
         $service = $serviceManager->readModelOneBy(array(
@@ -98,22 +98,24 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
             'clientId' => $clientId,
             'username' => $username,
         ));
+
+        $response = array();
         foreach ($devices as $device) {
             $client = new Client();
-            $crawler = $client->get($options['host'], array(), array(
+            $crawler = $client->post($options['host'], array(), json_encode(array(
+                'registration_ids' => (array) $device->getDeviceToken(),
+                'data' => $data,
+            )), array(
                 'headers' => array(
                     'Authorization' => 'key='.$options['key'],
                     'Content-Type' => 'application/json',
                 ),
-                'body' => json_encode(array(
-                    'registration_ids' => $device->getDeviceToken(),
-                    'data' => $message,
-                )),
                 'exceptions' => false,
+                'verify' => false,
             ));
-            $content = $crawler->send->getBody();
-            $response = json_decode($content, true);
-            var_dump($content);
+            $response[] = json_decode($crawler->send()->getBody());
         }
+
+        return $response;
     }
 }
