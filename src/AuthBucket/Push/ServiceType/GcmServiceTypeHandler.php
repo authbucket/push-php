@@ -11,6 +11,7 @@
 
 namespace AuthBucket\Push\ServiceType;
 
+use Guzzle\Http\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,5 +79,41 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function send(Request $request)
     {
+        $clientId = $this->checkClientId();
+
+        $username = $this->checkUsername();
+
+        $message = $this->checkMessage();
+
+        $serviceManager = $this->modelManagerFactory->getModelManager('service');
+        $service = $serviceManager->readModelOneBy(array(
+            'serviceType' => 'gcm',
+            'clientId' => $clientId,
+        ));
+        $options = $service->getOptions();
+
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $devices = $deviceManager->readModelBy(array(
+            'serviceType' => 'gcm',
+            'clientId' => $clientId,
+            'username' => $username,
+        ));
+        foreach ($devices as $device) {
+            $client = new Client();
+            $crawler = $client->get($options['host'], array(), array(
+                'headers' => array(
+                    'Authorization' => 'key='.$options['key'],
+                    'Content-Type' => 'application/json',
+                ),
+                'body' => json_encode(array(
+                    'registration_ids' => $device->getDeviceToken(),
+                    'data' => $message,
+                )),
+                'exceptions' => false,
+            ));
+            $content = $crawler->send->getBody();
+            $response = json_decode($content, true);
+            var_dump($content);
+        }
     }
 }

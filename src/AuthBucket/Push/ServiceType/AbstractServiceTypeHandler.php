@@ -37,8 +37,7 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
         SecurityContextInterface $securityContext,
         ValidatorInterface $validator,
         ModelManagerFactoryInterface $modelManagerFactory
-    )
-    {
+    ) {
         $this->securityContext = $securityContext;
         $this->validator = $validator;
         $this->modelManagerFactory = $modelManagerFactory;
@@ -83,5 +82,13 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
         }
 
         return $deviceToken;
+    }
+
+    protected function checkMessage(Request $request)
+    {
+        // message is required.
+        $message = $request->request->get('message');
+
+        return $message;
     }
 }

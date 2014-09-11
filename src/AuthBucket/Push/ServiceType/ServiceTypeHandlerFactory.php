@@ -33,8 +33,7 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
         ValidatorInterface $validator,
         ModelManagerFactoryInterface $modelManagerFactory,
         array $classes = array()
-    )
-    {
+    ) {
         $this->securityContext = $securityContext;
         $this->validator = $validator;
         $this->modelManagerFactory = $modelManagerFactory;

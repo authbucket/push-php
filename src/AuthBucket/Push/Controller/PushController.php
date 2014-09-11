@@ -35,8 +35,7 @@ class PushController
         ValidatorInterface $validator,
         ModelManagerFactoryInterface $modelManagerFactory,
         ServiceTypeHandlerFactoryInterface $serviceTypeHandlerFactory
-    )
-    {
+    ) {
         $this->validator = $validator;
         $this->modelManagerFactory = $modelManagerFactory;
         $this->serviceTypeHandlerFactory = $serviceTypeHandlerFactory;
@@ -66,13 +65,13 @@ class PushController
 
     public function sendAction(Request $request)
     {
-        // Check service_type.
-        $serviceType = $this->checkServiceType($request);
-
-        // Handle action.
-        return $this->serviceTypeHandlerFactory
-            ->getServiceTypeHandler($serviceType)
-            ->send($request);
+        foreach ($this->serviceTypeHandlerFactory->getServiceTypeHandlers() as $serviceType) {
+            $this->serviceTypeHandlerFactory
+                ->getServiceTypeHandler($serviceType)
+                ->send($request);
+        }
+        
+        return new Response();
     }
 
     public function cronAction(Request $request)
