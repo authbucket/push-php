@@ -78,5 +78,68 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function send(Request $request)
     {
+        $clientId = $this->checkClientId();
+
+        $username = $this->checkUsername();
+
+        $data = $this->checkData($request);
+
+        $serviceManager = $this->modelManagerFactory->getModelManager('service');
+        $service = $serviceManager->readModelOneBy(array(
+            'serviceType' => 'apns',
+            'clientId' => $clientId,
+        ));
+        $options = $service->getOptions();
+
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $devices = $deviceManager->readModelBy(array(
+            'serviceType' => 'apns',
+            'clientId' => $clientId,
+            'username' => $username,
+        ));
+
+        // PHP SSL implementation need local_cert as physical file.
+        // @see http://stackoverflow.com/a/11403788
+        $local_cert = tempnam(sys_get_temp_dir(), 'PEM');
+        register_shutdown_function('unlink', $local_cert);
+        $handler = fopen($local_cert, 'w');
+        fwrite($handler, $options['local_cert']);
+        fclose($handler);
+
+        $response = array();
+        foreach ($devices as $device) {
+            // Prepare the payload in JSON format.
+            $payload = json_encode(array(
+                'aps' => array(
+                    'alert' => $data,
+                    'badge' => 1,
+                    'sound' => 'default',
+                ),
+            ));
+
+            // Build the message.
+            $message = chr(0).chr(0);
+            $message .= chr(32).pack('H*', $device->getDeviceToken());
+            $message .= chr(strlen($payload)).$payload;
+
+            // Create and write to the stream.
+            $context = stream_context_create();
+            stream_context_set_option($context, 'ssl', 'local_cert', $local_cert);
+            stream_context_set_option($context, 'ssl', 'passphrase', $options['passphrase']);
+            $handler = stream_socket_client(
+                $options['host'],
+                $error,
+                $errorString,
+                3,
+                STREAM_CLIENT_CONNECT,
+                $context
+            );
+            fwrite($handler, $message);
+            fclose($handler);
+
+            $response[] = $errorString;
+        }
+
+        return $response;
     }
 }

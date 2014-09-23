@@ -23,9 +23,8 @@ class ServiceFixture implements FixtureInterface
         $model->setServiceType('apns')
             ->setClientId('http://democlient1.com/')
             ->setOptions(array(
-                'host' => 'gateway.sandbox.push.apple.com',
-                'port' => '2195',
-                'pem' => <<<EOF
+                'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
+                'local_cert' => <<<EOF
 -----BEGIN CERTIFICATE-----
 MIIFmzCCBIOgAwIBAgIIEK8htRc6Pt4wDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV
 BAYTAlVTMRMwEQYDVQQKDApBcHBsZSBJbmMuMSwwKgYDVQQLDCNBcHBsZSBXb3Js
@@ -94,7 +93,7 @@ yU1XJwWyzCb9OjilJzcRCkUqx0UwEe1Vn1uSKp+XdQRBhTknMYikPSU4+wVuQ5HN
 -----END RSA PRIVATE KEY-----
 EOF
         ,
-                'pass' => 'hello123',
+                'passphrase' => 'hello123',
             ));
         $manager->persist($model);
 
