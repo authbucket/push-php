@@ -28,7 +28,7 @@ class DeviceFixture implements FixtureInterface
         $manager->persist($model);
 
         $model = new Device();
-        $model->setDeviceToken('7be07f1e5e1737f2aec000a0cc82da06')
+        $model->setDeviceToken('APA91bFwYKY0qonK0xg_lHMe-zcwaoeNsjGBMKDND-HspWOgbfsMYJyNqAlhSBbcc9WmxmVOyJk_jYJKUzwg22NFnK44w5f0PvC_ugXJR9MnBgvl5sgbPP9VeMIVAr9gH-3xz09ObfORaBTYfwQ7YrJuZ0CIAfHyvMmxNLu_hxtzXCMXx3xtdY8')
             ->setServiceType('gcm')
             ->setClientId('http://democlient1.com/')
             ->setUsername('demousername1')
