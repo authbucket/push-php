@@ -111,16 +111,19 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             // Prepare the payload in JSON format.
             $payload = json_encode(array(
                 'aps' => array(
-                    'alert' => $data,
+                    'alert' => $data['message'],
                     'badge' => 1,
                     'sound' => 'default',
                 ),
             ));
 
             // Build the message.
-            $message = chr(0).chr(0);
-            $message .= chr(32).pack('H*', $device->getDeviceToken());
-            $message .= chr(strlen($payload)).$payload;
+            $message = pack('CnH*', 1, 32, $device->getDeviceToken());
+            $message .= pack('Cn', 2, strlen($payload)).$payload;
+            $message .= pack('CnN', 3, 4, md5(uniqid(null, true)));
+            $message .= pack('CnN', 4, 4, 60*60*24*7);
+            $message .= pack('CnC', 5, 1, 10);
+            $message = pack('CN', 2, strlen($message)).$message;
 
             // Create and write to the stream.
             $context = stream_context_create();
@@ -130,8 +133,8 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
                 $options['host'],
                 $error,
                 $errorString,
-                3,
-                STREAM_CLIENT_CONNECT,
+                10,
+                STREAM_CLIENT_ASYNC_CONNECT,
                 $context
             );
             fwrite($handler, $message);
