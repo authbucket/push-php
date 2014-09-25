@@ -78,14 +78,6 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function send(Request $request)
     {
-        // PHP SSL implementation need local_cert as physical file.
-        // @see http://stackoverflow.com/a/11403788
-        $local_cert = tempnam(sys_get_temp_dir(), 'PEM');
-        register_shutdown_function('unlink', $local_cert);
-        $handler = fopen($local_cert, 'w');
-        fwrite($handler, $options['local_cert']);
-        fclose($handler);
-
         $clientId = $this->checkClientId();
 
         $username = $this->checkUsername();
@@ -113,6 +105,14 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             }
         }
 
+        // PHP SSL implementation need local_cert as physical file.
+        // @see http://stackoverflow.com/a/11403788
+        $local_cert = tempnam(sys_get_temp_dir(), 'PEM');
+        register_shutdown_function('unlink', $local_cert);
+        $handler = fopen($local_cert, 'w');
+        fwrite($handler, $options['local_cert']);
+        fclose($handler);
+        
         $response = array();
         foreach ($deviceTokens as $deviceToken) {
             // Prepare the payload in JSON format.
@@ -125,7 +125,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             ));
 
             // Build the message.
-            $message = pack('CnH32', 1, 32, $deviceToken);
+            $message = pack('CnH*', 1, 32, $deviceToken);
             $message .= pack('Cn', 2, strlen($payload)).$payload;
             $message .= pack('CnN', 3, 4, md5(uniqid(null, true)));
             $message .= pack('CnN', 4, 4, 60*60*24*7);
