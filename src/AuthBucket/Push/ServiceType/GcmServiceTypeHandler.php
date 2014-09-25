@@ -99,11 +99,18 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
             'username' => $username,
         ));
 
-        $response = array();
+        $deviceTokens = array();
         foreach ($devices as $device) {
+            if ($device->getExpires() > new \DateTime()) {
+                $deviceTokens[$device->getDeviceToken()] = $device->getDeviceToken();
+            }
+        }
+
+        $response = array();
+        foreach ($deviceTokens as $deviceToken) {
             $client = new Client();
             $crawler = $client->post($options['host'], array(), json_encode(array(
-                'registration_ids' => (array) $device->getDeviceToken(),
+                'registration_ids' => (array) $deviceToken,
                 'data' => $data,
             )), array(
                 'headers' => array(
