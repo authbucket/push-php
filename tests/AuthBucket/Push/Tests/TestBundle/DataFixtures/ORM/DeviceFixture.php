@@ -20,7 +20,15 @@ class DeviceFixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $model = new Device();
-        $model->setDeviceToken('569b74819e2e16f52c9f00d293aefcf78ffa45942dbbdbdc3dcd31369b485a2f')
+        $model->setDeviceToken('b55d6e3322b5bf00de15a622246d24492d3668e08aa919a74cfeeb1ee16b4d42')
+            ->setServiceType('apns')
+            ->setClientId('http://democlient1.com/')
+            ->setUsername('demousername1')
+            ->setExpires(new \DateTime('+7 days'));
+        $manager->persist($model);
+
+        $model = new Device();
+        $model->setDeviceToken('e0f948405a1566ed46fde8daa51aa2c05cf925d7d7cca10bcff4e002657be1d6')
             ->setServiceType('apns')
             ->setClientId('http://democlient1.com/')
             ->setUsername('demousername1')
