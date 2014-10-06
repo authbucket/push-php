@@ -23,7 +23,8 @@ class PushControllerTest extends WebTestCase
             'service_type' => 'unsupported_service_type',
         );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
@@ -39,7 +40,8 @@ class PushControllerTest extends WebTestCase
             'service_type' => 'apns',
         );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
@@ -56,7 +58,8 @@ class PushControllerTest extends WebTestCase
             'service_type' => 'gcm',
         );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
@@ -73,7 +76,8 @@ class PushControllerTest extends WebTestCase
             'service_type' => 'apns',
         );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
@@ -93,7 +97,8 @@ class PushControllerTest extends WebTestCase
             'service_type' => 'gcm',
         );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
@@ -110,7 +115,8 @@ class PushControllerTest extends WebTestCase
     {
         $parameters = array();
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/push/cron', $parameters, array(), $server);

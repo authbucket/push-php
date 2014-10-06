@@ -11,6 +11,7 @@
 
 namespace AuthBucket\Push\Provider;
 
+use AuthBucket\Push\Controller\ApplicationController;
 use AuthBucket\Push\Controller\PushController;
 use AuthBucket\Push\Controller\ServiceController;
 use AuthBucket\Push\EventListener\ExceptionListener;
@@ -60,6 +61,14 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
             );
         });
 
+        $app['authbucket_push.application_controller'] = $app->share(function () use ($app) {
+            return new ApplicationController(
+                $app['validator'],
+                $app['serializer'],
+                $app['authbucket_push.model_manager.factory']
+            );
+        });
+
         $app['authbucket_push.service_controller'] = $app->share(function () use ($app) {
             return new ServiceController(
                 $app['validator'],
@@ -85,7 +94,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         $app->get('/api/v1.0/push/cron', 'authbucket_push.push_controller:cronAction')
             ->bind('api_push_cron');
 
-        foreach (array('service') as $type) {
+        foreach (array('application', 'service') as $type) {
             $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')
                 ->bind('api_'.$type.'_create')
                 ->assert('_format', 'json|xml');
