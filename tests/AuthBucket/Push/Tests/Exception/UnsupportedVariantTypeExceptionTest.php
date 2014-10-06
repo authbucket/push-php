@@ -11,20 +11,20 @@
 
 namespace AuthBucket\Push\Tests\Exception;
 
-use AuthBucket\Push\Exception\UnsupportedServiceTypeException;
+use AuthBucket\Push\Exception\UnsupportedVariantTypeException;
 
 /**
  * Test unsupported service type exception.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class UnsupportedServiceTypeExceptionTest extends \PHPUnit_Framework_TestCase
+class UnsupportedVariantTypeExceptionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \AuthBucket\Push\Exception\UnsupportedServiceTypeException
+     * @expectedException \AuthBucket\Push\Exception\UnsupportedVariantTypeException
      */
-    public function testUnsupportedServiceTypeExceptionTest()
+    public function testUnsupportedVariantTypeExceptionTest()
     {
-        throw new UnsupportedServiceTypeException();
+        throw new UnsupportedVariantTypeException();
     }
 }

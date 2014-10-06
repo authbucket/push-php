@@ -11,16 +11,16 @@
 
 namespace AuthBucket\Push\Tests\TestBundle\Entity;
 
-use AuthBucket\Push\Model\ServiceInterface;
+use AuthBucket\Push\Model\VariantInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Service
+ * Variant
  *
- * @ORM\Table(name="authbucket_push_service")
- * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\ServiceRepository")
+ * @ORM\Table(name="authbucket_push_variant")
+ * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\VariantRepository")
  */
-class Service implements ServiceInterface
+class Variant implements VariantInterface
 {
     /**
      * @var integer
@@ -34,9 +34,9 @@ class Service implements ServiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="service_type", type="string", length=255)
+     * @ORM\Column(name="variant_type", type="string", length=255)
      */
-    protected $serviceType;
+    protected $variantType;
 
     /**
      * @var string
@@ -63,27 +63,27 @@ class Service implements ServiceInterface
     }
 
     /**
-     * Set service_type
+     * Set variantType
      *
-     * @param string $serviceType
+     * @param string $variantType
      *
-     * @return Service
+     * @return Variant
      */
-    public function setServiceType($serviceType)
+    public function setVariantType($variantType)
     {
-        $this->serviceType = $serviceType;
+        $this->variantType = $variantType;
 
         return $this;
     }
 
     /**
-     * Get service_type
+     * Get variantType
      *
      * @return string
      */
-    public function getServiceType()
+    public function getVariantType()
     {
-        return $this->serviceType;
+        return $this->variantType;
     }
 
     /**
@@ -91,7 +91,7 @@ class Service implements ServiceInterface
      *
      * @param string $clientId
      *
-     * @return Service
+     * @return Variant
      */
     public function setClientId($clientId)
     {
@@ -115,7 +115,7 @@ class Service implements ServiceInterface
      *
      * @param array $options
      *
-     * @return Service
+     * @return Variant
      */
     public function setOptions($options)
     {

@@ -13,9 +13,9 @@ namespace AuthBucket\Push\Provider;
 
 use AuthBucket\Push\Controller\ApplicationController;
 use AuthBucket\Push\Controller\PushController;
-use AuthBucket\Push\Controller\ServiceController;
+use AuthBucket\Push\Controller\VariantController;
 use AuthBucket\Push\EventListener\ExceptionListener;
-use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactory;
+use AuthBucket\Push\VariantType\VariantTypeHandlerFactory;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
@@ -34,22 +34,22 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         // EntityRepository.
         $app['authbucket_push.model_manager.factory'] = null;
 
-        // Add default service type handler.
-        $app['authbucket_push.service_handler'] = array(
-            'apns' => 'AuthBucket\\Push\\ServiceType\\ApnsServiceTypeHandler',
-            'gcm' => 'AuthBucket\\Push\\ServiceType\\GcmServiceTypeHandler',
+        // Add default variant type handler.
+        $app['authbucket_push.variant_handler'] = array(
+            'apns' => 'AuthBucket\\Push\\VariantType\\ApnsVariantTypeHandler',
+            'gcm' => 'AuthBucket\\Push\\VariantType\\GcmVariantTypeHandler',
         );
 
         $app['authbucket_push.exception_listener'] = $app->share(function () {
             return new ExceptionListener();
         });
 
-        $app['authbucket_push.service_handler.factory'] = $app->share(function ($app) {
-            return new ServiceTypeHandlerFactory(
+        $app['authbucket_push.variant_handler.factory'] = $app->share(function ($app) {
+            return new VariantTypeHandlerFactory(
                 $app['security'],
                 $app['validator'],
                 $app['authbucket_push.model_manager.factory'],
-                $app['authbucket_push.service_handler']
+                $app['authbucket_push.variant_handler']
             );
         });
 
@@ -57,7 +57,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
             return new PushController(
                 $app['validator'],
                 $app['authbucket_push.model_manager.factory'],
-                $app['authbucket_push.service_handler.factory']
+                $app['authbucket_push.variant_handler.factory']
             );
         });
 
@@ -69,8 +69,8 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
             );
         });
 
-        $app['authbucket_push.service_controller'] = $app->share(function () use ($app) {
-            return new ServiceController(
+        $app['authbucket_push.variant_controller'] = $app->share(function () use ($app) {
+            return new VariantController(
                 $app['validator'],
                 $app['serializer'],
                 $app['authbucket_push.model_manager.factory']
@@ -94,7 +94,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         $app->get('/api/v1.0/push/cron', 'authbucket_push.push_controller:cronAction')
             ->bind('api_push_cron');
 
-        foreach (array('application', 'service') as $type) {
+        foreach (array('application', 'variant') as $type) {
             $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')
                 ->bind('api_'.$type.'_create')
                 ->assert('_format', 'json|xml');

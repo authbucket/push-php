@@ -11,16 +11,16 @@
 
 namespace AuthBucket\Push\Tests\TestBundle\DataFixtures\ORM;
 
-use AuthBucket\Push\Tests\TestBundle\Entity\Service;
+use AuthBucket\Push\Tests\TestBundle\Entity\Variant;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ServiceFixture implements FixtureInterface
+class VariantFixture implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $model = new Service();
-        $model->setServiceType('apns')
+        $model = new Variant();
+        $model->setVariantType('apns')
             ->setClientId('http://democlient1.com/')
             ->setOptions(array(
                 'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
@@ -97,8 +97,8 @@ EOF
             ));
         $manager->persist($model);
 
-        $model = new Service();
-        $model->setServiceType('gcm')
+        $model = new Variant();
+        $model->setVariantType('gcm')
             ->setClientId('http://democlient1.com/')
             ->setOptions(array(
                 'host' => 'https://android.googleapis.com/gcm/send',

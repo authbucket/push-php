@@ -9,18 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\ServiceType;
+namespace AuthBucket\Push\VariantType;
 
+use Guzzle\Http\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * APNs service type implementation.
+ * GCM variant type handler implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
+class GcmVariantTypeHandler extends AbstractVariantTypeHandler
 {
     public function register(Request $request)
     {
@@ -34,7 +35,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $class = $deviceManager->getClassName();
         $device = new $class();
         $device->setDeviceToken($deviceToken)
-            ->setServiceType('apns')
+            ->setVariantType('gcm')
             ->setClientId($clientId)
             ->setUsername($username)
             ->setExpires(new \DateTime('+7 days'));
@@ -42,7 +43,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
         $parameters = array(
             'device_token' => $device->getDeviceToken(),
-            'service_type' => $device->getServiceType(),
+            'variant_type' => $device->getVariantType(),
             'client_id' => $device->getClientId(),
             'username' => $device->getUsername(),
             'expires_in' => $device->getExpires()->getTimestamp() - time(),
@@ -65,7 +66,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceToken,
-            'serviceType' => 'apns',
+            'variantType' => 'gcm',
             'clientId' => $clientId,
             'username' => $username,
         ));
@@ -84,16 +85,16 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
         $data = $this->checkData($request);
 
-        $serviceManager = $this->modelManagerFactory->getModelManager('service');
-        $service = $serviceManager->readModelOneBy(array(
-            'serviceType' => 'apns',
+        $variantManager = $this->modelManagerFactory->getModelManager('variant');
+        $variant = $variantManager->readModelOneBy(array(
+            'variantType' => 'gcm',
             'clientId' => $clientId,
         ));
-        $options = $service->getOptions();
+        $options = $variant->getOptions();
 
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'serviceType' => 'apns',
+            'variantType' => 'gcm',
             'clientId' => $clientId,
             'username' => $username,
         ));
@@ -105,49 +106,21 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             }
         }
 
-        // PHP SSL implementation need local_cert as physical file.
-        // @see http://stackoverflow.com/a/11403788
-        $local_cert = tempnam(sys_get_temp_dir(), 'PEM');
-        register_shutdown_function('unlink', $local_cert);
-        $handler = fopen($local_cert, 'w');
-        fwrite($handler, $options['local_cert']);
-        fclose($handler);
-
         $response = array();
         foreach ($deviceTokens as $deviceToken) {
-            // Prepare the payload in JSON format.
-            $payload = json_encode(array(
-                'aps' => array(
-                    'alert' => $data['message'],
-                    'badge' => 1,
-                    'sound' => 'default',
+            $client = new Client();
+            $crawler = $client->post($options['host'], array(), json_encode(array(
+                'registration_ids' => (array) $deviceToken,
+                'data' => $data,
+            )), array(
+                'headers' => array(
+                    'Authorization' => 'key='.$options['key'],
+                    'Content-Type' => 'application/json',
                 ),
+                'exceptions' => false,
+                'verify' => false,
             ));
-
-            // Build the message.
-            $message = pack('CnH*', 1, 32, $deviceToken);
-            $message .= pack('Cn', 2, strlen($payload)).$payload;
-            $message .= pack('CnN', 3, 4, md5(uniqid(null, true)));
-            $message .= pack('CnN', 4, 4, 60*60*24*7);
-            $message .= pack('CnC', 5, 1, 10);
-            $message = pack('CN', 2, strlen($message)).$message;
-
-            // Create and write to the stream.
-            $context = stream_context_create();
-            stream_context_set_option($context, 'ssl', 'local_cert', $local_cert);
-            stream_context_set_option($context, 'ssl', 'passphrase', $options['passphrase']);
-            $handler = stream_socket_client(
-                $options['host'],
-                $error,
-                $errorString,
-                10,
-                STREAM_CLIENT_ASYNC_CONNECT,
-                $context
-            );
-            fwrite($handler, $message);
-            fclose($handler);
-
-            $response[] = $errorString;
+            $response[] = json_decode($crawler->send()->getBody());
         }
 
         return $response;

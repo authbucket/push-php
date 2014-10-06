@@ -41,9 +41,9 @@ class Device implements DeviceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="service_type", type="string", length=255)
+     * @ORM\Column(name="variant_type", type="string", length=255)
      */
-    protected $serviceType;
+    protected $variantType;
 
     /**
      * @var string
@@ -101,27 +101,27 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set service_type
+     * Set variant_type
      *
-     * @param string $serviceType
+     * @param string $variantType
      *
      * @return Device
      */
-    public function setServiceType($serviceType)
+    public function setVariantType($variantType)
     {
-        $this->serviceType = $serviceType;
+        $this->variantType = $variantType;
 
         return $this;
     }
 
     /**
-     * Get service_type
+     * Get variant_type
      *
      * @return string
      */
-    public function getServiceType()
+    public function getVariantType()
     {
-        return $this->serviceType;
+        return $this->variantType;
     }
 
     /**

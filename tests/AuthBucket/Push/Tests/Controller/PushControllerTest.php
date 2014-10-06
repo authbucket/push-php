@@ -20,7 +20,7 @@ class PushControllerTest extends WebTestCase
     {
         $parameters = array(
             'device_token' => 'demodevicetoken1',
-            'service_type' => 'unsupported_service_type',
+            'variant_type' => 'unsupported_variant_type',
         );
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
@@ -30,14 +30,14 @@ class PushControllerTest extends WebTestCase
         $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
         $deviceResponse = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('unsupported_service_type', $deviceResponse['error']);
+        $this->assertEquals('unsupported_variant_type', $deviceResponse['error']);
     }
 
     public function testGoodRegisterApns()
     {
         $parameters = array(
             'device_token' => 'e2db93d13228fb7c97d3bda74a61f478',
-            'service_type' => 'apns',
+            'variant_type' => 'apns',
         );
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
@@ -48,14 +48,14 @@ class PushControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $deviceResponse = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('e2db93d13228fb7c97d3bda74a61f478', $deviceResponse['device_token']);
-        $this->assertEquals('apns', $deviceResponse['service_type']);
+        $this->assertEquals('apns', $deviceResponse['variant_type']);
     }
 
     public function testGoodRegisterGcm()
     {
         $parameters = array(
             'device_token' => 'e2db93d13228fb7c97d3bda74a61f478',
-            'service_type' => 'gcm',
+            'variant_type' => 'gcm',
         );
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
@@ -66,14 +66,14 @@ class PushControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $deviceResponse = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals('e2db93d13228fb7c97d3bda74a61f478', $deviceResponse['device_token']);
-        $this->assertEquals('gcm', $deviceResponse['service_type']);
+        $this->assertEquals('gcm', $deviceResponse['variant_type']);
     }
 
     public function testGoodUnregisterApns()
     {
         $parameters = array(
             'device_token' => 'eeb5aa92bbb4b56373b9e0d00bc02d93',
-            'service_type' => 'apns',
+            'variant_type' => 'apns',
         );
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
@@ -94,7 +94,7 @@ class PushControllerTest extends WebTestCase
     {
         $parameters = array(
             'device_token' => '7be07f1e5e1737f2aec000a0cc82da06',
-            'service_type' => 'gcm',
+            'variant_type' => 'gcm',
         );
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',

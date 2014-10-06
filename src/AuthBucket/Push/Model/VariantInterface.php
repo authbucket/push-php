@@ -12,34 +12,34 @@
 namespace AuthBucket\Push\Model;
 
 /**
- * Push service interface.
+ * Push variant interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-interface ServiceInterface extends ModelInterface
+interface VariantInterface extends ModelInterface
 {
     /**
-     * Set service_type
+     * Set variantType
      *
-     * @param string $serviceType
+     * @param string $variantType
      *
-     * @return Service
+     * @return Variant
      */
-    public function setServiceType($serviceType);
+    public function setVariantType($variantType);
 
     /**
-     * Get service_type
+     * Get variantType
      *
      * @return string
      */
-    public function getServiceType();
+    public function getVariantType();
 
     /**
      * Set client_id
      *
      * @param string $clientId
      *
-     * @return Service
+     * @return Variant
      */
     public function setClientId($clientId);
 
@@ -55,7 +55,7 @@ interface ServiceInterface extends ModelInterface
      *
      * @param array $options
      *
-     * @return Service
+     * @return Variant
      */
     public function setOptions($options);
 

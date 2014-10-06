@@ -42,7 +42,7 @@ $app['doctrine.orm.entity_manager'] = $app->share(function ($app) {
 $app['authbucket_push.model'] = array(
     'application' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Application',
     'device' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Device',
-    'service' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Service',
+    'variant' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Variant',
 );
 
 // Add model managers from ORM.

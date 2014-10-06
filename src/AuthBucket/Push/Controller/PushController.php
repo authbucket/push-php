@@ -13,8 +13,8 @@ namespace AuthBucket\Push\Controller;
 
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactoryInterface;
-use AuthBucket\Push\Validator\Constraints\ServiceType;
+use AuthBucket\Push\VariantType\VariantTypeHandlerFactoryInterface;
+use AuthBucket\Push\Validator\Constraints\VariantType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -29,46 +29,46 @@ class PushController
 {
     protected $validator;
     protected $modelManagerFactory;
-    protected $serviceTypeHandlerFactory;
+    protected $variantTypeHandlerFactory;
 
     public function __construct(
         ValidatorInterface $validator,
         ModelManagerFactoryInterface $modelManagerFactory,
-        ServiceTypeHandlerFactoryInterface $serviceTypeHandlerFactory
+        VariantTypeHandlerFactoryInterface $variantTypeHandlerFactory
     ) {
         $this->validator = $validator;
         $this->modelManagerFactory = $modelManagerFactory;
-        $this->serviceTypeHandlerFactory = $serviceTypeHandlerFactory;
+        $this->variantTypeHandlerFactory = $variantTypeHandlerFactory;
     }
 
     public function registerAction(Request $request)
     {
-        // Check service_type.
-        $serviceType = $this->checkServiceType($request);
+        // Check variant_type.
+        $variantType = $this->checkVariantType($request);
 
         // Handle action.
-        return $this->serviceTypeHandlerFactory
-            ->getServiceTypeHandler($serviceType)
+        return $this->variantTypeHandlerFactory
+            ->getVariantTypeHandler($variantType)
             ->register($request);
     }
 
     public function unregisterAction(Request $request)
     {
-        // Check service_type.
-        $serviceType = $this->checkServiceType($request);
+        // Check variant_type.
+        $variantType = $this->checkVariantType($request);
 
         // Handle action.
-        return $this->serviceTypeHandlerFactory
-            ->getServiceTypeHandler($serviceType)
+        return $this->variantTypeHandlerFactory
+            ->getVariantTypeHandler($variantType)
             ->unregister($request);
     }
 
     public function sendAction(Request $request)
     {
         $response = array();
-        foreach ($this->serviceTypeHandlerFactory->getServiceTypeHandlers() as $key => $value) {
-            $response[$key] = $this->serviceTypeHandlerFactory
-                ->getServiceTypeHandler($key)
+        foreach ($this->variantTypeHandlerFactory->getVariantTypeHandlers() as $key => $value) {
+            $response[$key] = $this->variantTypeHandlerFactory
+                ->getVariantTypeHandler($key)
                 ->send($request);
         }
 
@@ -98,13 +98,13 @@ class PushController
         return new Response();
     }
 
-    protected function checkServiceType(Request $request)
+    protected function checkVariantType(Request $request)
     {
-        // Fetch service_type from POST
-        $serviceType = $request->request->get('service_type');
-        $errors = $this->validator->validateValue($serviceType, array(
+        // Fetch variant_type from POST
+        $variantType = $request->request->get('variant_type');
+        $errors = $this->validator->validateValue($variantType, array(
             new NotBlank(),
-            new ServiceType(),
+            new VariantType(),
         ));
         if (count($errors) > 0) {
             throw new InvalidRequestException(array(
@@ -112,6 +112,6 @@ class PushController
             ));
         }
 
-        return $serviceType;
+        return $variantType;
     }
 }

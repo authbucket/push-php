@@ -9,24 +9,24 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\ServiceType;
+namespace AuthBucket\Push\VariantType;
 
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Exception\ServerErrorException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use AuthBucket\Push\Validator\Constraints\DeviceToken;
-use AuthBucket\Push\Validator\Constraints\ServiceType;
+use AuthBucket\Push\Validator\Constraints\VariantType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
 
 /**
- * Shared service type implementation.
+ * Shared variant type implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
+abstract class AbstractVariantTypeHandler implements VariantTypeHandlerInterface
 {
     protected $securityContext;
     protected $validator;

@@ -35,20 +35,20 @@ interface DeviceInterface extends ModelInterface
     public function getDeviceToken();
 
     /**
-     * Set service_type
+     * Set variant_type
      *
-     * @param string $serviceType
+     * @param string $variantType
      *
      * @return Device
      */
-    public function setServiceType($serviceType);
+    public function setVariantType($variantType);
 
     /**
-     * Get service_type
+     * Get variant_type
      *
      * @return string
      */
-    public function getServiceType();
+    public function getVariantType();
 
     /**
      * Set client_id
