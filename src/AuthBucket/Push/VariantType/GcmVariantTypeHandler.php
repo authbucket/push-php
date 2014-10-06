@@ -25,7 +25,7 @@ class GcmVariantTypeHandler extends AbstractVariantTypeHandler
 {
     public function register(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -36,7 +36,7 @@ class GcmVariantTypeHandler extends AbstractVariantTypeHandler
         $device = new $class();
         $device->setDeviceToken($deviceToken)
             ->setVariantType('gcm')
-            ->setClientId($clientId)
+            ->setApplicationId($applicationId)
             ->setUsername($username)
             ->setExpires(new \DateTime('+7 days'));
         $device = $deviceManager->createModel($device);
@@ -44,7 +44,7 @@ class GcmVariantTypeHandler extends AbstractVariantTypeHandler
         $parameters = array(
             'device_token' => $device->getDeviceToken(),
             'variant_type' => $device->getVariantType(),
-            'client_id' => $device->getClientId(),
+            'application_id' => $device->getApplicationId(),
             'username' => $device->getUsername(),
             'expires_in' => $device->getExpires()->getTimestamp() - time(),
         );
@@ -57,7 +57,7 @@ class GcmVariantTypeHandler extends AbstractVariantTypeHandler
 
     public function unregister(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -67,7 +67,7 @@ class GcmVariantTypeHandler extends AbstractVariantTypeHandler
         $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceToken,
             'variantType' => 'gcm',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'username' => $username,
         ));
         foreach ($devices as $device) {
@@ -79,7 +79,7 @@ class GcmVariantTypeHandler extends AbstractVariantTypeHandler
 
     public function send(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -88,14 +88,14 @@ class GcmVariantTypeHandler extends AbstractVariantTypeHandler
         $variantManager = $this->modelManagerFactory->getModelManager('variant');
         $variant = $variantManager->readModelOneBy(array(
             'variantType' => 'gcm',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
         ));
         $options = $variant->getOptions();
 
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
             'variantType' => 'gcm',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'username' => $username,
         ));
 

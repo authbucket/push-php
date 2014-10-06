@@ -21,7 +21,7 @@ class VariantFixture implements FixtureInterface
     {
         $model = new Variant();
         $model->setVariantType('apns')
-            ->setClientId('http://democlient1.com/')
+            ->setApplicationId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setOptions(array(
                 'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
                 'local_cert' => <<<EOF
@@ -99,7 +99,7 @@ EOF
 
         $model = new Variant();
         $model->setVariantType('gcm')
-            ->setClientId('http://democlient1.com/')
+            ->setApplicationId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setOptions(array(
                 'host' => 'https://android.googleapis.com/gcm/send',
                 'key' => 'AIzaSyAWV2gTtvIYIwg-Bgo_TI0w5EEEjQUJh_0',

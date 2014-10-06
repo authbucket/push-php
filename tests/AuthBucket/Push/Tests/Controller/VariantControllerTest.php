@@ -18,38 +18,38 @@ class VariantControllerTest extends WebTestCase
 {
     public function testCreateActionJson()
     {
-        $clientId = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationId = substr(md5(uniqid(null, true)), 0, 8);
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'options' => array(),
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/variant.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
     }
 
     public function testCreateActionXml()
     {
-        $clientId = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationId = substr(md5(uniqid(null, true)), 0, 8);
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'options' => array(),
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/variant.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
     }
 
     public function testReadActionJson()
@@ -61,7 +61,7 @@ class VariantControllerTest extends WebTestCase
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/variant/1.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals('http://democlient1.com/', $response['clientId']);
+        $this->assertEquals('6b44c21ef7bc8ca7380bb5b8276b3f97', $response['applicationId']);
     }
 
     public function testReadActionXml()
@@ -74,94 +74,94 @@ class VariantControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/api/v1.0/variant/1.xml', array(), array(), $server);
         $response = simplexml_load_string($client->getResponse()->getContent());
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals('http://democlient1.com/', $response['clientId']);
+        $this->assertEquals('6b44c21ef7bc8ca7380bb5b8276b3f97', $response['applicationId']);
     }
 
     public function testUpdateActionJson()
     {
-        $clientId = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationId = substr(md5(uniqid(null, true)), 0, 8);
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'options' => array(),
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/variant.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
 
         $id = $response['id'];
-        $clientIdUpdated = substr(md5(uniqid(null, true)), 0, 8);
-        $content = $this->app['serializer']->encode(array('clientId' => $clientIdUpdated), 'json');
+        $applicationIdUpdated = substr(md5(uniqid(null, true)), 0, 8);
+        $content = $this->app['serializer']->encode(array('applicationId' => $applicationIdUpdated), 'json');
         $client = $this->createClient();
         $crawler = $client->request('PUT', "/api/v1.0/variant/${id}.json", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($clientIdUpdated, $response['clientId']);
+        $this->assertEquals($applicationIdUpdated, $response['applicationId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/variant/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($clientIdUpdated, $response['clientId']);
+        $this->assertEquals($applicationIdUpdated, $response['applicationId']);
     }
 
     public function testUpdateActionXml()
     {
-        $clientId = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationId = substr(md5(uniqid(null, true)), 0, 8);
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'options' => array(),
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/variant.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
 
         $id = $response['id'];
-        $clientIdUpdated = substr(md5(uniqid(null, true)), 0, 8);
-        $content = $this->app['serializer']->encode(array('clientId' => $clientIdUpdated), 'xml');
+        $applicationIdUpdated = substr(md5(uniqid(null, true)), 0, 8);
+        $content = $this->app['serializer']->encode(array('applicationId' => $applicationIdUpdated), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('PUT', "/api/v1.0/variant/${id}.xml", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($clientIdUpdated, $response['clientId']);
+        $this->assertEquals($applicationIdUpdated, $response['applicationId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/variant/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($clientIdUpdated, $response['clientId']);
+        $this->assertEquals($applicationIdUpdated, $response['applicationId']);
     }
 
     public function testDeleteActionJson()
     {
-        $clientId = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationId = substr(md5(uniqid(null, true)), 0, 8);
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'options' => array(),
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/variant.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
 
         $id = $response['id'];
         $client = $this->createClient();
         $crawler = $client->request('DELETE', "/api/v1.0/variant/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals(null, $response['id']);
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/variant/${id}.json", array(), array(), $server);
@@ -171,27 +171,27 @@ class VariantControllerTest extends WebTestCase
 
     public function testDeleteActionXml()
     {
-        $clientId = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationId = substr(md5(uniqid(null, true)), 0, 8);
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'options' => array(),
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/variant.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
 
         $id = $response['id'];
         $client = $this->createClient();
         $crawler = $client->request('DELETE', "/api/v1.0/variant/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals(null, $response['id']);
-        $this->assertEquals($clientId, $response['clientId']);
+        $this->assertEquals($applicationId, $response['applicationId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/variant/${id}.xml", array(), array(), $server);
@@ -208,7 +208,7 @@ class VariantControllerTest extends WebTestCase
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/variant.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals('http://democlient1.com/', $response[0]['clientId']);
+        $this->assertEquals('6b44c21ef7bc8ca7380bb5b8276b3f97', $response[0]['applicationId']);
     }
 
     public function testListActionXml()
@@ -220,6 +220,6 @@ class VariantControllerTest extends WebTestCase
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/variant.xml', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals('http://democlient1.com/', $response[0]['clientId']);
+        $this->assertEquals('6b44c21ef7bc8ca7380bb5b8276b3f97', $response[0]['applicationId']);
     }
 }

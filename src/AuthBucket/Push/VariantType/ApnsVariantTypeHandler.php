@@ -24,7 +24,7 @@ class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
 {
     public function register(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -35,7 +35,7 @@ class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
         $device = new $class();
         $device->setDeviceToken($deviceToken)
             ->setVariantType('apns')
-            ->setClientId($clientId)
+            ->setApplicationId($applicationId)
             ->setUsername($username)
             ->setExpires(new \DateTime('+7 days'));
         $device = $deviceManager->createModel($device);
@@ -43,7 +43,7 @@ class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
         $parameters = array(
             'device_token' => $device->getDeviceToken(),
             'variant_type' => $device->getVariantType(),
-            'client_id' => $device->getClientId(),
+            'application_id' => $device->getApplicationId(),
             'username' => $device->getUsername(),
             'expires_in' => $device->getExpires()->getTimestamp() - time(),
         );
@@ -56,7 +56,7 @@ class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
 
     public function unregister(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -66,7 +66,7 @@ class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
         $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceToken,
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'username' => $username,
         ));
         foreach ($devices as $device) {
@@ -78,7 +78,7 @@ class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
 
     public function send(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -87,14 +87,14 @@ class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
         $variantManager = $this->modelManagerFactory->getModelManager('variant');
         $variant = $variantManager->readModelOneBy(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
         ));
         $options = $variant->getOptions();
 
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
             'variantType' => 'apns',
-            'clientId' => $clientId,
+            'applicationId' => $applicationId,
             'username' => $username,
         ));
 

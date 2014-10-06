@@ -35,20 +35,20 @@ interface VariantInterface extends ModelInterface
     public function getVariantType();
 
     /**
-     * Set client_id
+     * Set application_id
      *
-     * @param string $clientId
+     * @param string $applicationId
      *
      * @return Variant
      */
-    public function setClientId($clientId);
+    public function setApplicationId($applicationId);
 
     /**
-     * Get client_id
+     * Get application_id
      *
      * @return string
      */
-    public function getClientId();
+    public function getApplicationId();
 
     /**
      * Set options

@@ -42,9 +42,9 @@ abstract class AbstractVariantTypeHandler implements VariantTypeHandlerInterface
         $this->modelManagerFactory = $modelManagerFactory;
     }
 
-    protected function checkClientId()
+    protected function checkApplicationId()
     {
-        return 'http://democlient1.com/';
+        return '6b44c21ef7bc8ca7380bb5b8276b3f97';
 
 #        $token = $this->securityContext->getToken();
 #        if ($token === null || !$token instanceof AccessTokenToken) {

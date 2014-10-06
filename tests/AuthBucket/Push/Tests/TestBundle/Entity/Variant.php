@@ -41,9 +41,9 @@ class Variant implements VariantInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="client_id", type="string", length=255)
+     * @ORM\Column(name="application_id", type="string", length=255)
      */
-    protected $clientId;
+    protected $applicationId;
 
     /**
      * @var array
@@ -87,27 +87,27 @@ class Variant implements VariantInterface
     }
 
     /**
-     * Set client_id
+     * Set application_id
      *
-     * @param string $clientId
+     * @param string $applicationId
      *
      * @return Variant
      */
-    public function setClientId($clientId)
+    public function setApplicationId($applicationId)
     {
-        $this->clientId = $clientId;
+        $this->applicationId = $applicationId;
 
         return $this;
     }
 
     /**
-     * Get client_id
+     * Get application_id
      *
      * @return string
      */
-    public function getClientId()
+    public function getApplicationId()
     {
-        return $this->clientId;
+        return $this->applicationId;
     }
 
     /**
