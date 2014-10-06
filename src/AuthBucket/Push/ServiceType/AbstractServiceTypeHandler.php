@@ -11,7 +11,6 @@
 
 namespace AuthBucket\Push\ServiceType;
 
-use AuthBucket\OAuth2\Security\Authentication\Token\AccessTokenToken;
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Exception\ServerErrorException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
@@ -45,26 +44,30 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
 
     protected function checkClientId()
     {
-        $token = $this->securityContext->getToken();
-        if ($token === null || !$token instanceof AccessTokenToken) {
-            throw new ServerErrorException(array(
-                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
-            ));
-        }
+        return 'http://democlient1.com/';
 
-        return $token->getClientId();
+#        $token = $this->securityContext->getToken();
+#        if ($token === null || !$token instanceof AccessTokenToken) {
+#            throw new ServerErrorException(array(
+#                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+#            ));
+#        }
+#
+#        return $token->getClientId();
     }
 
     protected function checkUsername()
     {
-        $token = $this->securityContext->getToken();
-        if ($token === null || !$token instanceof AccessTokenToken) {
-            throw new ServerErrorException(array(
-                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
-            ));
-        }
+        return 'demouserame1';
 
-        return $token->getUsername();
+#        $token = $this->securityContext->getToken();
+#        if ($token === null || !$token instanceof AccessTokenToken) {
+#            throw new ServerErrorException(array(
+#                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+#            ));
+#        }
+#
+#        return $token->getUsername();
     }
 
     protected function checkDeviceToken(Request $request)

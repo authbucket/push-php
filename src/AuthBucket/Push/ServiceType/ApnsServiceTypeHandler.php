@@ -97,7 +97,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             'clientId' => $clientId,
             'username' => $username,
         ));
-        
+
         $deviceTokens = array();
         foreach ($devices as $device) {
             if ($device->getExpires() > new \DateTime()) {
@@ -112,7 +112,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $handler = fopen($local_cert, 'w');
         fwrite($handler, $options['local_cert']);
         fclose($handler);
-        
+
         $response = array();
         foreach ($deviceTokens as $deviceToken) {
             // Prepare the payload in JSON format.
