@@ -13,10 +13,11 @@ namespace AuthBucket\Push\Controller;
 
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\VariantType\VariantTypeHandlerFactoryInterface;
 use AuthBucket\Push\Validator\Constraints\VariantType;
+use AuthBucket\Push\VariantType\VariantTypeHandlerFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
 
@@ -28,28 +29,66 @@ use Symfony\Component\Validator\ValidatorInterface;
 class PushController
 {
     protected $validator;
+    protected $serializer;
     protected $modelManagerFactory;
     protected $variantTypeHandlerFactory;
 
     public function __construct(
         ValidatorInterface $validator,
+        SerializerInterface $serializer,
         ModelManagerFactoryInterface $modelManagerFactory,
         VariantTypeHandlerFactoryInterface $variantTypeHandlerFactory
     ) {
         $this->validator = $validator;
+        $this->serializer = $serializer;
         $this->modelManagerFactory = $modelManagerFactory;
         $this->variantTypeHandlerFactory = $variantTypeHandlerFactory;
     }
 
     public function registerAction(Request $request)
     {
-        // Check variant_type.
-        $variantType = $this->checkVariantType($request);
+        $format = $request->getRequestFormat();
 
-        // Handle action.
-        return $this->variantTypeHandlerFactory
-            ->getVariantTypeHandler($variantType)
-            ->register($request);
+        // Fetch from JSON/XML.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $deviceSupplied = $this->serializer->deserialize(
+            $request->getContent(),
+            $deviceManager->getClassName(),
+            $format
+        );
+
+        // Validate supplied values
+        $errors = $this->validator->validate($deviceSupplied);
+        if (count($errors) > 0) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
+        }
+
+        // Check if provided variantId exists.
+        $variantManager = $this->modelManagerFactory->getModelManager('variant');
+        $variant = $variantManager->readModelOneBy(array(
+            'variantId' => $deviceSupplied->getVariantId(),
+        ));
+        if ($variant === null) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
+        }
+
+        // Remove all legacy record for this deviceToken, then recreate it.
+        $devices = $deviceManager->readModelBy(array(
+            'deviceToken' => $deviceSupplied->getDeviceToken(),
+            'variantId' => $deviceSupplied->getVariantId(),
+        ));
+        foreach ($devices as $device) {
+            $deviceManager->deleteModel($device);
+        }
+        $deviceSaved = $deviceManager->createModel($deviceSupplied);
+
+        return new Response($this->serializer->serialize($deviceSaved, $format), 200, array(
+            "Content-Type" => $request->getMimeType($format),
+        ));
     }
 
     public function unregisterAction(Request $request)
@@ -73,29 +112,6 @@ class PushController
         }
 
         return new Response(json_encode($response));
-    }
-
-    public function cronAction(Request $request)
-    {
-        $limit = 100;
-
-        foreach (array('device') as $type) {
-            $modelManager = $this->modelManagerFactory->getModelManager($type);
-
-            $offset = 0;
-            while (count($models = $modelManager->readModelBy(array(), array(), $limit, $offset)) > 0) {
-                $offset += $limit;
-
-                foreach ($models as $model) {
-                    if ($model->getExpires() < new \DateTime()) {
-                        $modelManager->deleteModel($model);
-                        $offset--;
-                    }
-                }
-            }
-        }
-
-        return new Response();
     }
 
     protected function checkVariantType(Request $request)

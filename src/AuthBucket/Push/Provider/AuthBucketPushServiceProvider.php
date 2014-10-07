@@ -58,6 +58,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         $app['authbucket_push.push_controller'] = $app->share(function () use ($app) {
             return new PushController(
                 $app['validator'],
+                $app['serializer'],
                 $app['authbucket_push.model_manager.factory'],
                 $app['authbucket_push.variant_handler.factory']
             );
@@ -100,17 +101,15 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
     {
         $controllers = $app['controllers_factory'];
 
-        $app->post('/api/v1.0/push/register', 'authbucket_push.push_controller:registerAction')
-            ->bind('api_push_register');
+        $app->post('/api/v1.0/push/register.{_format}', 'authbucket_push.push_controller:registerAction')
+            ->bind('api_push_register')
+            ->assert('_format', 'json|xml');
 
         $app->post('/api/v1.0/push/unregister', 'authbucket_push.push_controller:unregisterAction')
             ->bind('api_push_unregister');
 
         $app->post('/api/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
             ->bind('api_push_send');
-
-        $app->get('/api/v1.0/push/cron', 'authbucket_push.push_controller:cronAction')
-            ->bind('api_push_cron');
 
         foreach (array('application', 'variant', 'device', 'message') as $type) {
             $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')
