@@ -12,32 +12,32 @@
 namespace AuthBucket\Push\Model;
 
 /**
- * Push device interface.
+ * Push message interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-interface DeviceInterface extends ModelInterface
+interface MessageInterface extends ModelInterface
 {
     /**
-     * Set deviceToken
+     * Set applicationId
      *
-     * @param string $deviceToken
+     * @param string $applicationId
      *
      * @return Device
      */
-    public function setDeviceToken($deviceToken);
+    public function setApplicationId($applicationId);
 
     /**
-     * Get deviceToken
+     * Get applicationId
      *
      * @return string
      */
-    public function getDeviceToken();
+    public function getApplicationId();
 
     /**
      * Set variantId
      *
-     * @param string $variantId
+     * @param array $variantId
      *
      * @return Device
      */
@@ -46,14 +46,14 @@ interface DeviceInterface extends ModelInterface
     /**
      * Get variantId
      *
-     * @return string
+     * @return array
      */
     public function getVariantId();
 
     /**
      * Set alias
      *
-     * @param string $alias
+     * @param array $alias
      *
      * @return Device
      */
@@ -62,7 +62,7 @@ interface DeviceInterface extends ModelInterface
     /**
      * Get alias
      *
-     * @return string
+     * @return array
      */
     public function getAlias();
 
@@ -81,4 +81,20 @@ interface DeviceInterface extends ModelInterface
      * @return array
      */
     public function getCategory();
+
+    /**
+     * Set payload
+     *
+     * @param array $payload
+     *
+     * @return Device
+     */
+    public function setPayload($payload);
+
+    /**
+     * Get payload
+     *
+     * @return array
+     */
+    public function getPayload();
 }

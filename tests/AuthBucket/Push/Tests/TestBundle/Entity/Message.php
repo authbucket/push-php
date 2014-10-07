@@ -11,16 +11,16 @@
 
 namespace AuthBucket\Push\Tests\TestBundle\Entity;
 
-use AuthBucket\Push\Model\DeviceInterface;
+use AuthBucket\Push\Model\MessageInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Device
+ * Message
  *
- * @ORM\Table(name="authbucket_push_device")
- * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\DeviceRepository")
+ * @ORM\Table(name="authbucket_push_message")
+ * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\MessageRepository")
  */
-class Device implements DeviceInterface
+class Message implements MessageInterface
 {
     /**
      * @var integer
@@ -34,30 +34,37 @@ class Device implements DeviceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="device_token", type="string", length=255)
+     * @ORM\Column(name="application_id", type="string", length=255)
      */
-    protected $deviceToken;
+    protected $applicationId;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="variant_id", type="string", length=255)
+     * @ORM\Column(name="variant_id", type="array")
      */
     protected $variantId;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="alias", type="string", length=255)
+     * @ORM\Column(name="alias", type="array")
      */
     protected $alias;
 
     /**
-     * @var string
+     * @var array
      *
      * @ORM\Column(name="category", type="array")
      */
     protected $category;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="payload", type="array")
+     */
+    protected $payload;
 
     /**
      * Get id
@@ -70,33 +77,33 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set deviceToken
+     * Set applicationId
      *
-     * @param string $deviceToken
+     * @param string $applicationId
      *
      * @return Device
      */
-    public function setDeviceToken($deviceToken)
+    public function setApplicationId($applicationId)
     {
-        $this->deviceToken = $deviceToken;
+        $this->applicationId = $applicationId;
 
         return $this;
     }
 
     /**
-     * Get deviceToken
+     * Get applicationId
      *
      * @return string
      */
-    public function getDeviceToken()
+    public function getApplicationId()
     {
-        return $this->deviceToken;
+        return $this->applicationId;
     }
 
     /**
      * Set variantId
      *
-     * @param string $variantId
+     * @param array $variantId
      *
      * @return Device
      */
@@ -110,7 +117,7 @@ class Device implements DeviceInterface
     /**
      * Get variantId
      *
-     * @return string
+     * @return array
      */
     public function getVariantId()
     {
@@ -120,7 +127,7 @@ class Device implements DeviceInterface
     /**
      * Set alias
      *
-     * @param string $alias
+     * @param array $alias
      *
      * @return Device
      */
@@ -134,7 +141,7 @@ class Device implements DeviceInterface
     /**
      * Get alias
      *
-     * @return string
+     * @return array
      */
     public function getAlias()
     {
@@ -163,5 +170,29 @@ class Device implements DeviceInterface
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set payload
+     *
+     * @param array $payload
+     *
+     * @return Device
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
+
+        return $this;
+    }
+
+    /**
+     * Get payload
+     *
+     * @return array
+     */
+    public function getPayload()
+    {
+        return $this->payload;
     }
 }

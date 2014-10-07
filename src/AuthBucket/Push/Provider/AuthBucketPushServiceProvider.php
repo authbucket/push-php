@@ -13,6 +13,7 @@ namespace AuthBucket\Push\Provider;
 
 use AuthBucket\Push\Controller\ApplicationController;
 use AuthBucket\Push\Controller\DeviceController;
+use AuthBucket\Push\Controller\MessageController;
 use AuthBucket\Push\Controller\PushController;
 use AuthBucket\Push\Controller\VariantController;
 use AuthBucket\Push\EventListener\ExceptionListener;
@@ -85,6 +86,14 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
                 $app['authbucket_push.model_manager.factory']
             );
         });
+
+        $app['authbucket_push.message_controller'] = $app->share(function () use ($app) {
+            return new MessageController(
+                $app['validator'],
+                $app['serializer'],
+                $app['authbucket_push.model_manager.factory']
+            );
+        });
     }
 
     public function connect(Application $app)
@@ -103,7 +112,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         $app->get('/api/v1.0/push/cron', 'authbucket_push.push_controller:cronAction')
             ->bind('api_push_cron');
 
-        foreach (array('application', 'variant', 'device') as $type) {
+        foreach (array('application', 'variant', 'device', 'message') as $type) {
             $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')
                 ->bind('api_'.$type.'_create')
                 ->assert('_format', 'json|xml');
