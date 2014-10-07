@@ -41,30 +41,23 @@ class Device implements DeviceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="variant_type", type="string", length=255)
+     * @ORM\Column(name="variant_id", type="string", length=255)
      */
-    protected $variantType;
+    protected $variantId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="application_id", type="string", length=255)
+     * @ORM\Column(name="alias", type="string", length=255)
      */
-    protected $applicationId;
+    protected $alias;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="category", type="array")
      */
-    protected $username;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expires", type="datetime")
-     */
-    protected $expires;
+    protected $category;
 
     /**
      * Get id
@@ -77,7 +70,7 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set device_token
+     * Set deviceToken
      *
      * @param string $deviceToken
      *
@@ -91,7 +84,7 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Get device_token
+     * Get deviceToken
      *
      * @return string
      */
@@ -101,98 +94,74 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set variant_type
+     * Set variantId
      *
-     * @param string $variantType
+     * @param string $variantId
      *
      * @return Device
      */
-    public function setVariantType($variantType)
+    public function setVariantId($variantId)
     {
-        $this->variantType = $variantType;
+        $this->variantId = $variantId;
 
         return $this;
     }
 
     /**
-     * Get variant_type
+     * Get variantId
      *
      * @return string
      */
-    public function getVariantType()
+    public function getVariantId()
     {
-        return $this->variantType;
+        return $this->variantId;
     }
 
     /**
-     * Set application_id
+     * Set alias
      *
-     * @param string $applicationId
+     * @param string $alias
      *
      * @return Device
      */
-    public function setApplicationId($applicationId)
+    public function setAlias($alias)
     {
-        $this->applicationId = $applicationId;
+        $this->alias = $alias;
 
         return $this;
     }
 
     /**
-     * Get application_id
+     * Get alias
      *
      * @return string
      */
-    public function getApplicationId()
+    public function getAlias()
     {
-        return $this->applicationId;
+        return $this->alias;
     }
 
     /**
-     * Set username
+     * Set category
      *
-     * @param string $username
+     * @param string $category
      *
      * @return Device
      */
-    public function setUsername($username)
+    public function setCategory($category)
     {
-        $this->username = $username;
+        $this->category = $category;
 
         return $this;
     }
 
     /**
-     * Get username
+     * Get category
      *
-     * @return string
+     * @return array
      */
-    public function getUsername()
+    public function getCategory()
     {
-        return $this->username;
-    }
-
-    /**
-     * Set expires
-     *
-     * @param \DateTime $expires
-     *
-     * @return Device
-     */
-    public function setExpires($expires)
-    {
-        $this->expires = $expires;
-
-        return $this;
-    }
-
-    /**
-     * Get expires
-     *
-     * @return \DateTime
-     */
-    public function getExpires()
-    {
-        return $this->expires;
+        return $this->category;
     }
 }

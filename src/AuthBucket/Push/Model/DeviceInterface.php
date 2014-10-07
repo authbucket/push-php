@@ -19,7 +19,7 @@ namespace AuthBucket\Push\Model;
 interface DeviceInterface extends ModelInterface
 {
     /**
-     * Set device_token
+     * Set deviceToken
      *
      * @param string $deviceToken
      *
@@ -28,73 +28,57 @@ interface DeviceInterface extends ModelInterface
     public function setDeviceToken($deviceToken);
 
     /**
-     * Get device_token
+     * Get deviceToken
      *
      * @return string
      */
     public function getDeviceToken();
 
     /**
-     * Set variant_type
+     * Set variantId
      *
-     * @param string $variantType
+     * @param string $variantId
      *
      * @return Device
      */
-    public function setVariantType($variantType);
+    public function setVariantId($variantId);
 
     /**
-     * Get variant_type
+     * Get variantId
      *
      * @return string
      */
-    public function getVariantType();
+    public function getVariantId();
 
     /**
-     * Set application_id
+     * Set alias
      *
-     * @param string $applicationId
+     * @param string $alias
      *
      * @return Device
      */
-    public function setApplicationId($applicationId);
+    public function setAlias($alias);
 
     /**
-     * Get application_id
+     * Get alias
      *
      * @return string
      */
-    public function getApplicationId();
+    public function getAlias();
 
     /**
-     * Set username
+     * Set category
      *
-     * @param string $username
+     * @param string $category
      *
      * @return Device
      */
-    public function setUsername($username);
+    public function setCategory($category);
 
     /**
-     * Get username
+     * Get category
      *
-     * @return string
+     * @return array
      */
-    public function getUsername();
-
-    /**
-     * Set expires
-     *
-     * @param \DateTime $expires
-     *
-     * @return Device
-     */
-    public function setExpires($expires);
-
-    /**
-     * Get expires
-     *
-     * @return \DateTime
-     */
-    public function getExpires();
+    public function getCategory();
 }
