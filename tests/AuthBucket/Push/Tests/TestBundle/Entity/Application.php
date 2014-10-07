@@ -56,7 +56,7 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * Set application_id
+     * Set applicationId
      *
      * @param string $applicationId
      *
@@ -70,7 +70,7 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * Get application_id
+     * Get applicationId
      *
      * @return string
      */
@@ -80,7 +80,7 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * Set application_secret
+     * Set applicationSecret
      *
      * @param string $applicationSecret
      *
@@ -94,7 +94,7 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * Get application_secret
+     * Get applicationSecret
      *
      * @return string
      */

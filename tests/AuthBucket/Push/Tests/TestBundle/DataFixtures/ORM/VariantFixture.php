@@ -20,7 +20,9 @@ class VariantFixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $model = new Variant();
-        $model->setVariantType('apns')
+        $model->setVariantId('f2ee1d163e9c9b633efca95fb9733f35')
+            ->setVariantSecret('51d819733baf585b424483da6383841e')
+            ->setVariantType('apns')
             ->setApplicationId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setOptions(array(
                 'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
@@ -98,7 +100,9 @@ EOF
         $manager->persist($model);
 
         $model = new Variant();
-        $model->setVariantType('gcm')
+        $model->setVariantId('78b67c04bfd60ddfc8c90895d36e1e05')
+            ->setVariantSecret('1c21c3f8a4ecba1703a6fbaf322587f6')
+            ->setVariantType('gcm')
             ->setApplicationId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setOptions(array(
                 'host' => 'https://android.googleapis.com/gcm/send',

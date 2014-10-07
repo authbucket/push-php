@@ -15,7 +15,6 @@ use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Exception\ServerErrorException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use AuthBucket\Push\Validator\Constraints\DeviceToken;
-use AuthBucket\Push\Validator\Constraints\VariantType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;

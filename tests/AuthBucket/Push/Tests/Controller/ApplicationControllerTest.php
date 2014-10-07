@@ -95,7 +95,7 @@ class ApplicationControllerTest extends WebTestCase
         $this->assertEquals($applicationId, $response['applicationId']);
 
         $id = $response['id'];
-        $applicationIdUpdated = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationIdUpdated = md5(uniqid(null, true));
         $content = $this->app['serializer']->encode(array('applicationId' => $applicationIdUpdated), 'json');
         $client = $this->createClient();
         $crawler = $client->request('PUT', "/api/v1.0/application/${id}.json", array(), array(), $server, $content);
@@ -126,7 +126,7 @@ class ApplicationControllerTest extends WebTestCase
         $this->assertEquals($applicationId, $response['applicationId']);
 
         $id = $response['id'];
-        $applicationIdUpdated = substr(md5(uniqid(null, true)), 0, 8);
+        $applicationIdUpdated = md5(uniqid(null, true));
         $content = $this->app['serializer']->encode(array('applicationId' => $applicationIdUpdated), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('PUT', "/api/v1.0/application/${id}.xml", array(), array(), $server, $content);

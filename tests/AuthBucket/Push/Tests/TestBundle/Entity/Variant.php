@@ -34,6 +34,20 @@ class Variant implements VariantInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="variant_id", type="string", length=255)
+     */
+    protected $variantId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="variant_secret", type="string", length=255)
+     */
+    protected $variantSecret;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="variant_type", type="string", length=255)
      */
     protected $variantType;
@@ -63,6 +77,54 @@ class Variant implements VariantInterface
     }
 
     /**
+     * Set variantId
+     *
+     * @param string $variantId
+     *
+     * @return Variant
+     */
+    public function setVariantId($variantId)
+    {
+        $this->variantId = $variantId;
+
+        return $this;
+    }
+
+    /**
+     * Get variantId
+     *
+     * @return string
+     */
+    public function getVariantId()
+    {
+        return $this->variantId;
+    }
+
+    /**
+     * Set variantSecret
+     *
+     * @param string $variantSecret
+     *
+     * @return Variant
+     */
+    public function setVariantSecret($variantSecret)
+    {
+        $this->variantSecret = $variantSecret;
+
+        return $this;
+    }
+
+    /**
+     * Get variantSecret
+     *
+     * @return string
+     */
+    public function getVariantSecret()
+    {
+        return $this->variantSecret;
+    }
+
+    /**
      * Set variantType
      *
      * @param string $variantType
@@ -87,7 +149,7 @@ class Variant implements VariantInterface
     }
 
     /**
-     * Set application_id
+     * Set applicationId
      *
      * @param string $applicationId
      *
@@ -101,7 +163,7 @@ class Variant implements VariantInterface
     }
 
     /**
-     * Get application_id
+     * Get applicationId
      *
      * @return string
      */

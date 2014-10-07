@@ -19,6 +19,38 @@ namespace AuthBucket\Push\Model;
 interface VariantInterface extends ModelInterface
 {
     /**
+     * Set variantId
+     *
+     * @param string $variantId
+     *
+     * @return Variant
+     */
+    public function setVariantId($variantId);
+
+    /**
+     * Get variantId
+     *
+     * @return string
+     */
+    public function getVariantId();
+
+    /**
+     * Set variantSecret
+     *
+     * @param string $variantSecret
+     *
+     * @return Variant
+     */
+    public function setVariantSecret($variantSecret);
+
+    /**
+     * Get variantSecret
+     *
+     * @return string
+     */
+    public function getVariantSecret();
+
+    /**
      * Set variantType
      *
      * @param string $variantType
@@ -35,7 +67,7 @@ interface VariantInterface extends ModelInterface
     public function getVariantType();
 
     /**
-     * Set application_id
+     * Set applicationId
      *
      * @param string $applicationId
      *
@@ -44,7 +76,7 @@ interface VariantInterface extends ModelInterface
     public function setApplicationId($applicationId);
 
     /**
-     * Get application_id
+     * Get applicationId
      *
      * @return string
      */
