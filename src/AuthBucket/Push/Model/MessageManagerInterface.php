@@ -9,17 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\Validator\Constraints;
-
-use Symfony\Component\Validator\Constraints\RegexValidator;
+namespace AuthBucket\Push\Model;
 
 /**
- * Validates whether the value is a valid service_type per RFC 6749
+ * Push message manager interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
- *
- * @see http://tools.ietf.org/html/rfc6749#appendix-A.3
  */
-class ServiceTypeValidator extends RegexValidator
+interface MessageManagerInterface extends ModelManagerInterface
 {
 }

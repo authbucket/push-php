@@ -20,35 +20,58 @@ class DeviceFixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $model = new Device();
-        $model->setDeviceToken('569b74819e2e16f52c9f00d293aefcf78ffa45942dbbdbdc3dcd31369b485a2f')
-            ->setServiceType('apns')
-            ->setClientId('http://democlient1.com/')
-            ->setUsername('demousername1')
-            ->setExpires(new \DateTime('+7 days'));
-        $manager->persist($model);
-
-        $model = new Device();
-        $model->setDeviceToken('APA91bFwYKY0qonK0xg_lHMe-zcwaoeNsjGBMKDND-HspWOgbfsMYJyNqAlhSBbcc9WmxmVOyJk_jYJKUzwg22NFnK44w5f0PvC_ugXJR9MnBgvl5sgbPP9VeMIVAr9gH-3xz09ObfORaBTYfwQ7YrJuZ0CIAfHyvMmxNLu_hxtzXCMXx3xtdY8')
-            ->setServiceType('gcm')
-            ->setClientId('http://democlient1.com/')
-            ->setUsername('demousername1')
-            ->setExpires(new \DateTime('+7 days'));
-        $manager->persist($model);
-
-        $model = new Device();
         $model->setDeviceToken('0027956241e3ca5090de548fe468334d')
-            ->setServiceType('apns')
-            ->setClientId('http://democlient1.com/')
-            ->setUsername('demousername1')
-            ->setExpires(new \DateTime('-7 days'));
+            ->setVariantId('f2ee1d163e9c9b633efca95fb9733f35')
+            ->setAlias('demousername1')
+            ->setCategory(array(
+                'democategory1',
+                'democategory2',
+                'democategory3',
+            ));
         $manager->persist($model);
 
         $model = new Device();
         $model->setDeviceToken('9e0d8519fc205595bd895fbf70addcad')
-            ->setServiceType('gcm')
-            ->setClientId('http://democlient1.com/')
-            ->setUsername('demousername1')
-            ->setExpires(new \DateTime('-7 days'));
+            ->setVariantId('78b67c04bfd60ddfc8c90895d36e1e05')
+            ->setAlias('demousername1')
+            ->setCategory(array(
+                'democategory1',
+                'democategory2',
+                'democategory3',
+            ));
+        $manager->persist($model);
+
+        $model = new Device();
+        $model->setDeviceToken('b55d6e3322b5bf00de15a622246d24492d3668e08aa919a74cfeeb1ee16b4d42')
+            ->setVariantId('f2ee1d163e9c9b633efca95fb9733f35')
+            ->setAlias('demousername1')
+            ->setCategory(array(
+                'democategory1',
+                'democategory2',
+                'democategory3',
+            ));
+        $manager->persist($model);
+
+        $model = new Device();
+        $model->setDeviceToken('e0f948405a1566ed46fde8daa51aa2c05cf925d7d7cca10bcff4e002657be1d6')
+            ->setVariantId('f2ee1d163e9c9b633efca95fb9733f35')
+            ->setAlias('demousername1')
+            ->setCategory(array(
+                'democategory1',
+                'democategory2',
+                'democategory3',
+            ));
+        $manager->persist($model);
+
+        $model = new Device();
+        $model->setDeviceToken('APA91bFwYKY0qonK0xg_lHMe-zcwaoeNsjGBMKDND-HspWOgbfsMYJyNqAlhSBbcc9WmxmVOyJk_jYJKUzwg22NFnK44w5f0PvC_ugXJR9MnBgvl5sgbPP9VeMIVAr9gH-3xz09ObfORaBTYfwQ7YrJuZ0CIAfHyvMmxNLu_hxtzXCMXx3xtdY8')
+            ->setVariantId('78b67c04bfd60ddfc8c90895d36e1e05')
+            ->setAlias('demousername1')
+            ->setCategory(array(
+                'democategory1',
+                'democategory2',
+                'democategory3',
+            ));
         $manager->persist($model);
 
         $manager->flush();

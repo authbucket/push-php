@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\Tests\ServiceType;
+namespace AuthBucket\Push\Tests\VariantType;
 
-use AuthBucket\Push\ServiceType\ServiceTypeHandlerInterface;
+use AuthBucket\Push\VariantType\VariantTypeHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class BarServiceTypeHandler implements ServiceTypeHandlerInterface
+class BarVariantTypeHandler implements VariantTypeHandlerInterface
 {
     public function register(Request $request)
     {

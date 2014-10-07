@@ -9,8 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\Tests\ServiceType;
+namespace AuthBucket\Push\Model;
 
-class FooServiceTypeHandler
+/**
+ * Push variant manager interface.
+ *
+ * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+ */
+interface VariantManagerInterface extends ModelManagerInterface
 {
 }

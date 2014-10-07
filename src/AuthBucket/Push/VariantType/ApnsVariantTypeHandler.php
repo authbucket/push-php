@@ -9,22 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\ServiceType;
+namespace AuthBucket\Push\VariantType;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * APNs service type implementation.
+ * APNs variant type implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
+class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
 {
     public function register(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -34,16 +34,16 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $class = $deviceManager->getClassName();
         $device = new $class();
         $device->setDeviceToken($deviceToken)
-            ->setServiceType('apns')
-            ->setClientId($clientId)
+            ->setVariantType('apns')
+            ->setApplicationId($applicationId)
             ->setUsername($username)
             ->setExpires(new \DateTime('+7 days'));
         $device = $deviceManager->createModel($device);
 
         $parameters = array(
             'device_token' => $device->getDeviceToken(),
-            'service_type' => $device->getServiceType(),
-            'client_id' => $device->getClientId(),
+            'variant_type' => $device->getVariantType(),
+            'application_id' => $device->getApplicationId(),
             'username' => $device->getUsername(),
             'expires_in' => $device->getExpires()->getTimestamp() - time(),
         );
@@ -56,7 +56,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function unregister(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -65,8 +65,8 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceToken,
-            'serviceType' => 'apns',
-            'clientId' => $clientId,
+            'variantType' => 'apns',
+            'applicationId' => $applicationId,
             'username' => $username,
         ));
         foreach ($devices as $device) {
@@ -78,6 +78,33 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function send(Request $request)
     {
+        $applicationId = $this->checkApplicationId();
+
+        $username = $this->checkUsername();
+
+        $data = $this->checkData($request);
+
+        $variantManager = $this->modelManagerFactory->getModelManager('variant');
+        $variant = $variantManager->readModelOneBy(array(
+            'variantType' => 'apns',
+            'applicationId' => $applicationId,
+        ));
+        $options = $variant->getOptions();
+
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $devices = $deviceManager->readModelBy(array(
+            'variantType' => 'apns',
+            'applicationId' => $applicationId,
+            'username' => $username,
+        ));
+
+        $deviceTokens = array();
+        foreach ($devices as $device) {
+            if ($device->getExpires() > new \DateTime()) {
+                $deviceTokens[$device->getDeviceToken()] = $device->getDeviceToken();
+            }
+        }
+
         // PHP SSL implementation need local_cert as physical file.
         // @see http://stackoverflow.com/a/11403788
         $local_cert = tempnam(sys_get_temp_dir(), 'PEM');
@@ -85,33 +112,6 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $handler = fopen($local_cert, 'w');
         fwrite($handler, $options['local_cert']);
         fclose($handler);
-
-        $clientId = $this->checkClientId();
-
-        $username = $this->checkUsername();
-
-        $data = $this->checkData($request);
-
-        $serviceManager = $this->modelManagerFactory->getModelManager('service');
-        $service = $serviceManager->readModelOneBy(array(
-            'serviceType' => 'apns',
-            'clientId' => $clientId,
-        ));
-        $options = $service->getOptions();
-
-        $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $devices = $deviceManager->readModelBy(array(
-            'serviceType' => 'apns',
-            'clientId' => $clientId,
-            'username' => $username,
-        ));
-        
-        $deviceTokens = array();
-        foreach ($devices as $device) {
-            if ($device->getExpires() > new \DateTime()) {
-                $deviceTokens[$device->getDeviceToken()] = $device->getDeviceToken();
-            }
-        }
 
         $response = array();
         foreach ($deviceTokens as $deviceToken) {
@@ -125,7 +125,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             ));
 
             // Build the message.
-            $message = pack('CnH32', 1, 32, $deviceToken);
+            $message = pack('CnH*', 1, 32, $deviceToken);
             $message .= pack('Cn', 2, strlen($payload)).$payload;
             $message .= pack('CnN', 3, 4, md5(uniqid(null, true)));
             $message .= pack('CnN', 4, 4, 60*60*24*7);

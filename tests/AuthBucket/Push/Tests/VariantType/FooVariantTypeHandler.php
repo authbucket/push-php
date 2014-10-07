@@ -9,5 +9,8 @@
  * file that was distributed with this source code.
  */
 
-$app->match('/api/v1.0/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
-    ->bind('api_oauth2_debug');
+namespace AuthBucket\Push\Tests\VariantType;
+
+class FooVariantTypeHandler
+{
+}

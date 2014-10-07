@@ -13,10 +13,11 @@ namespace AuthBucket\Push\Controller;
 
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactoryInterface;
-use AuthBucket\Push\Validator\Constraints\ServiceType;
+use AuthBucket\Push\Validator\Constraints\VariantType;
+use AuthBucket\Push\VariantType\VariantTypeHandlerFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
 
@@ -28,83 +29,118 @@ use Symfony\Component\Validator\ValidatorInterface;
 class PushController
 {
     protected $validator;
+    protected $serializer;
     protected $modelManagerFactory;
-    protected $serviceTypeHandlerFactory;
+    protected $variantTypeHandlerFactory;
 
     public function __construct(
         ValidatorInterface $validator,
+        SerializerInterface $serializer,
         ModelManagerFactoryInterface $modelManagerFactory,
-        ServiceTypeHandlerFactoryInterface $serviceTypeHandlerFactory
+        VariantTypeHandlerFactoryInterface $variantTypeHandlerFactory
     ) {
         $this->validator = $validator;
+        $this->serializer = $serializer;
         $this->modelManagerFactory = $modelManagerFactory;
-        $this->serviceTypeHandlerFactory = $serviceTypeHandlerFactory;
+        $this->variantTypeHandlerFactory = $variantTypeHandlerFactory;
     }
 
     public function registerAction(Request $request)
     {
-        // Check service_type.
-        $serviceType = $this->checkServiceType($request);
+        $format = $request->getRequestFormat();
 
-        // Handle action.
-        return $this->serviceTypeHandlerFactory
-            ->getServiceTypeHandler($serviceType)
-            ->register($request);
+        $deviceSupplied = $this->checkDevice($request);
+
+        // Remove all legacy record for this deviceToken.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $devices = $deviceManager->readModelBy(array(
+            'deviceToken' => $deviceSupplied->getDeviceToken(),
+            'variantId' => $deviceSupplied->getVariantId(),
+        ));
+        foreach ($devices as $device) {
+            $deviceManager->deleteModel($device);
+        }
+
+        // Recreate record with new supplied values.
+        $deviceSaved = $deviceManager->createModel($deviceSupplied);
+
+        return new Response($this->serializer->serialize($deviceSaved, $format), 200, array(
+            "Content-Type" => $request->getMimeType($format),
+        ));
     }
 
     public function unregisterAction(Request $request)
     {
-        // Check service_type.
-        $serviceType = $this->checkServiceType($request);
+        $format = $request->getRequestFormat();
 
-        // Handle action.
-        return $this->serviceTypeHandlerFactory
-            ->getServiceTypeHandler($serviceType)
-            ->unregister($request);
+        $deviceSupplied = $this->checkDevice($request);
+
+        // Remove all legacy record for this deviceToken.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $devices = $deviceManager->readModelBy(array(
+            'deviceToken' => $deviceSupplied->getDeviceToken(),
+            'variantId' => $deviceSupplied->getVariantId(),
+        ));
+        foreach ($devices as $device) {
+            $deviceManager->deleteModel($device);
+        }
+
+        return new Response($this->serializer->serialize($deviceSupplied, $format), 200, array(
+            "Content-Type" => $request->getMimeType($format),
+        ));
     }
 
     public function sendAction(Request $request)
     {
         $response = array();
-        foreach ($this->serviceTypeHandlerFactory->getServiceTypeHandlers() as $key => $value) {
-            $response[$key] = $this->serviceTypeHandlerFactory
-                ->getServiceTypeHandler($key)
+        foreach ($this->variantTypeHandlerFactory->getVariantTypeHandlers() as $key => $value) {
+            $response[$key] = $this->variantTypeHandlerFactory
+                ->getVariantTypeHandler($key)
                 ->send($request);
         }
 
         return new Response(json_encode($response));
     }
 
-    public function cronAction(Request $request)
+    protected function checkDevice(Request $request)
     {
-        $limit = 100;
+        // Fetch device from request body.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $device = $this->serializer->deserialize(
+            $request->getContent(),
+            $deviceManager->getClassName(),
+            $request->getRequestFormat()
+        );
 
-        foreach (array('device') as $type) {
-            $modelManager = $this->modelManagerFactory->getModelManager($type);
-
-            $offset = 0;
-            while (count($models = $modelManager->readModelBy(array(), array(), $limit, $offset)) > 0) {
-                $offset += $limit;
-
-                foreach ($models as $model) {
-                    if ($model->getExpires() < new \DateTime()) {
-                        $modelManager->deleteModel($model);
-                        $offset--;
-                    }
-                }
-            }
+        // Validate supplied values.
+        $errors = $this->validator->validate($device);
+        if (count($errors) > 0) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
         }
 
-        return new Response();
+        // Check if provided variantId exists.
+        $variantManager = $this->modelManagerFactory->getModelManager('variant');
+        $variant = $variantManager->readModelOneBy(array(
+            'variantId' => $device->getVariantId(),
+        ));
+        if ($variant === null) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
+        }
+
+        return $device;
     }
 
-    protected function checkServiceType(Request $request)
+    protected function checkVariantType(Request $request)
     {
-        // Fetch service_type from POST
-        $serviceType = $request->request->get('service_type');
-        $errors = $this->validator->validateValue($serviceType, array(
+        // Fetch variant_type from POST
+        $variantType = $request->request->get('variant_type');
+        $errors = $this->validator->validateValue($variantType, array(
             new NotBlank(),
-            new ServiceType(),
+            new VariantType(),
         ));
         if (count($errors) > 0) {
             throw new InvalidRequestException(array(
@@ -112,6 +148,6 @@ class PushController
             ));
         }
 
-        return $serviceType;
+        return $variantType;
     }
 }

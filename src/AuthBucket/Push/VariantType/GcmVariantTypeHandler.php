@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\ServiceType;
+namespace AuthBucket\Push\VariantType;
 
 use Guzzle\Http\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,15 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * GCM service type handler implementation.
+ * GCM variant type handler implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class GcmServiceTypeHandler extends AbstractServiceTypeHandler
+class GcmVariantTypeHandler extends AbstractVariantTypeHandler
 {
     public function register(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -35,16 +35,16 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
         $class = $deviceManager->getClassName();
         $device = new $class();
         $device->setDeviceToken($deviceToken)
-            ->setServiceType('gcm')
-            ->setClientId($clientId)
+            ->setVariantType('gcm')
+            ->setApplicationId($applicationId)
             ->setUsername($username)
             ->setExpires(new \DateTime('+7 days'));
         $device = $deviceManager->createModel($device);
 
         $parameters = array(
             'device_token' => $device->getDeviceToken(),
-            'service_type' => $device->getServiceType(),
-            'client_id' => $device->getClientId(),
+            'variant_type' => $device->getVariantType(),
+            'application_id' => $device->getApplicationId(),
             'username' => $device->getUsername(),
             'expires_in' => $device->getExpires()->getTimestamp() - time(),
         );
@@ -57,7 +57,7 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function unregister(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
@@ -66,8 +66,8 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceToken,
-            'serviceType' => 'gcm',
-            'clientId' => $clientId,
+            'variantType' => 'gcm',
+            'applicationId' => $applicationId,
             'username' => $username,
         ));
         foreach ($devices as $device) {
@@ -79,23 +79,23 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 
     public function send(Request $request)
     {
-        $clientId = $this->checkClientId();
+        $applicationId = $this->checkApplicationId();
 
         $username = $this->checkUsername();
 
         $data = $this->checkData($request);
 
-        $serviceManager = $this->modelManagerFactory->getModelManager('service');
-        $service = $serviceManager->readModelOneBy(array(
-            'serviceType' => 'gcm',
-            'clientId' => $clientId,
+        $variantManager = $this->modelManagerFactory->getModelManager('variant');
+        $variant = $variantManager->readModelOneBy(array(
+            'variantType' => 'gcm',
+            'applicationId' => $applicationId,
         ));
-        $options = $service->getOptions();
+        $options = $variant->getOptions();
 
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'serviceType' => 'gcm',
-            'clientId' => $clientId,
+            'variantType' => 'gcm',
+            'applicationId' => $applicationId,
             'username' => $username,
         ));
 

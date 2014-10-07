@@ -16,114 +16,71 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PushControllerTest extends WebTestCase
 {
-    public function testExceptionRegisterUnsupportedServiceType()
+    public function testGoodRegisterJson()
     {
-        $parameters = array(
-            'device_token' => 'demodevicetoken1',
-            'service_type' => 'unsupported_service_type',
-        );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
+        $content = $this->app['serializer']->encode(array(
+            'deviceToken' => '0027956241e3ca5090de548fe468334d',
+            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+        ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
-        $deviceResponse = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('unsupported_service_type', $deviceResponse['error']);
+        $crawler = $client->request('POST', '/api/v1.0/push/register.json', array(), array(), $server, $content);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
+        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
     }
 
-    public function testGoodRegisterApns()
+    public function testGoodRegisterXml()
     {
-        $parameters = array(
-            'device_token' => 'e2db93d13228fb7c97d3bda74a61f478',
-            'service_type' => 'apns',
-        );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
+        $content = $this->app['serializer']->encode(array(
+            'deviceToken' => '0027956241e3ca5090de548fe468334d',
+            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+        ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
+        $crawler = $client->request('POST', '/api/v1.0/push/register.xml', array(), array(), $server, $content);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $deviceResponse = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('e2db93d13228fb7c97d3bda74a61f478', $deviceResponse['device_token']);
-        $this->assertEquals('apns', $deviceResponse['service_type']);
+        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
+        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
     }
 
-    public function testGoodRegisterGcm()
+    public function testGoodUnrgisterJson()
     {
-        $parameters = array(
-            'device_token' => 'e2db93d13228fb7c97d3bda74a61f478',
-            'service_type' => 'gcm',
-        );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
+        $content = $this->app['serializer']->encode(array(
+            'deviceToken' => '0027956241e3ca5090de548fe468334d',
+            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+        ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
+        $crawler = $client->request('POST', '/api/v1.0/push/unregister.json', array(), array(), $server, $content);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $deviceResponse = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('e2db93d13228fb7c97d3bda74a61f478', $deviceResponse['device_token']);
-        $this->assertEquals('gcm', $deviceResponse['service_type']);
+        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
+        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
     }
 
-    public function testGoodUnregisterApns()
+    public function testGoodUnregisterXml()
     {
-        $parameters = array(
-            'device_token' => 'eeb5aa92bbb4b56373b9e0d00bc02d93',
-            'service_type' => 'apns',
-        );
         $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
+            'PHP_AUTH_USER' => 'demousername1',
+            'PHP_AUTH_PW' => 'demopassword1',
         );
+        $content = $this->app['serializer']->encode(array(
+            'deviceToken' => '0027956241e3ca5090de548fe468334d',
+            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+        ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
+        $crawler = $client->request('POST', '/api/v1.0/push/unregister.xml', array(), array(), $server, $content);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $modelManagerFactory = $this->app['authbucket_push.model_manager.factory'];
-        $this->assertEmpty($modelManagerFactory->getModelManager('device')
-            ->readModelBy(array(
-                'deviceToken' => 'eeb5aa92bbb4b56373b9e0d00bc02d93',
-            )));
-    }
-
-    public function testGoodUnregisterGcm()
-    {
-        $parameters = array(
-            'device_token' => '7be07f1e5e1737f2aec000a0cc82da06',
-            'service_type' => 'gcm',
-        );
-        $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
-        );
-        $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $modelManagerFactory = $this->app['authbucket_push.model_manager.factory'];
-        $this->assertEmpty($modelManagerFactory->getModelManager('device')
-            ->readModelBy(array(
-                'deviceToken' => '7be07f1e5e1737f2aec000a0cc82da06',
-            )));
-    }
-
-    public function testGoodCron()
-    {
-        $parameters = array();
-        $server = array(
-            'HTTP_Authorization' => implode(' ', array('Bearer', 'eeb5aa92bbb4b56373b9e0d00bc02d93')),
-        );
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/push/cron', $parameters, array(), $server);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $modelManagerFactory = $this->app['authbucket_push.model_manager.factory'];
-        $this->assertEmpty($modelManagerFactory->getModelManager('device')
-            ->readModelBy(array(
-                'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            )));
-        $this->assertEmpty($modelManagerFactory->getModelManager('device')
-            ->readModelBy(array(
-                'deviceToken' => '9e0d8519fc205595bd895fbf70addcad',
-            )));
+        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
+        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
     }
 }

@@ -9,25 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\ServiceType;
+namespace AuthBucket\Push\VariantType;
 
-use AuthBucket\OAuth2\Security\Authentication\Token\AccessTokenToken;
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Exception\ServerErrorException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use AuthBucket\Push\Validator\Constraints\DeviceToken;
-use AuthBucket\Push\Validator\Constraints\ServiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
 
 /**
- * Shared service type implementation.
+ * Shared variant type implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
+abstract class AbstractVariantTypeHandler implements VariantTypeHandlerInterface
 {
     protected $securityContext;
     protected $validator;
@@ -43,28 +41,32 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
         $this->modelManagerFactory = $modelManagerFactory;
     }
 
-    protected function checkClientId()
+    protected function checkApplicationId()
     {
-        $token = $this->securityContext->getToken();
-        if ($token === null || !$token instanceof AccessTokenToken) {
-            throw new ServerErrorException(array(
-                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
-            ));
-        }
+        return '6b44c21ef7bc8ca7380bb5b8276b3f97';
 
-        return $token->getClientId();
+#        $token = $this->securityContext->getToken();
+#        if ($token === null || !$token instanceof AccessTokenToken) {
+#            throw new ServerErrorException(array(
+#                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+#            ));
+#        }
+#
+#        return $token->getClientId();
     }
 
     protected function checkUsername()
     {
-        $token = $this->securityContext->getToken();
-        if ($token === null || !$token instanceof AccessTokenToken) {
-            throw new ServerErrorException(array(
-                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
-            ));
-        }
+        return 'demouserame1';
 
-        return $token->getUsername();
+#        $token = $this->securityContext->getToken();
+#        if ($token === null || !$token instanceof AccessTokenToken) {
+#            throw new ServerErrorException(array(
+#                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+#            ));
+#        }
+#
+#        return $token->getUsername();
     }
 
     protected function checkDeviceToken(Request $request)
