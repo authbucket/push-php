@@ -49,34 +49,10 @@ class PushController
     {
         $format = $request->getRequestFormat();
 
-        // Fetch from JSON/XML.
+        $deviceSupplied = $this->checkDevice($request);
+
+        // Remove all legacy record for this deviceToken.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $deviceSupplied = $this->serializer->deserialize(
-            $request->getContent(),
-            $deviceManager->getClassName(),
-            $format
-        );
-
-        // Validate supplied values
-        $errors = $this->validator->validate($deviceSupplied);
-        if (count($errors) > 0) {
-            throw new InvalidRequestException(array(
-                'error_description' => 'The request includes an invalid parameter value.',
-            ));
-        }
-
-        // Check if provided variantId exists.
-        $variantManager = $this->modelManagerFactory->getModelManager('variant');
-        $variant = $variantManager->readModelOneBy(array(
-            'variantId' => $deviceSupplied->getVariantId(),
-        ));
-        if ($variant === null) {
-            throw new InvalidRequestException(array(
-                'error_description' => 'The request includes an invalid parameter value.',
-            ));
-        }
-
-        // Remove all legacy record for this deviceToken, then recreate it.
         $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceSupplied->getDeviceToken(),
             'variantId' => $deviceSupplied->getVariantId(),
@@ -84,6 +60,8 @@ class PushController
         foreach ($devices as $device) {
             $deviceManager->deleteModel($device);
         }
+
+        // Recreate record with new supplied values.
         $deviceSaved = $deviceManager->createModel($deviceSupplied);
 
         return new Response($this->serializer->serialize($deviceSaved, $format), 200, array(
@@ -93,13 +71,23 @@ class PushController
 
     public function unregisterAction(Request $request)
     {
-        // Check variant_type.
-        $variantType = $this->checkVariantType($request);
+        $format = $request->getRequestFormat();
 
-        // Handle action.
-        return $this->variantTypeHandlerFactory
-            ->getVariantTypeHandler($variantType)
-            ->unregister($request);
+        $deviceSupplied = $this->checkDevice($request);
+
+        // Remove all legacy record for this deviceToken.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $devices = $deviceManager->readModelBy(array(
+            'deviceToken' => $deviceSupplied->getDeviceToken(),
+            'variantId' => $deviceSupplied->getVariantId(),
+        ));
+        foreach ($devices as $device) {
+            $deviceManager->deleteModel($device);
+        }
+
+        return new Response($this->serializer->serialize($deviceSupplied, $format), 200, array(
+            "Content-Type" => $request->getMimeType($format),
+        ));
     }
 
     public function sendAction(Request $request)
@@ -112,6 +100,38 @@ class PushController
         }
 
         return new Response(json_encode($response));
+    }
+
+    protected function checkDevice(Request $request)
+    {
+        // Fetch device from request body.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $device = $this->serializer->deserialize(
+            $request->getContent(),
+            $deviceManager->getClassName(),
+            $request->getRequestFormat()
+        );
+
+        // Validate supplied values.
+        $errors = $this->validator->validate($device);
+        if (count($errors) > 0) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
+        }
+
+        // Check if provided variantId exists.
+        $variantManager = $this->modelManagerFactory->getModelManager('variant');
+        $variant = $variantManager->readModelOneBy(array(
+            'variantId' => $device->getVariantId(),
+        ));
+        if ($variant === null) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
+        }
+
+        return $device;
     }
 
     protected function checkVariantType(Request $request)

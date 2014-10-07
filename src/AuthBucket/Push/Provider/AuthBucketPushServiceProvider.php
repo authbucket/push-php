@@ -105,8 +105,9 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
             ->bind('api_push_register')
             ->assert('_format', 'json|xml');
 
-        $app->post('/api/v1.0/push/unregister', 'authbucket_push.push_controller:unregisterAction')
-            ->bind('api_push_unregister');
+        $app->post('/api/v1.0/push/unregister.{_format}', 'authbucket_push.push_controller:unregisterAction')
+            ->bind('api_push_unregister')
+            ->assert('_format', 'json|xml');
 
         $app->post('/api/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
             ->bind('api_push_send');
