@@ -19,11 +19,27 @@ namespace AuthBucket\Push\Model;
 interface MessageInterface extends ModelInterface
 {
     /**
+     * Set messageId
+     *
+     * @param string $messageId
+     *
+     * @return Message
+     */
+    public function setMessageId($messageId);
+
+    /**
+     * Get messageId
+     *
+     * @return string
+     */
+    public function getMessageId();
+
+    /**
      * Set clientId
      *
      * @param string $clientId
      *
-     * @return Device
+     * @return Message
      */
     public function setClientId($clientId);
 
@@ -39,7 +55,7 @@ interface MessageInterface extends ModelInterface
      *
      * @param array $serviceId
      *
-     * @return Device
+     * @return Message
      */
     public function setServiceId($serviceId);
 
@@ -55,7 +71,7 @@ interface MessageInterface extends ModelInterface
      *
      * @param array $username
      *
-     * @return Device
+     * @return Message
      */
     public function setUsername($username);
 
@@ -71,7 +87,7 @@ interface MessageInterface extends ModelInterface
      *
      * @param array $scope
      *
-     * @return Device
+     * @return Message
      */
     public function setScope($scope);
 
@@ -87,7 +103,7 @@ interface MessageInterface extends ModelInterface
      *
      * @param array $payload
      *
-     * @return Device
+     * @return Message
      */
     public function setPayload($payload);
 

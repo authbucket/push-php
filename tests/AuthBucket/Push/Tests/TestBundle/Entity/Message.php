@@ -34,7 +34,14 @@ class Message implements MessageInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="application_id", type="string", length=255)
+     * @ORM\Column(name="message_id", type="string", length=255)
+     */
+    protected $messageId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="client_id", type="string", length=255)
      */
     protected $clientId;
 
@@ -77,11 +84,35 @@ class Message implements MessageInterface
     }
 
     /**
+     * Set messageId
+     *
+     * @param string $messageId
+     *
+     * @return Message
+     */
+    public function setMessageId($messageId)
+    {
+        $this->messageId = $messageId;
+
+        return $this;
+    }
+
+    /**
+     * Get messageId
+     *
+     * @return string
+     */
+    public function getMessageId()
+    {
+        return $this->messageId;
+    }
+
+    /**
      * Set clientId
      *
      * @param string $clientId
      *
-     * @return Device
+     * @return Message
      */
     public function setClientId($clientId)
     {
@@ -105,7 +136,7 @@ class Message implements MessageInterface
      *
      * @param array $serviceId
      *
-     * @return Device
+     * @return Message
      */
     public function setServiceId($serviceId)
     {
@@ -129,7 +160,7 @@ class Message implements MessageInterface
      *
      * @param array $username
      *
-     * @return Device
+     * @return Message
      */
     public function setUsername($username)
     {
@@ -153,7 +184,7 @@ class Message implements MessageInterface
      *
      * @param array $scope
      *
-     * @return Device
+     * @return Message
      */
     public function setScope($scope)
     {
@@ -177,7 +208,7 @@ class Message implements MessageInterface
      *
      * @param array $payload
      *
-     * @return Device
+     * @return Message
      */
     public function setPayload($payload)
     {

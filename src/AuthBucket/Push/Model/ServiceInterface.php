@@ -67,18 +67,18 @@ interface ServiceInterface extends ModelInterface
     public function getClientId();
 
     /**
-     * Set options
+     * Set option
      *
-     * @param array $options
+     * @param array $option
      *
      * @return Service
      */
-    public function setOptions($options);
+    public function setOption($option);
 
     /**
-     * Get options
+     * Get option
      *
      * @return array
      */
-    public function getOptions();
+    public function getOption();
 }

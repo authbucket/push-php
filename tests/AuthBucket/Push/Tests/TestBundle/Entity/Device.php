@@ -48,14 +48,14 @@ class Device implements DeviceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, nullable=true)
+     * @ORM\Column(name="username", type="string", length=255)
      */
     protected $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="scope", type="array", nullable=true)
+     * @ORM\Column(name="scope", type="array")
      */
     protected $scope;
 

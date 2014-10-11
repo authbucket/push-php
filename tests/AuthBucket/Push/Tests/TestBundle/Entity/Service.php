@@ -48,16 +48,16 @@ class Service implements ServiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="application_id", type="string", length=255)
+     * @ORM\Column(name="client_id", type="string", length=255)
      */
     protected $clientId;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="options", type="array")
+     * @ORM\Column(name="option", type="array")
      */
-    protected $options;
+    protected $option;
 
     /**
      * Get id
@@ -142,26 +142,26 @@ class Service implements ServiceInterface
     }
 
     /**
-     * Set options
+     * Set option
      *
-     * @param array $options
+     * @param array $option
      *
      * @return Service
      */
-    public function setOptions($options)
+    public function setOption($option)
     {
-        $this->options = $options;
+        $this->option = $option;
 
         return $this;
     }
 
     /**
-     * Get options
+     * Get option
      *
      * @return array
      */
-    public function getOptions()
+    public function getOption()
     {
-        return $this->options;
+        return $this->option;
     }
 }

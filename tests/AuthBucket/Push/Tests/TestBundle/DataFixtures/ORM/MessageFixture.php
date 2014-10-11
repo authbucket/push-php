@@ -20,7 +20,8 @@ class MessageFixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $model = new Message();
-        $model->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
+        $model->setMessageId('4ac2842c963da2983a83e91c2a59f0b1')
+            ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setServiceId(array(
                 'f2ee1d163e9c9b633efca95fb9733f35',
             ))
@@ -41,7 +42,8 @@ class MessageFixture implements FixtureInterface
         $manager->persist($model);
 
         $model = new Message();
-        $model->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
+        $model->setMessageId('c555754aebec3ce37585ff784348662f')
+            ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setServiceId(array(
                 '78b67c04bfd60ddfc8c90895d36e1e05',
             ))

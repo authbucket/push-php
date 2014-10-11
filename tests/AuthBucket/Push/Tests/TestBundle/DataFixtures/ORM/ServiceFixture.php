@@ -23,7 +23,7 @@ class ServiceFixture implements FixtureInterface
         $model->setServiceId('f2ee1d163e9c9b633efca95fb9733f35')
             ->setServiceType('apns')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
-            ->setOptions(array(
+            ->setOption(array(
                 'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
                 'local_cert' => <<<EOF
 -----BEGIN CERTIFICATE-----
@@ -102,7 +102,7 @@ EOF
         $model->setServiceId('78b67c04bfd60ddfc8c90895d36e1e05')
             ->setServiceType('gcm')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
-            ->setOptions(array(
+            ->setOption(array(
                 'host' => 'https://android.googleapis.com/gcm/send',
                 'key' => 'AIzaSyAWV2gTtvIYIwg-Bgo_TI0w5EEEjQUJh_0',
             ));

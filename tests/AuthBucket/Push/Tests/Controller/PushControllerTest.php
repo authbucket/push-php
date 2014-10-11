@@ -25,6 +25,7 @@ class PushControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'username' => 'demousername1',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/register.json', array(), array(), $server, $content);
@@ -42,6 +43,7 @@ class PushControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'username' => 'demousername1',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/register.xml', array(), array(), $server, $content);
