@@ -12,15 +12,15 @@
 namespace AuthBucket\Push\Exception;
 
 /**
- * UnsupportedVariantTypeException
+ * UnsupportedServiceTypeException
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class UnsupportedVariantTypeException extends \InvalidArgumentException implements ExceptionInterface
+class UnsupportedServiceTypeException extends \InvalidArgumentException implements ExceptionInterface
 {
     public function __construct($message = array(), $code = 400, Exception $previous = null)
     {
-        $message['error'] = 'unsupported_variant_type';
+        $message['error'] = 'unsupported_service_type';
         parent::__construct(serialize($message), $code, $previous);
     }
 }

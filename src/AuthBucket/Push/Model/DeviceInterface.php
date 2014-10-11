@@ -35,20 +35,20 @@ interface DeviceInterface extends ModelInterface
     public function getDeviceToken();
 
     /**
-     * Set variantId
+     * Set serviceId
      *
-     * @param string $variantId
+     * @param string $serviceId
      *
      * @return Device
      */
-    public function setVariantId($variantId);
+    public function setServiceId($serviceId);
 
     /**
-     * Get variantId
+     * Get serviceId
      *
      * @return string
      */
-    public function getVariantId();
+    public function getServiceId();
 
     /**
      * Set alias

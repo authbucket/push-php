@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\Tests\VariantType;
+namespace AuthBucket\Push\Tests\ServiceType;
 
-class FooVariantTypeHandler
+class FooServiceTypeHandler
 {
 }

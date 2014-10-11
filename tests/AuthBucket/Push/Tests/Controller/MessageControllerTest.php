@@ -24,7 +24,7 @@ class MessageControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'payload' => $payload,
         ), 'json');
         $client = $this->createClient();
@@ -41,7 +41,7 @@ class MessageControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'payload' => $payload,
         ), 'xml');
         $client = $this->createClient();
@@ -83,7 +83,7 @@ class MessageControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'payload' => $payload,
         ), 'json');
         $client = $this->createClient();
@@ -113,7 +113,7 @@ class MessageControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'payload' => $payload,
         ), 'xml');
         $client = $this->createClient();
@@ -143,7 +143,7 @@ class MessageControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'payload' => $payload,
         ), 'json');
         $client = $this->createClient();
@@ -172,7 +172,7 @@ class MessageControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'payload' => $payload,
         ), 'xml');
         $client = $this->createClient();

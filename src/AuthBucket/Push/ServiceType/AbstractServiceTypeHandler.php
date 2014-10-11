@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\VariantType;
+namespace AuthBucket\Push\ServiceType;
 
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Exception\ServerErrorException;
@@ -21,11 +21,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
 
 /**
- * Shared variant type implementation.
+ * Shared service type implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-abstract class AbstractVariantTypeHandler implements VariantTypeHandlerInterface
+abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
 {
     protected $securityContext;
     protected $validator;
@@ -41,7 +41,7 @@ abstract class AbstractVariantTypeHandler implements VariantTypeHandlerInterface
         $this->modelManagerFactory = $modelManagerFactory;
     }
 
-    protected function checkApplicationId()
+    protected function checkClientId()
     {
         return '6b44c21ef7bc8ca7380bb5b8276b3f97';
 

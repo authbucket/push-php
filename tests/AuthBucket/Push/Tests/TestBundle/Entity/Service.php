@@ -11,16 +11,16 @@
 
 namespace AuthBucket\Push\Tests\TestBundle\Entity;
 
-use AuthBucket\Push\Model\VariantInterface;
+use AuthBucket\Push\Model\ServiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Variant
+ * Service
  *
- * @ORM\Table(name="authbucket_push_variant")
- * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\VariantRepository")
+ * @ORM\Table(name="authbucket_push_service")
+ * @ORM\Entity(repositoryClass="AuthBucket\Push\Tests\TestBundle\Entity\ServiceRepository")
  */
-class Variant implements VariantInterface
+class Service implements ServiceInterface
 {
     /**
      * @var integer
@@ -34,30 +34,30 @@ class Variant implements VariantInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="variant_id", type="string", length=255)
+     * @ORM\Column(name="service_id", type="string", length=255)
      */
-    protected $variantId;
+    protected $serviceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="variant_secret", type="string", length=255)
+     * @ORM\Column(name="service_secret", type="string", length=255)
      */
-    protected $variantSecret;
+    protected $serviceSecret;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="variant_type", type="string", length=255)
+     * @ORM\Column(name="service_type", type="string", length=255)
      */
-    protected $variantType;
+    protected $serviceType;
 
     /**
      * @var string
      *
      * @ORM\Column(name="application_id", type="string", length=255)
      */
-    protected $applicationId;
+    protected $clientId;
 
     /**
      * @var array
@@ -77,99 +77,99 @@ class Variant implements VariantInterface
     }
 
     /**
-     * Set variantId
+     * Set serviceId
      *
-     * @param string $variantId
+     * @param string $serviceId
      *
-     * @return Variant
+     * @return Service
      */
-    public function setVariantId($variantId)
+    public function setServiceId($serviceId)
     {
-        $this->variantId = $variantId;
+        $this->serviceId = $serviceId;
 
         return $this;
     }
 
     /**
-     * Get variantId
+     * Get serviceId
      *
      * @return string
      */
-    public function getVariantId()
+    public function getServiceId()
     {
-        return $this->variantId;
+        return $this->serviceId;
     }
 
     /**
-     * Set variantSecret
+     * Set serviceSecret
      *
-     * @param string $variantSecret
+     * @param string $serviceSecret
      *
-     * @return Variant
+     * @return Service
      */
-    public function setVariantSecret($variantSecret)
+    public function setServiceSecret($serviceSecret)
     {
-        $this->variantSecret = $variantSecret;
+        $this->serviceSecret = $serviceSecret;
 
         return $this;
     }
 
     /**
-     * Get variantSecret
+     * Get serviceSecret
      *
      * @return string
      */
-    public function getVariantSecret()
+    public function getServiceSecret()
     {
-        return $this->variantSecret;
+        return $this->serviceSecret;
     }
 
     /**
-     * Set variantType
+     * Set serviceType
      *
-     * @param string $variantType
+     * @param string $serviceType
      *
-     * @return Variant
+     * @return Service
      */
-    public function setVariantType($variantType)
+    public function setServiceType($serviceType)
     {
-        $this->variantType = $variantType;
+        $this->serviceType = $serviceType;
 
         return $this;
     }
 
     /**
-     * Get variantType
+     * Get serviceType
      *
      * @return string
      */
-    public function getVariantType()
+    public function getServiceType()
     {
-        return $this->variantType;
+        return $this->serviceType;
     }
 
     /**
-     * Set applicationId
+     * Set clientId
      *
-     * @param string $applicationId
+     * @param string $clientId
      *
-     * @return Variant
+     * @return Service
      */
-    public function setApplicationId($applicationId)
+    public function setClientId($clientId)
     {
-        $this->applicationId = $applicationId;
+        $this->clientId = $clientId;
 
         return $this;
     }
 
     /**
-     * Get applicationId
+     * Get clientId
      *
      * @return string
      */
-    public function getApplicationId()
+    public function getClientId()
     {
-        return $this->applicationId;
+        return $this->clientId;
     }
 
     /**
@@ -177,7 +177,7 @@ class Variant implements VariantInterface
      *
      * @param array $options
      *
-     * @return Variant
+     * @return Service
      */
     public function setOptions($options)
     {

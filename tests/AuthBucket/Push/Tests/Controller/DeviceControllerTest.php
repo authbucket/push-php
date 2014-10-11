@@ -25,7 +25,7 @@ class DeviceControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
             'alias' => 'demousername1',
             'category' => array(
                 'democategory1',
@@ -48,7 +48,7 @@ class DeviceControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
             'alias' => 'demousername1',
             'category' => array(
                 'democategory1',
@@ -96,7 +96,7 @@ class DeviceControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
             'alias' => 'demousername1',
             'category' => array(
                 'democategory1',
@@ -132,7 +132,7 @@ class DeviceControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
             'alias' => 'demousername1',
             'category' => array(
                 'democategory1',
@@ -168,7 +168,7 @@ class DeviceControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
             'alias' => 'demousername1',
             'category' => array(
                 'democategory1',
@@ -203,7 +203,7 @@ class DeviceControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
             'alias' => 'demousername1',
             'category' => array(
                 'democategory1',

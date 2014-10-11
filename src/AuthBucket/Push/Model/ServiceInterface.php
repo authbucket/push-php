@@ -12,82 +12,82 @@
 namespace AuthBucket\Push\Model;
 
 /**
- * Push variant interface.
+ * Push service interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-interface VariantInterface extends ModelInterface
+interface ServiceInterface extends ModelInterface
 {
     /**
-     * Set variantId
+     * Set serviceId
      *
-     * @param string $variantId
+     * @param string $serviceId
      *
-     * @return Variant
+     * @return Service
      */
-    public function setVariantId($variantId);
+    public function setServiceId($serviceId);
 
     /**
-     * Get variantId
+     * Get serviceId
      *
      * @return string
      */
-    public function getVariantId();
+    public function getServiceId();
 
     /**
-     * Set variantSecret
+     * Set serviceSecret
      *
-     * @param string $variantSecret
+     * @param string $serviceSecret
      *
-     * @return Variant
+     * @return Service
      */
-    public function setVariantSecret($variantSecret);
+    public function setServiceSecret($serviceSecret);
 
     /**
-     * Get variantSecret
+     * Get serviceSecret
      *
      * @return string
      */
-    public function getVariantSecret();
+    public function getServiceSecret();
 
     /**
-     * Set variantType
+     * Set serviceType
      *
-     * @param string $variantType
+     * @param string $serviceType
      *
-     * @return Variant
+     * @return Service
      */
-    public function setVariantType($variantType);
+    public function setServiceType($serviceType);
 
     /**
-     * Get variantType
+     * Get serviceType
      *
      * @return string
      */
-    public function getVariantType();
+    public function getServiceType();
 
     /**
-     * Set applicationId
+     * Set clientId
      *
-     * @param string $applicationId
+     * @param string $clientId
      *
-     * @return Variant
+     * @return Service
      */
-    public function setApplicationId($applicationId);
+    public function setClientId($clientId);
 
     /**
-     * Get applicationId
+     * Get clientId
      *
      * @return string
      */
-    public function getApplicationId();
+    public function getClientId();
 
     /**
      * Set options
      *
      * @param array $options
      *
-     * @return Variant
+     * @return Service
      */
     public function setOptions($options);
 

@@ -24,7 +24,7 @@ class PushControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/register.json', array(), array(), $server, $content);
@@ -41,7 +41,7 @@ class PushControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/register.xml', array(), array(), $server, $content);
@@ -58,7 +58,7 @@ class PushControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/unregister.json', array(), array(), $server, $content);
@@ -75,7 +75,7 @@ class PushControllerTest extends WebTestCase
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
+            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/push/unregister.xml', array(), array(), $server, $content);

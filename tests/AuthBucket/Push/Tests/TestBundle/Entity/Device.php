@@ -41,9 +41,9 @@ class Device implements DeviceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="variant_id", type="string", length=255)
+     * @ORM\Column(name="service_id", type="string", length=255)
      */
-    protected $variantId;
+    protected $serviceId;
 
     /**
      * @var string
@@ -94,27 +94,27 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set variantId
+     * Set serviceId
      *
-     * @param string $variantId
+     * @param string $serviceId
      *
      * @return Device
      */
-    public function setVariantId($variantId)
+    public function setServiceId($serviceId)
     {
-        $this->variantId = $variantId;
+        $this->serviceId = $serviceId;
 
         return $this;
     }
 
     /**
-     * Get variantId
+     * Get serviceId
      *
      * @return string
      */
-    public function getVariantId()
+    public function getServiceId()
     {
-        return $this->variantId;
+        return $this->serviceId;
     }
 
     /**

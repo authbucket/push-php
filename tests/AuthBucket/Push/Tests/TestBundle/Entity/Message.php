@@ -36,14 +36,14 @@ class Message implements MessageInterface
      *
      * @ORM\Column(name="application_id", type="string", length=255)
      */
-    protected $applicationId;
+    protected $clientId;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="variant_id", type="array")
+     * @ORM\Column(name="service_id", type="array")
      */
-    protected $variantId;
+    protected $serviceId;
 
     /**
      * @var array
@@ -77,51 +77,51 @@ class Message implements MessageInterface
     }
 
     /**
-     * Set applicationId
+     * Set clientId
      *
-     * @param string $applicationId
+     * @param string $clientId
      *
      * @return Device
      */
-    public function setApplicationId($applicationId)
+    public function setClientId($clientId)
     {
-        $this->applicationId = $applicationId;
+        $this->clientId = $clientId;
 
         return $this;
     }
 
     /**
-     * Get applicationId
+     * Get clientId
      *
      * @return string
      */
-    public function getApplicationId()
+    public function getClientId()
     {
-        return $this->applicationId;
+        return $this->clientId;
     }
 
     /**
-     * Set variantId
+     * Set serviceId
      *
-     * @param array $variantId
+     * @param array $serviceId
      *
      * @return Device
      */
-    public function setVariantId($variantId)
+    public function setServiceId($serviceId)
     {
-        $this->variantId = $variantId;
+        $this->serviceId = $serviceId;
 
         return $this;
     }
 
     /**
-     * Get variantId
+     * Get serviceId
      *
      * @return array
      */
-    public function getVariantId()
+    public function getServiceId()
     {
-        return $this->variantId;
+        return $this->serviceId;
     }
 
     /**

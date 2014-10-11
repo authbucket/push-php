@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\VariantType;
+namespace AuthBucket\Push\ServiceType;
 
 use Guzzle\Http\Client;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,31 +17,31 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * GCM variant type handler implementation.
+ * GCM service type handler implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class GcmVariantTypeHandler extends AbstractVariantTypeHandler
+class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 {
     public function send(Request $request)
     {
-        $applicationId = $this->checkApplicationId();
+        $clientId = $this->checkClientId();
 
         $username = $this->checkUsername();
 
         $data = $this->checkData($request);
 
-        $variantManager = $this->modelManagerFactory->getModelManager('variant');
-        $variant = $variantManager->readModelOneBy(array(
-            'variantType' => 'gcm',
-            'applicationId' => $applicationId,
+        $serviceManager = $this->modelManagerFactory->getModelManager('service');
+        $service = $serviceManager->readModelOneBy(array(
+            'serviceType' => 'gcm',
+            'clientId' => $clientId,
         ));
-        $options = $variant->getOptions();
+        $options = $service->getOptions();
 
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'variantType' => 'gcm',
-            'applicationId' => $applicationId,
+            'serviceType' => 'gcm',
+            'clientId' => $clientId,
             'username' => $username,
         ));
 
