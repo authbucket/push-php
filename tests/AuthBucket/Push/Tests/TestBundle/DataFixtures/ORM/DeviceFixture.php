@@ -25,8 +25,6 @@ class DeviceFixture implements FixtureInterface
             ->setUsername('demousername1')
             ->setScope(array(
                 'demoscope1',
-                'demoscope2',
-                'demoscope3',
             ));
         $manager->persist($model);
 
@@ -36,41 +34,24 @@ class DeviceFixture implements FixtureInterface
             ->setUsername('demousername1')
             ->setScope(array(
                 'demoscope1',
-                'demoscope2',
-                'demoscope3',
             ));
         $manager->persist($model);
 
         $model = new Device();
-        $model->setDeviceToken('b55d6e3322b5bf00de15a622246d24492d3668e08aa919a74cfeeb1ee16b4d42')
+        $model->setDeviceToken('d288ad9899d0e0fecaac1083d46121feba27b15b3d57cd0d666799168bc03639')
             ->setServiceId('f2ee1d163e9c9b633efca95fb9733f35')
             ->setUsername('demousername1')
             ->setScope(array(
                 'demoscope1',
-                'demoscope2',
-                'demoscope3',
             ));
         $manager->persist($model);
 
         $model = new Device();
-        $model->setDeviceToken('e0f948405a1566ed46fde8daa51aa2c05cf925d7d7cca10bcff4e002657be1d6')
-            ->setServiceId('f2ee1d163e9c9b633efca95fb9733f35')
-            ->setUsername('demousername1')
-            ->setScope(array(
-                'demoscope1',
-                'demoscope2',
-                'demoscope3',
-            ));
-        $manager->persist($model);
-
-        $model = new Device();
-        $model->setDeviceToken('APA91bFwYKY0qonK0xg_lHMe-zcwaoeNsjGBMKDND-HspWOgbfsMYJyNqAlhSBbcc9WmxmVOyJk_jYJKUzwg22NFnK44w5f0PvC_ugXJR9MnBgvl5sgbPP9VeMIVAr9gH-3xz09ObfORaBTYfwQ7YrJuZ0CIAfHyvMmxNLu_hxtzXCMXx3xtdY8')
+        $model->setDeviceToken('APA91bE-hRR6MJ60PkTKLr-8x4u7nEV_R9aZSfqV4k4ceuOKw5Pr9sHsmBtgEg0OjFZAyZqFepel6goRrfUZfsR3Desr2Tea_tEnimT8y4qoPeJVLuFPbyS2Rs7qY35thHoZJjiM0eVrClPPVx5zAP_XlzavnDjsYW8VXDfiaUF6MNELmfWLMlw')
             ->setServiceId('78b67c04bfd60ddfc8c90895d36e1e05')
             ->setUsername('demousername1')
             ->setScope(array(
                 'demoscope1',
-                'demoscope2',
-                'demoscope3',
             ));
         $manager->persist($model);
 
