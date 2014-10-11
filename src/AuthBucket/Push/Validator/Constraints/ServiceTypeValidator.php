@@ -9,20 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\VariantType;
+namespace AuthBucket\Push\Validator\Constraints;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\RegexValidator;
 
 /**
- * Push variant type handler interface.
+ * Validates whether the value is a valid service_type per RFC 6749
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+ *
+ * @see http://tools.ietf.org/html/rfc6749#appendix-A.3
  */
-interface VariantTypeHandlerInterface
+class ServiceTypeValidator extends RegexValidator
 {
-    public function register(Request $request);
-
-    public function unregister(Request $request);
-
-    public function send(Request $request);
 }

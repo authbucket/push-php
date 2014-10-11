@@ -11,6 +11,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+$app->register(new AuthBucket\OAuth2\Provider\AuthBucketOAuth2ServiceProvider());
 $app->register(new AuthBucket\Push\Tests\TestBundle\TestBundleServiceProvider());
 $app->register(new Silex\Provider\DoctrineServiceProvider());
 $app->register(new Silex\Provider\FormServiceProvider());

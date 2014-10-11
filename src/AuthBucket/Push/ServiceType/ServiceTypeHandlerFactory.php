@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\VariantType;
+namespace AuthBucket\Push\ServiceType;
 
-use AuthBucket\Push\Exception\UnsupportedVariantTypeException;
+use AuthBucket\Push\Exception\UnsupportedServiceTypeException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Validator\ValidatorInterface;
 
 /**
- * Push variant type handler factory implemention.
+ * Push service type handler factory implemention.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class VariantTypeHandlerFactory implements VariantTypeHandlerFactoryInterface
+class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
 {
     protected $securityContext;
     protected $validator;
@@ -40,14 +40,14 @@ class VariantTypeHandlerFactory implements VariantTypeHandlerFactoryInterface
 
         foreach ($classes as $class) {
             if (!class_exists($class)) {
-                throw new UnsupportedVariantTypeException(array(
+                throw new UnsupportedServiceTypeException(array(
                     'error_description' => 'The authorization server does not support obtaining an authorization code using this method.',
                 ));
             }
 
             $reflection = new \ReflectionClass($class);
-            if (!$reflection->implementsInterface('AuthBucket\\Push\\VariantType\\VariantTypeHandlerInterface')) {
-                throw new UnsupportedVariantTypeException(array(
+            if (!$reflection->implementsInterface('AuthBucket\\Push\\ServiceType\\ServiceTypeHandlerInterface')) {
+                throw new UnsupportedServiceTypeException(array(
                     'error_description' => 'The authorization server does not support obtaining an authorization code using this method.',
                 ));
             }
@@ -56,12 +56,12 @@ class VariantTypeHandlerFactory implements VariantTypeHandlerFactoryInterface
         $this->classes = $classes;
     }
 
-    public function getVariantTypeHandler($type = null)
+    public function getServiceTypeHandler($type = null)
     {
         $type = $type ?: current(array_keys($this->classes));
 
         if (!isset($this->classes[$type]) || !class_exists($this->classes[$type])) {
-            throw new UnsupportedVariantTypeException(array(
+            throw new UnsupportedServiceTypeException(array(
                 'error_description' => 'The authorization server does not support obtaining an authorization code using this method.',
             ));
         }
@@ -75,7 +75,7 @@ class VariantTypeHandlerFactory implements VariantTypeHandlerFactoryInterface
         );
     }
 
-    public function getVariantTypeHandlers()
+    public function getServiceTypeHandlers()
     {
         return $this->classes;
     }

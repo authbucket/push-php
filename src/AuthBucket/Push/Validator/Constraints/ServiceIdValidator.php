@@ -14,12 +14,12 @@ namespace AuthBucket\Push\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\RegexValidator;
 
 /**
- * Validates whether the value is a valid service_type per RFC 6749
+ * Validates whether the value is a valid service_id per RFC 6749
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  *
- * @see http://tools.ietf.org/html/rfc6749#appendix-A.3
+ * @see http://tools.ietf.org/html/rfc6749#appendix-A.1
  */
-class VariantTypeValidator extends RegexValidator
+class ServiceIdValidator extends RegexValidator
 {
 }
