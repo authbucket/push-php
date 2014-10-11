@@ -19,8 +19,7 @@ class PushControllerTest extends WebTestCase
     public function testGoodRegisterJson()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
@@ -37,8 +36,7 @@ class PushControllerTest extends WebTestCase
     public function testGoodRegisterXml()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
@@ -55,8 +53,7 @@ class PushControllerTest extends WebTestCase
     public function testGoodUnrgisterJson()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',
@@ -72,8 +69,7 @@ class PushControllerTest extends WebTestCase
     public function testGoodUnregisterXml()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => '0027956241e3ca5090de548fe468334d',

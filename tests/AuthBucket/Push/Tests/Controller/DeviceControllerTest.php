@@ -20,8 +20,7 @@ class DeviceControllerTest extends WebTestCase
     {
         $deviceToken = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
@@ -43,8 +42,7 @@ class DeviceControllerTest extends WebTestCase
     {
         $deviceToken = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
@@ -65,8 +63,7 @@ class DeviceControllerTest extends WebTestCase
     public function testReadActionJson()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/device/1.json', array(), array(), $server);
@@ -77,8 +74,7 @@ class DeviceControllerTest extends WebTestCase
     public function testReadActionXml()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/device/1.xml', array(), array(), $server);
@@ -91,8 +87,7 @@ class DeviceControllerTest extends WebTestCase
     {
         $deviceToken = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
@@ -127,8 +122,7 @@ class DeviceControllerTest extends WebTestCase
     {
         $deviceToken = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
@@ -163,8 +157,7 @@ class DeviceControllerTest extends WebTestCase
     {
         $deviceToken = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
@@ -198,8 +191,7 @@ class DeviceControllerTest extends WebTestCase
     {
         $deviceToken = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
@@ -232,8 +224,7 @@ class DeviceControllerTest extends WebTestCase
     public function testListActionJson()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/device.json', array(), array(), $server);
@@ -244,8 +235,7 @@ class DeviceControllerTest extends WebTestCase
     public function testListActionXml()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/device.xml', array(), array(), $server);
