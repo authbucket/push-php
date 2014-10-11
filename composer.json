@@ -24,6 +24,7 @@
         "apns",
         "gcm",
         "notification",
+        "oauth2",
         "push"
     ],
     "license": "MIT",

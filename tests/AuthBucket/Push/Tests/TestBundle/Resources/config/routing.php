@@ -10,6 +10,7 @@
  */
 
 require __DIR__.'/routing_demo.php';
+require __DIR__.'/routing_oauth2.php';
 require __DIR__.'/routing_push.php';
 
 $app->get('/', 'authbucket_push.tests.default_controller:indexAction')

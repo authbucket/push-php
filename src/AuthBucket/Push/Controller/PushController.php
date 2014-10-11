@@ -13,8 +13,8 @@ namespace AuthBucket\Push\Controller;
 
 use AuthBucket\Push\Exception\InvalidRequestException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use AuthBucket\Push\Validator\Constraints\ServiceType;
 use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactoryInterface;
+use AuthBucket\Push\Validator\Constraints\ServiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
