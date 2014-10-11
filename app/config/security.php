@@ -32,7 +32,7 @@ $app['security.firewalls'] = array(
         'users' => $app['security.user_provider.admin'],
     ),
     'api' => array(
-        'pattern' => '^/api/v1.0',
+        'pattern' => '^/api/v1.0$',
         'http' => true,
         'users' => $app['security.user_provider.default'],
     ),

@@ -16,14 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BarVariantTypeHandler implements VariantTypeHandlerInterface
 {
-    public function register(Request $request)
-    {
-    }
-
-    public function unregister(Request $request)
-    {
-    }
-
     public function send(Request $request)
     {
     }

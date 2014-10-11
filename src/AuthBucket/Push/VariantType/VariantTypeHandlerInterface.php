@@ -20,9 +20,5 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface VariantTypeHandlerInterface
 {
-    public function register(Request $request);
-
-    public function unregister(Request $request);
-
     public function send(Request $request);
 }
