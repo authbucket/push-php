@@ -18,12 +18,12 @@ use Symfony\Component\Validator\Constraints\Regex;
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class VariantType extends Regex
+class ServiceType extends Regex
 {
     public function __construct($options = null)
     {
         return parent::__construct(array_merge(array(
-            'message' => 'This is not a valid variantType.',
+            'message' => 'This is not a valid serviceType.',
             'pattern' => '/^([a-z0-9\_]+)$/',
         ), (array) $options));
     }

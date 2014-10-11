@@ -9,38 +9,37 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\VariantType;
+namespace AuthBucket\Push\ServiceType;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * APNs variant type implementation.
+ * APNs service type implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class ApnsVariantTypeHandler extends AbstractVariantTypeHandler
+class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 {
     public function send(Request $request)
     {
-        $applicationId = $this->checkApplicationId();
+        $clientId = $this->checkClientId();
 
         $username = $this->checkUsername();
 
         $data = $this->checkData($request);
 
-        $variantManager = $this->modelManagerFactory->getModelManager('variant');
-        $variant = $variantManager->readModelOneBy(array(
-            'variantType' => 'apns',
-            'applicationId' => $applicationId,
+        $serviceManager = $this->modelManagerFactory->getModelManager('service');
+        $service = $serviceManager->readModelOneBy(array(
+            'serviceType' => 'apns',
+            'clientId' => $clientId,
         ));
-        $options = $variant->getOptions();
+        $options = $service->getOptions();
 
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'variantType' => 'apns',
-            'applicationId' => $applicationId,
+            'serviceType' => 'apns',
+            'clientId' => $clientId,
             'username' => $username,
         ));
 

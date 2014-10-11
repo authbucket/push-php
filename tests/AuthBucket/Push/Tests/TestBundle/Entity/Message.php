@@ -34,30 +34,37 @@ class Message implements MessageInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="application_id", type="string", length=255)
+     * @ORM\Column(name="message_id", type="string", length=255)
      */
-    protected $applicationId;
+    protected $messageId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="client_id", type="string", length=255)
+     */
+    protected $clientId;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="variant_id", type="array")
+     * @ORM\Column(name="service_id", type="array")
      */
-    protected $variantId;
+    protected $serviceId;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="alias", type="array")
+     * @ORM\Column(name="username", type="array")
      */
-    protected $alias;
+    protected $username;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="category", type="array")
+     * @ORM\Column(name="scope", type="array")
      */
-    protected $category;
+    protected $scope;
 
     /**
      * @var array
@@ -77,99 +84,123 @@ class Message implements MessageInterface
     }
 
     /**
-     * Set applicationId
+     * Set messageId
      *
-     * @param string $applicationId
+     * @param string $messageId
      *
-     * @return Device
+     * @return Message
      */
-    public function setApplicationId($applicationId)
+    public function setMessageId($messageId)
     {
-        $this->applicationId = $applicationId;
+        $this->messageId = $messageId;
 
         return $this;
     }
 
     /**
-     * Get applicationId
+     * Get messageId
      *
      * @return string
      */
-    public function getApplicationId()
+    public function getMessageId()
     {
-        return $this->applicationId;
+        return $this->messageId;
     }
 
     /**
-     * Set variantId
+     * Set clientId
      *
-     * @param array $variantId
+     * @param string $clientId
      *
-     * @return Device
+     * @return Message
      */
-    public function setVariantId($variantId)
+    public function setClientId($clientId)
     {
-        $this->variantId = $variantId;
+        $this->clientId = $clientId;
 
         return $this;
     }
 
     /**
-     * Get variantId
+     * Get clientId
      *
-     * @return array
+     * @return string
      */
-    public function getVariantId()
+    public function getClientId()
     {
-        return $this->variantId;
+        return $this->clientId;
     }
 
     /**
-     * Set alias
+     * Set serviceId
      *
-     * @param array $alias
+     * @param array $serviceId
      *
-     * @return Device
+     * @return Message
      */
-    public function setAlias($alias)
+    public function setServiceId($serviceId)
     {
-        $this->alias = $alias;
+        $this->serviceId = $serviceId;
 
         return $this;
     }
 
     /**
-     * Get alias
+     * Get serviceId
      *
      * @return array
      */
-    public function getAlias()
+    public function getServiceId()
     {
-        return $this->alias;
+        return $this->serviceId;
     }
 
     /**
-     * Set category
+     * Set username
      *
-     * @param array $category
+     * @param array $username
      *
-     * @return Device
+     * @return Message
      */
-    public function setCategory($category)
+    public function setUsername($username)
     {
-        $this->category = $category;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Get username
      *
      * @return array
      */
-    public function getCategory()
+    public function getUsername()
     {
-        return $this->category;
+        return $this->username;
+    }
+
+    /**
+     * Set scope
+     *
+     * @param array $scope
+     *
+     * @return Message
+     */
+    public function setScope($scope)
+    {
+        $this->scope = $scope;
+
+        return $this;
+    }
+
+    /**
+     * Get scope
+     *
+     * @return array
+     */
+    public function getScope()
+    {
+        return $this->scope;
     }
 
     /**
@@ -177,7 +208,7 @@ class Message implements MessageInterface
      *
      * @param array $payload
      *
-     * @return Device
+     * @return Message
      */
     public function setPayload($payload)
     {

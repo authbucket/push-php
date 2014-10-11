@@ -9,16 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\VariantType;
+namespace AuthBucket\Push\Tests\ServiceType;
 
+use AuthBucket\Push\ServiceType\ServiceTypeHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Push variant type handler interface.
- *
- * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
- */
-interface VariantTypeHandlerInterface
+class BarServiceTypeHandler implements ServiceTypeHandlerInterface
 {
-    public function send(Request $request);
+    public function send(Request $request)
+    {
+    }
 }

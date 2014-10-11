@@ -11,20 +11,19 @@
 
 namespace AuthBucket\Push\Tests\TestBundle\DataFixtures\ORM;
 
-use AuthBucket\Push\Tests\TestBundle\Entity\Variant;
+use AuthBucket\Push\Tests\TestBundle\Entity\Service;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class VariantFixture implements FixtureInterface
+class ServiceFixture implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $model = new Variant();
-        $model->setVariantId('f2ee1d163e9c9b633efca95fb9733f35')
-            ->setVariantSecret('51d819733baf585b424483da6383841e')
-            ->setVariantType('apns')
-            ->setApplicationId('6b44c21ef7bc8ca7380bb5b8276b3f97')
-            ->setOptions(array(
+        $model = new Service();
+        $model->setServiceId('f2ee1d163e9c9b633efca95fb9733f35')
+            ->setServiceType('apns')
+            ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
+            ->setOption(array(
                 'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
                 'local_cert' => <<<EOF
 -----BEGIN CERTIFICATE-----
@@ -99,12 +98,11 @@ EOF
             ));
         $manager->persist($model);
 
-        $model = new Variant();
-        $model->setVariantId('78b67c04bfd60ddfc8c90895d36e1e05')
-            ->setVariantSecret('1c21c3f8a4ecba1703a6fbaf322587f6')
-            ->setVariantType('gcm')
-            ->setApplicationId('6b44c21ef7bc8ca7380bb5b8276b3f97')
-            ->setOptions(array(
+        $model = new Service();
+        $model->setServiceId('78b67c04bfd60ddfc8c90895d36e1e05')
+            ->setServiceType('gcm')
+            ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
+            ->setOption(array(
                 'host' => 'https://android.googleapis.com/gcm/send',
                 'key' => 'AIzaSyAWV2gTtvIYIwg-Bgo_TI0w5EEEjQUJh_0',
             ));

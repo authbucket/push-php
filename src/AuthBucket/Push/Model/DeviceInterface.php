@@ -35,50 +35,50 @@ interface DeviceInterface extends ModelInterface
     public function getDeviceToken();
 
     /**
-     * Set variantId
+     * Set serviceId
      *
-     * @param string $variantId
+     * @param string $serviceId
      *
      * @return Device
      */
-    public function setVariantId($variantId);
+    public function setServiceId($serviceId);
 
     /**
-     * Get variantId
+     * Get serviceId
      *
      * @return string
      */
-    public function getVariantId();
+    public function getServiceId();
 
     /**
-     * Set alias
+     * Set username
      *
-     * @param string $alias
+     * @param string $username
      *
      * @return Device
      */
-    public function setAlias($alias);
+    public function setUsername($username);
 
     /**
-     * Get alias
+     * Get username
      *
      * @return string
      */
-    public function getAlias();
+    public function getUsername();
 
     /**
-     * Set category
+     * Set scope
      *
-     * @param array $category
+     * @param array $scope
      *
      * @return Device
      */
-    public function setCategory($category);
+    public function setScope($scope);
 
     /**
-     * Get category
+     * Get scope
      *
      * @return array
      */
-    public function getCategory();
+    public function getScope();
 }

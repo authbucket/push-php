@@ -12,10 +12,10 @@
 namespace AuthBucket\Push\Model;
 
 /**
- * Push application manager interface.
+ * Push service manager interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-interface ApplicationManagerInterface extends ModelManagerInterface
+interface ServiceManagerInterface extends ModelManagerInterface
 {
 }

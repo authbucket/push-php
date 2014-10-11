@@ -16,71 +16,35 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PushControllerTest extends WebTestCase
 {
-    public function testGoodRegisterJson()
+    public function testGoodRegister()
     {
-        $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+        $parameters = array(
+            'device_token' => '0027956241e3ca5090de548fe468334d',
+            'service_id' => 'f2ee1d163e9c9b633efca95fb9733f35',
         );
-        $content = $this->app['serializer']->encode(array(
-            'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-        ), 'json');
+        $server = array(
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
+        );
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/register.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/api/v1.0/push/register', $parameters, array(), $server);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
+        $response = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['device_token']);
     }
 
-    public function testGoodRegisterXml()
+    public function testGoodUnrgister()
     {
-        $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+        $parameters = array(
+            'device_token' => '0027956241e3ca5090de548fe468334d',
+            'service_id' => 'f2ee1d163e9c9b633efca95fb9733f35',
         );
-        $content = $this->app['serializer']->encode(array(
-            'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-        ), 'xml');
-        $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/register.xml', array(), array(), $server, $content);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
-    }
-
-    public function testGoodUnrgisterJson()
-    {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
-        $content = $this->app['serializer']->encode(array(
-            'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-        ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/unregister.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
-    }
-
-    public function testGoodUnregisterXml()
-    {
-        $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
-        );
-        $content = $this->app['serializer']->encode(array(
-            'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'variantId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-        ), 'xml');
-        $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/unregister.xml', array(), array(), $server, $content);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
+        $response = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['device_token']);
     }
 }

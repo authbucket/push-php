@@ -11,13 +11,12 @@
 
 namespace AuthBucket\Push\Provider;
 
-use AuthBucket\Push\Controller\ApplicationController;
 use AuthBucket\Push\Controller\DeviceController;
 use AuthBucket\Push\Controller\MessageController;
 use AuthBucket\Push\Controller\PushController;
-use AuthBucket\Push\Controller\VariantController;
+use AuthBucket\Push\Controller\ServiceController;
 use AuthBucket\Push\EventListener\ExceptionListener;
-use AuthBucket\Push\VariantType\VariantTypeHandlerFactory;
+use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactory;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
@@ -36,44 +35,37 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         // EntityRepository.
         $app['authbucket_push.model_manager.factory'] = null;
 
-        // Add default variant type handler.
-        $app['authbucket_push.variant_handler'] = array(
-            'apns' => 'AuthBucket\\Push\\VariantType\\ApnsVariantTypeHandler',
-            'gcm' => 'AuthBucket\\Push\\VariantType\\GcmVariantTypeHandler',
+        // Add default service type handler.
+        $app['authbucket_push.service_handler'] = array(
+            'apns' => 'AuthBucket\\Push\\ServiceType\\ApnsServiceTypeHandler',
+            'gcm' => 'AuthBucket\\Push\\ServiceType\\GcmServiceTypeHandler',
         );
 
         $app['authbucket_push.exception_listener'] = $app->share(function () {
             return new ExceptionListener();
         });
 
-        $app['authbucket_push.variant_handler.factory'] = $app->share(function ($app) {
-            return new VariantTypeHandlerFactory(
+        $app['authbucket_push.service_handler.factory'] = $app->share(function ($app) {
+            return new ServiceTypeHandlerFactory(
                 $app['security'],
                 $app['validator'],
                 $app['authbucket_push.model_manager.factory'],
-                $app['authbucket_push.variant_handler']
+                $app['authbucket_push.service_handler']
             );
         });
 
         $app['authbucket_push.push_controller'] = $app->share(function () use ($app) {
             return new PushController(
+                $app['security'],
                 $app['validator'],
                 $app['serializer'],
                 $app['authbucket_push.model_manager.factory'],
-                $app['authbucket_push.variant_handler.factory']
+                $app['authbucket_push.service_handler.factory']
             );
         });
 
-        $app['authbucket_push.application_controller'] = $app->share(function () use ($app) {
-            return new ApplicationController(
-                $app['validator'],
-                $app['serializer'],
-                $app['authbucket_push.model_manager.factory']
-            );
-        });
-
-        $app['authbucket_push.variant_controller'] = $app->share(function () use ($app) {
-            return new VariantController(
+        $app['authbucket_push.service_controller'] = $app->share(function () use ($app) {
+            return new ServiceController(
                 $app['validator'],
                 $app['serializer'],
                 $app['authbucket_push.model_manager.factory']
@@ -101,18 +93,16 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
     {
         $controllers = $app['controllers_factory'];
 
-        $app->post('/api/v1.0/push/register.{_format}', 'authbucket_push.push_controller:registerAction')
-            ->bind('api_push_register')
-            ->assert('_format', 'json|xml');
+        $app->post('/api/v1.0/push/register', 'authbucket_push.push_controller:registerAction')
+            ->bind('api_push_register');
 
-        $app->post('/api/v1.0/push/unregister.{_format}', 'authbucket_push.push_controller:unregisterAction')
-            ->bind('api_push_unregister')
-            ->assert('_format', 'json|xml');
+        $app->post('/api/v1.0/push/unregister', 'authbucket_push.push_controller:unregisterAction')
+            ->bind('api_push_unregister');
 
         $app->post('/api/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
             ->bind('api_push_send');
 
-        foreach (array('application', 'variant', 'device', 'message') as $type) {
+        foreach (array('service', 'device', 'message') as $type) {
             $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')
                 ->bind('api_'.$type.'_create')
                 ->assert('_format', 'json|xml');

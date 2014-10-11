@@ -18,145 +18,138 @@ class MessageControllerTest extends WebTestCase
 {
     public function testCreateActionJson()
     {
-        $payload = array('alert' => md5(uniqid(null, true)));
+        $messageId = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
-            'payload' => $payload,
+            'messageId' => $messageId,
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
     }
 
     public function testCreateActionXml()
     {
-        $payload = array('alert' => md5(uniqid(null, true)));
+        $messageId = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
-            'payload' => $payload,
+            'messageId' => $messageId,
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
     }
 
     public function testReadActionJson()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message/1.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals('demoalert1', $response['payload']['alert']);
+        $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response['messageId']);
     }
 
     public function testReadActionXml()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message/1.xml', array(), array(), $server);
         $response = simplexml_load_string($client->getResponse()->getContent());
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals('demoalert1', $response['payload']['alert']);
+        $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response['messageId']);
     }
 
     public function testUpdateActionJson()
     {
-        $payload = array('alert' => md5(uniqid(null, true)));
+        $messageId = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
-            'payload' => $payload,
+            'messageId' => $messageId,
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
 
         $id = $response['id'];
-        $payloadUpdated = array('alert' => md5(uniqid(null, true)));
-        $content = $this->app['serializer']->encode(array('payload' => $payloadUpdated), 'json');
+        $messageIdUpdated = md5(uniqid(null, true));
+        $content = $this->app['serializer']->encode(array('messageId' => $messageIdUpdated), 'json');
         $client = $this->createClient();
         $crawler = $client->request('PUT', "/api/v1.0/message/${id}.json", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($payloadUpdated, $response['payload']);
+        $this->assertEquals($messageIdUpdated, $response['messageId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/message/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($payloadUpdated, $response['payload']);
+        $this->assertEquals($messageIdUpdated, $response['messageId']);
     }
 
     public function testUpdateActionXml()
     {
-        $payload = array('alert' => md5(uniqid(null, true)));
+        $messageId = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
-            'payload' => $payload,
+            'messageId' => $messageId,
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
 
         $id = $response['id'];
-        $payloadUpdated = array('alert' => md5(uniqid(null, true)));
-        $content = $this->app['serializer']->encode(array('payload' => $payloadUpdated), 'xml');
+        $messageIdUpdated = md5(uniqid(null, true));
+        $content = $this->app['serializer']->encode(array('messageId' => $messageIdUpdated), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('PUT', "/api/v1.0/message/${id}.xml", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($payloadUpdated, $response['payload']);
+        $this->assertEquals($messageIdUpdated, $response['messageId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/message/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($payloadUpdated, $response['payload']);
+        $this->assertEquals($messageIdUpdated, $response['messageId']);
     }
 
     public function testDeleteActionJson()
     {
-        $payload = array('alert' => md5(uniqid(null, true)));
+        $messageId = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
-            'payload' => $payload,
+            'messageId' => $messageId,
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
 
         $id = $response['id'];
         $client = $this->createClient();
         $crawler = $client->request('DELETE', "/api/v1.0/message/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals(null, $response['id']);
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/message/${id}.json", array(), array(), $server);
@@ -166,26 +159,25 @@ class MessageControllerTest extends WebTestCase
 
     public function testDeleteActionXml()
     {
-        $payload = array('alert' => md5(uniqid(null, true)));
+        $messageId = md5(uniqid(null, true));
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
-            'applicationId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
-            'payload' => $payload,
+            'messageId' => $messageId,
+            'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
 
         $id = $response['id'];
         $client = $this->createClient();
         $crawler = $client->request('DELETE', "/api/v1.0/message/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals(null, $response['id']);
-        $this->assertEquals($payload, $response['payload']);
+        $this->assertEquals($messageId, $response['messageId']);
 
         $client = $this->createClient();
         $crawler = $client->request('GET', "/api/v1.0/message/${id}.xml", array(), array(), $server);
@@ -196,24 +188,22 @@ class MessageControllerTest extends WebTestCase
     public function testListActionJson()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals('demoalert1', $response[0]['payload']['alert']);
+        $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response[0]['messageId']);
     }
 
     public function testListActionXml()
     {
         $server = array(
-            'PHP_AUTH_USER' => 'demousername1',
-            'PHP_AUTH_PW' => 'demopassword1',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message.xml', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
-        $this->assertEquals('demoalert1', $response[0]['payload']['alert']);
+        $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response[0]['messageId']);
     }
 }

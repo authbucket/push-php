@@ -9,13 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace AuthBucket\Push\Model;
+namespace AuthBucket\Push\ServiceType;
+
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Push variant manager interface.
+ * Push service type handler interface.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-interface VariantManagerInterface extends ModelManagerInterface
+interface ServiceTypeHandlerInterface
 {
+    public function send(Request $request);
 }

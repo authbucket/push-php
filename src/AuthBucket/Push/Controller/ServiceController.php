@@ -19,11 +19,11 @@ use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\ValidatorInterface;
 
 /**
- * Variant endpoint controller implementation.
+ * Service endpoint controller implementation.
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class VariantController
+class ServiceController
 {
     protected $validator;
     protected $serializer;
@@ -43,7 +43,7 @@ class VariantController
     {
         $format = $request->getRequestFormat();
 
-        $modelManager = $this->modelManagerFactory->getModelManager('variant');
+        $modelManager = $this->modelManagerFactory->getModelManager('service');
         $model = $this->serializer->deserialize(
             $request->getContent(),
             $modelManager->getClassName(),
@@ -60,7 +60,7 @@ class VariantController
     {
         $format = $request->getRequestFormat();
 
-        $modelManager = $this->modelManagerFactory->getModelManager('variant');
+        $modelManager = $this->modelManagerFactory->getModelManager('service');
         $model = $modelManager->readModelOneBy(array('id' => (int) $id));
 
         return new Response($this->serializer->serialize($model, $format), 200, array(
@@ -72,7 +72,7 @@ class VariantController
     {
         $format = $request->getRequestFormat();
 
-        $modelManager = $this->modelManagerFactory->getModelManager('variant');
+        $modelManager = $this->modelManagerFactory->getModelManager('service');
         $model = $modelManager->readModelOneBy(array('id' => (int) $id));
 
         $values = $this->serializer->decode($request->getContent(), $format);
@@ -94,7 +94,7 @@ class VariantController
     {
         $format = $request->getRequestFormat();
 
-        $modelManager = $this->modelManagerFactory->getModelManager('variant');
+        $modelManager = $this->modelManagerFactory->getModelManager('service');
         $model = $modelManager->readModelOneBy(array('id' => (int) $id));
 
         $model = $modelManager->deleteModel($model);
@@ -108,7 +108,7 @@ class VariantController
     {
         $format = $request->getRequestFormat();
 
-        $modelManager = $this->modelManagerFactory->getModelManager('variant');
+        $modelManager = $this->modelManagerFactory->getModelManager('service');
         $model = $modelManager->readModelAll();
 
         return new Response($this->serializer->serialize($model, $format), 200, array(

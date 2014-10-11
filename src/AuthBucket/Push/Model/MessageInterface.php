@@ -19,75 +19,91 @@ namespace AuthBucket\Push\Model;
 interface MessageInterface extends ModelInterface
 {
     /**
-     * Set applicationId
+     * Set messageId
      *
-     * @param string $applicationId
+     * @param string $messageId
      *
-     * @return Device
+     * @return Message
      */
-    public function setApplicationId($applicationId);
+    public function setMessageId($messageId);
 
     /**
-     * Get applicationId
+     * Get messageId
      *
      * @return string
      */
-    public function getApplicationId();
+    public function getMessageId();
 
     /**
-     * Set variantId
+     * Set clientId
      *
-     * @param array $variantId
+     * @param string $clientId
      *
-     * @return Device
+     * @return Message
      */
-    public function setVariantId($variantId);
+    public function setClientId($clientId);
 
     /**
-     * Get variantId
+     * Get clientId
+     *
+     * @return string
+     */
+    public function getClientId();
+
+    /**
+     * Set serviceId
+     *
+     * @param array $serviceId
+     *
+     * @return Message
+     */
+    public function setServiceId($serviceId);
+
+    /**
+     * Get serviceId
      *
      * @return array
      */
-    public function getVariantId();
+    public function getServiceId();
 
     /**
-     * Set alias
+     * Set username
      *
-     * @param array $alias
+     * @param array $username
      *
-     * @return Device
+     * @return Message
      */
-    public function setAlias($alias);
+    public function setUsername($username);
 
     /**
-     * Get alias
+     * Get username
      *
      * @return array
      */
-    public function getAlias();
+    public function getUsername();
 
     /**
-     * Set category
+     * Set scope
      *
-     * @param array $category
+     * @param array $scope
      *
-     * @return Device
+     * @return Message
      */
-    public function setCategory($category);
+    public function setScope($scope);
 
     /**
-     * Get category
+     * Get scope
      *
      * @return array
      */
-    public function getCategory();
+    public function getScope();
 
     /**
      * Set payload
      *
      * @param array $payload
      *
-     * @return Device
+     * @return Message
      */
     public function setPayload($payload);
 
