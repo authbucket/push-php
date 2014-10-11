@@ -48,16 +48,16 @@ class Device implements DeviceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="alias", type="string", length=255, nullable=true)
+     * @ORM\Column(name="username", type="string", length=255, nullable=true)
      */
-    protected $alias;
+    protected $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="category", type="array", nullable=true)
+     * @ORM\Column(name="scope", type="array", nullable=true)
      */
-    protected $category;
+    protected $scope;
 
     /**
      * Get id
@@ -118,50 +118,50 @@ class Device implements DeviceInterface
     }
 
     /**
-     * Set alias
+     * Set username
      *
-     * @param string $alias
+     * @param string $username
      *
      * @return Device
      */
-    public function setAlias($alias)
+    public function setUsername($username)
     {
-        $this->alias = $alias;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get alias
+     * Get username
      *
      * @return string
      */
-    public function getAlias()
+    public function getUsername()
     {
-        return $this->alias;
+        return $this->username;
     }
 
     /**
-     * Set category
+     * Set scope
      *
-     * @param array $category
+     * @param array $scope
      *
      * @return Device
      */
-    public function setCategory($category)
+    public function setScope($scope)
     {
-        $this->category = $category;
+        $this->scope = $scope;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Get scope
      *
      * @return array
      */
-    public function getCategory()
+    public function getScope()
     {
-        return $this->category;
+        return $this->scope;
     }
 }

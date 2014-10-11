@@ -26,11 +26,11 @@ class DeviceControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-            'alias' => 'demousername1',
-            'category' => array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            'username' => 'demousername1',
+            'scope' => array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ),
         ), 'json');
         $client = $this->createClient();
@@ -49,11 +49,11 @@ class DeviceControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-            'alias' => 'demousername1',
-            'category' => array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            'username' => 'demousername1',
+            'scope' => array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ),
         ), 'xml');
         $client = $this->createClient();
@@ -97,11 +97,11 @@ class DeviceControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-            'alias' => 'demousername1',
-            'category' => array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            'username' => 'demousername1',
+            'scope' => array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ),
         ), 'json');
         $client = $this->createClient();
@@ -133,11 +133,11 @@ class DeviceControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-            'alias' => 'demousername1',
-            'category' => array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            'username' => 'demousername1',
+            'scope' => array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ),
         ), 'xml');
         $client = $this->createClient();
@@ -169,11 +169,11 @@ class DeviceControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-            'alias' => 'demousername1',
-            'category' => array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            'username' => 'demousername1',
+            'scope' => array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ),
         ), 'json');
         $client = $this->createClient();
@@ -204,11 +204,11 @@ class DeviceControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'deviceToken' => $deviceToken,
             'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-            'alias' => 'demousername1',
-            'category' => array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            'username' => 'demousername1',
+            'scope' => array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ),
         ), 'xml');
         $client = $this->createClient();

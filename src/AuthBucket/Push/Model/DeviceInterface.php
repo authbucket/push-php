@@ -51,34 +51,34 @@ interface DeviceInterface extends ModelInterface
     public function getServiceId();
 
     /**
-     * Set alias
+     * Set username
      *
-     * @param string $alias
+     * @param string $username
      *
      * @return Device
      */
-    public function setAlias($alias);
+    public function setUsername($username);
 
     /**
-     * Get alias
+     * Get username
      *
      * @return string
      */
-    public function getAlias();
+    public function getUsername();
 
     /**
-     * Set category
+     * Set scope
      *
-     * @param array $category
+     * @param array $scope
      *
      * @return Device
      */
-    public function setCategory($category);
+    public function setScope($scope);
 
     /**
-     * Get category
+     * Get scope
      *
      * @return array
      */
-    public function getCategory();
+    public function getScope();
 }
