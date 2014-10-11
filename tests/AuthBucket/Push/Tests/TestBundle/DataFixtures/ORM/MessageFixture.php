@@ -24,13 +24,13 @@ class MessageFixture implements FixtureInterface
             ->setServiceId(array(
                 'f2ee1d163e9c9b633efca95fb9733f35',
             ))
-            ->setAlias(array(
+            ->setUsername(array(
                 'demousername1',
             ))
-            ->setCategory(array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            ->setScope(array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ))
             ->setPayload(array(
                 'alert' => 'demoalert1',
@@ -45,13 +45,13 @@ class MessageFixture implements FixtureInterface
             ->setServiceId(array(
                 '78b67c04bfd60ddfc8c90895d36e1e05',
             ))
-            ->setAlias(array(
+            ->setUsername(array(
                 'demousername1',
             ))
-            ->setCategory(array(
-                'democategory1',
-                'democategory2',
-                'democategory3',
+            ->setScope(array(
+                'demoscope1',
+                'demoscope2',
+                'demoscope3',
             ))
             ->setPayload(array(
                 'alert' => 'demoalert2',

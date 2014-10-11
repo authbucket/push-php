@@ -51,36 +51,36 @@ interface MessageInterface extends ModelInterface
     public function getServiceId();
 
     /**
-     * Set alias
+     * Set username
      *
-     * @param array $alias
-     *
-     * @return Device
-     */
-    public function setAlias($alias);
-
-    /**
-     * Get alias
-     *
-     * @return array
-     */
-    public function getAlias();
-
-    /**
-     * Set category
-     *
-     * @param array $category
+     * @param array $username
      *
      * @return Device
      */
-    public function setCategory($category);
+    public function setUsername($username);
 
     /**
-     * Get category
+     * Get username
      *
      * @return array
      */
-    public function getCategory();
+    public function getUsername();
+
+    /**
+     * Set scope
+     *
+     * @param array $scope
+     *
+     * @return Device
+     */
+    public function setScope($scope);
+
+    /**
+     * Get scope
+     *
+     * @return array
+     */
+    public function getScope();
 
     /**
      * Set payload

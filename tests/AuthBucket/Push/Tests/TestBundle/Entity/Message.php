@@ -48,16 +48,16 @@ class Message implements MessageInterface
     /**
      * @var array
      *
-     * @ORM\Column(name="alias", type="array")
+     * @ORM\Column(name="username", type="array")
      */
-    protected $alias;
+    protected $username;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="category", type="array")
+     * @ORM\Column(name="scope", type="array")
      */
-    protected $category;
+    protected $scope;
 
     /**
      * @var array
@@ -125,51 +125,51 @@ class Message implements MessageInterface
     }
 
     /**
-     * Set alias
+     * Set username
      *
-     * @param array $alias
+     * @param array $username
      *
      * @return Device
      */
-    public function setAlias($alias)
+    public function setUsername($username)
     {
-        $this->alias = $alias;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get alias
+     * Get username
      *
      * @return array
      */
-    public function getAlias()
+    public function getUsername()
     {
-        return $this->alias;
+        return $this->username;
     }
 
     /**
-     * Set category
+     * Set scope
      *
-     * @param array $category
+     * @param array $scope
      *
      * @return Device
      */
-    public function setCategory($category)
+    public function setScope($scope)
     {
-        $this->category = $category;
+        $this->scope = $scope;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Get scope
      *
      * @return array
      */
-    public function getCategory()
+    public function getScope()
     {
-        return $this->category;
+        return $this->scope;
     }
 
     /**
