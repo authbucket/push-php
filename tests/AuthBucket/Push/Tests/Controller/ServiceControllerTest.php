@@ -19,14 +19,12 @@ class ServiceControllerTest extends WebTestCase
     public function testCreateActionJson()
     {
         $serviceId = md5(uniqid(null, true));
-        $serviceSecret = md5(uniqid(null, true));
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'serviceId' => $serviceId,
-            'serviceSecret' => $serviceSecret,
             'serviceType' => 'apns',
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'options' => array(),
@@ -40,14 +38,12 @@ class ServiceControllerTest extends WebTestCase
     public function testCreateActionXml()
     {
         $serviceId = md5(uniqid(null, true));
-        $serviceSecret = md5(uniqid(null, true));
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'serviceId' => $serviceId,
-            'serviceSecret' => $serviceSecret,
             'serviceType' => 'apns',
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'options' => array(),
@@ -86,14 +82,12 @@ class ServiceControllerTest extends WebTestCase
     public function testUpdateActionJson()
     {
         $serviceId = md5(uniqid(null, true));
-        $serviceSecret = md5(uniqid(null, true));
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'serviceId' => $serviceId,
-            'serviceSecret' => $serviceSecret,
             'serviceType' => 'apns',
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'options' => array(),
@@ -120,14 +114,12 @@ class ServiceControllerTest extends WebTestCase
     public function testUpdateActionXml()
     {
         $serviceId = md5(uniqid(null, true));
-        $serviceSecret = md5(uniqid(null, true));
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'serviceId' => $serviceId,
-            'serviceSecret' => $serviceSecret,
             'serviceType' => 'apns',
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'options' => array(),
@@ -154,14 +146,12 @@ class ServiceControllerTest extends WebTestCase
     public function testDeleteActionJson()
     {
         $serviceId = md5(uniqid(null, true));
-        $serviceSecret = md5(uniqid(null, true));
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'serviceId' => $serviceId,
-            'serviceSecret' => $serviceSecret,
             'serviceType' => 'apns',
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'options' => array(),
@@ -187,14 +177,12 @@ class ServiceControllerTest extends WebTestCase
     public function testDeleteActionXml()
     {
         $serviceId = md5(uniqid(null, true));
-        $serviceSecret = md5(uniqid(null, true));
         $server = array(
             'PHP_AUTH_USER' => 'demousername1',
             'PHP_AUTH_PW' => 'demopassword1',
         );
         $content = $this->app['serializer']->encode(array(
             'serviceId' => $serviceId,
-            'serviceSecret' => $serviceSecret,
             'serviceType' => 'apns',
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
             'options' => array(),

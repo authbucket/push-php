@@ -21,7 +21,6 @@ class ServiceFixture implements FixtureInterface
     {
         $model = new Service();
         $model->setServiceId('f2ee1d163e9c9b633efca95fb9733f35')
-            ->setServiceSecret('51d819733baf585b424483da6383841e')
             ->setServiceType('apns')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setOptions(array(
@@ -101,7 +100,6 @@ EOF
 
         $model = new Service();
         $model->setServiceId('78b67c04bfd60ddfc8c90895d36e1e05')
-            ->setServiceSecret('1c21c3f8a4ecba1703a6fbaf322587f6')
             ->setServiceType('gcm')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setOptions(array(

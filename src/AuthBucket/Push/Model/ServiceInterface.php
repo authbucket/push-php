@@ -35,22 +35,6 @@ interface ServiceInterface extends ModelInterface
     public function getServiceId();
 
     /**
-     * Set serviceSecret
-     *
-     * @param string $serviceSecret
-     *
-     * @return Service
-     */
-    public function setServiceSecret($serviceSecret);
-
-    /**
-     * Get serviceSecret
-     *
-     * @return string
-     */
-    public function getServiceSecret();
-
-    /**
      * Set serviceType
      *
      * @param string $serviceType

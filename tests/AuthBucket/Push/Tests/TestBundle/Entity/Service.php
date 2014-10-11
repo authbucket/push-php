@@ -41,13 +41,6 @@ class Service implements ServiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="service_secret", type="string", length=255)
-     */
-    protected $serviceSecret;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="service_type", type="string", length=255)
      */
     protected $serviceType;
@@ -98,30 +91,6 @@ class Service implements ServiceInterface
     public function getServiceId()
     {
         return $this->serviceId;
-    }
-
-    /**
-     * Set serviceSecret
-     *
-     * @param string $serviceSecret
-     *
-     * @return Service
-     */
-    public function setServiceSecret($serviceSecret)
-    {
-        $this->serviceSecret = $serviceSecret;
-
-        return $this;
-    }
-
-    /**
-     * Get serviceSecret
-     *
-     * @return string
-     */
-    public function getServiceSecret()
-    {
-        return $this->serviceSecret;
     }
 
     /**
