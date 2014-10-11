@@ -32,19 +32,19 @@ class PushControllerTest extends WebTestCase
         $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['device_token']);
     }
 
-    public function _testGoodUnrgister()
+    public function testGoodUnrgister()
     {
+        $parameters = array(
+            'device_token' => '0027956241e3ca5090de548fe468334d',
+            'service_id' => 'f2ee1d163e9c9b633efca95fb9733f35',
+        );
         $server = array(
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
-        $content = $this->app['serializer']->encode(array(
-            'deviceToken' => '0027956241e3ca5090de548fe468334d',
-            'serviceId' => 'f2ee1d163e9c9b633efca95fb9733f35',
-        ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/push/unregister.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/api/v1.0/push/unregister', $parameters, array(), $server);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
-        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['deviceToken']);
+        $response = json_decode($client->getResponse()->getContent(), true);
+        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['device_token']);
     }
 }
