@@ -56,6 +56,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
 
         $app['authbucket_push.push_controller'] = $app->share(function () use ($app) {
             return new PushController(
+                $app['security'],
                 $app['validator'],
                 $app['serializer'],
                 $app['authbucket_push.model_manager.factory'],
@@ -92,11 +93,14 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
     {
         $controllers = $app['controllers_factory'];
 
-        foreach (array('register', 'unregister', 'send') as $type) {
-            $app->post('/api/v1.0/push/'.$type.'.{_format}', 'authbucket_push.push_controller:'.$type.'Action')
-                ->bind('api_push_'.$type)
-                ->assert('_format', 'json|xml');
-        }
+        $app->post('/api/v1.0/push/register', 'authbucket_push.push_controller:registerAction')
+            ->bind('api_push_register');
+
+        $app->post('/api/v1.0/push/unregister', 'authbucket_push.push_controller:unregisterAction')
+            ->bind('api_push_unregister');
+
+        $app->post('/api/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
+            ->bind('api_push_send');
 
         foreach (array('service', 'device', 'message') as $type) {
             $app->post('/api/v1.0/'.$type.'.{_format}', 'authbucket_push.'.$type.'_controller:createAction')

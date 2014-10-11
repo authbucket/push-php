@@ -20,7 +20,7 @@ class MessageControllerTest extends WebTestCase
     {
         $messageId = md5(uniqid(null, true));
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
@@ -36,7 +36,7 @@ class MessageControllerTest extends WebTestCase
     {
         $messageId = md5(uniqid(null, true));
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
@@ -51,7 +51,7 @@ class MessageControllerTest extends WebTestCase
     public function testReadActionJson()
     {
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message/1.json', array(), array(), $server);
@@ -62,7 +62,7 @@ class MessageControllerTest extends WebTestCase
     public function testReadActionXml()
     {
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message/1.xml', array(), array(), $server);
@@ -75,7 +75,7 @@ class MessageControllerTest extends WebTestCase
     {
         $messageId = md5(uniqid(null, true));
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
@@ -104,7 +104,7 @@ class MessageControllerTest extends WebTestCase
     {
         $messageId = md5(uniqid(null, true));
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
@@ -133,7 +133,7 @@ class MessageControllerTest extends WebTestCase
     {
         $messageId = md5(uniqid(null, true));
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
@@ -161,7 +161,7 @@ class MessageControllerTest extends WebTestCase
     {
         $messageId = md5(uniqid(null, true));
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
@@ -188,7 +188,7 @@ class MessageControllerTest extends WebTestCase
     public function testListActionJson()
     {
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message.json', array(), array(), $server);
@@ -199,7 +199,7 @@ class MessageControllerTest extends WebTestCase
     public function testListActionXml()
     {
         $server = array(
-            'HTTP_Authorization' => 'Bearer eeb5aa92bbb4b56373b9e0d00bc02d93',
+            'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
         $crawler = $client->request('GET', '/api/v1.0/message.xml', array(), array(), $server);

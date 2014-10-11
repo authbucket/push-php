@@ -23,47 +23,13 @@ class OAuth2Controller
         $className = $accessTokenManager->getClassName();
 
         $model = new $className();
-        $model->setAccessToken('eeb5aa92bbb4b56373b9e0d00bc02d93')
+        $model->setAccessToken('18cdaa6481c0d5f323351ea1029fc065')
             ->setTokenType('bearer')
-            ->setClientId('http://democlient1.com/')
+            ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setUsername('demousername1')
             ->setExpires(new \DateTime('+10 years'))
             ->setScope(array(
                 'demoscope1',
-            ));
-        $accessTokenManager->createModel($model);
-
-        $model = new $className();
-        $model->setAccessToken('d2b58c4c6bc0cc9fefca2d558f1221a5')
-            ->setTokenType('bearer')
-            ->setClientId('http://democlient1.com/')
-            ->setUsername('demousername1')
-            ->setExpires(new \DateTime('-1 hours'))
-            ->setScope(array(
-                'demoscope1',
-            ));
-        $accessTokenManager->createModel($model);
-
-        $model = new $className();
-        $model->setAccessToken('ba2e8d1f54ed3e3d96935796576f1a06')
-            ->setTokenType('bearer')
-            ->setClientId('http://democlient1.com/')
-            ->setUsername('demousername1')
-            ->setExpires(new \DateTime('+1 hours'))
-            ->setScope(array(
-                'demoscope1',
-                'demoscope2',
-            ));
-        $accessTokenManager->createModel($model);
-
-        $model = new $className();
-        $model->setAccessToken('bcc105b66698a64ed23c87b967885289')
-            ->setTokenType('bearer')
-            ->setClientId('http://democlient1.com/')
-            ->setUsername('demousername1')
-            ->setExpires(new \DateTime('+1 hours'))
-            ->setScope(array(
-                'demoscope3',
             ));
         $accessTokenManager->createModel($model);
 

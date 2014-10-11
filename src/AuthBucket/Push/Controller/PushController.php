@@ -11,12 +11,17 @@
 
 namespace AuthBucket\Push\Controller;
 
+use AuthBucket\OAuth2\Security\Authentication\Token\AccessTokenToken;
 use AuthBucket\Push\Exception\InvalidRequestException;
+use AuthBucket\Push\Exception\ServerErrorException;
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
 use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactoryInterface;
-use AuthBucket\Push\Validator\Constraints\ServiceType;
+use AuthBucket\Push\Validator\Constraints\DeviceToken;
+use AuthBucket\Push\Validator\Constraints\ServiceId;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
@@ -28,17 +33,20 @@ use Symfony\Component\Validator\ValidatorInterface;
  */
 class PushController
 {
+    protected $securityContext;
     protected $validator;
     protected $serializer;
     protected $modelManagerFactory;
     protected $serviceTypeHandlerFactory;
 
     public function __construct(
+        SecurityContextInterface $securityContext,
         ValidatorInterface $validator,
         SerializerInterface $serializer,
         ModelManagerFactoryInterface $modelManagerFactory,
         ServiceTypeHandlerFactoryInterface $serviceTypeHandlerFactory
     ) {
+        $this->securityContext = $securityContext;
         $this->validator = $validator;
         $this->serializer = $serializer;
         $this->modelManagerFactory = $modelManagerFactory;
@@ -47,43 +55,68 @@ class PushController
 
     public function registerAction(Request $request)
     {
-        $format = $request->getRequestFormat();
+        $clientId = $this->checkClientId();
 
-        $deviceSupplied = $this->checkDevice($request);
+        $serviceId = $this->checkServiceId($request, $clientId);
 
-        // Remove all legacy record for this deviceToken.
+        $deviceToken = $this->checkDeviceToken($request);
+
+        $username = $this->checkUsername();
+
+        $scope = $this->checkScope();
+
+        // Remove all legacy record for this device_token.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'deviceToken' => $deviceSupplied->getDeviceToken(),
-            'serviceId' => $deviceSupplied->getServiceId(),
+            'deviceToken' => $deviceToken,
+            'serviceId' => $serviceId,
         ));
         foreach ($devices as $device) {
             $deviceManager->deleteModel($device);
         }
 
         // Recreate record with new supplied values.
-        $deviceSaved = $deviceManager->createModel($deviceSupplied);
+        $class = $deviceManager->getClassName();
+        $device = new $class();
+        $device->setDeviceToken($deviceToken)
+            ->setServiceId($serviceId)
+            ->setUsername($username)
+            ->setScope((array) $scope);
+        $device = $deviceManager->createModel($device);
 
-        return new Response($this->serializer->serialize($deviceSaved, $format), 200, array(
-            "Content-Type" => $request->getMimeType($format),
+        // Prepare parameters for JSON response.
+        $parameters = array(
+            'device_token' => $device->getDeviceToken(),
+            'service_id' => $device->getServiceId(),
+            'username' => $device->getUsername(),
+            'scope' => implode(' ', (array) $device->getScope()),
+        );
+
+        return JsonResponse::create($parameters, 200, array(
+            'Cache-Control' => 'no-store',
+            'Pragma' => 'no-cache',
         ));
     }
 
     public function unregisterAction(Request $request)
     {
-        $format = $request->getRequestFormat();
+        $clientId = $this->checkClientId();
 
-        $deviceSupplied = $this->checkDevice($request);
+        $deviceToken = $this->checkDeviceToken($request);
 
         // Remove all legacy record for this deviceToken.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'deviceToken' => $deviceSupplied->getDeviceToken(),
-            'serviceId' => $deviceSupplied->getServiceId(),
+            'deviceToken' => $deviceToken,
+            'serviceId' => $serviceId,
         ));
         foreach ($devices as $device) {
             $deviceManager->deleteModel($device);
         }
+
+        $format = $request->getRequestFormat();
+
+        $deviceSupplied = $this->checkDevice($request);
 
         return new Response($this->serializer->serialize($deviceSupplied, $format), 200, array(
             "Content-Type" => $request->getMimeType($format),
@@ -102,28 +135,78 @@ class PushController
         return new Response(json_encode($response));
     }
 
-    protected function checkDevice(Request $request)
+    protected function checkClientId()
     {
-        // Fetch device from request body.
-        $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $device = $this->serializer->deserialize(
-            $request->getContent(),
-            $deviceManager->getClassName(),
-            $request->getRequestFormat()
-        );
+        $token = $this->securityContext->getToken();
+        if ($token === null || !$token instanceof AccessTokenToken) {
+            throw new ServerErrorException(array(
+                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+            ));
+        }
 
-        // Validate supplied values.
-        $errors = $this->validator->validate($device);
+        return $token->getClientId();
+    }
+
+    protected function checkUsername()
+    {
+        $token = $this->securityContext->getToken();
+        if ($token === null || !$token instanceof AccessTokenToken) {
+            throw new ServerErrorException(array(
+                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+            ));
+        }
+
+        return $token->getUsername();
+    }
+
+    protected function checkScope()
+    {
+        $token = $this->securityContext->getToken();
+        if ($token === null || !$token instanceof AccessTokenToken) {
+            throw new ServerErrorException(array(
+                'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
+            ));
+        }
+
+        return $token->getScope();
+    }
+
+    protected function checkDeviceToken(Request $request)
+    {
+        // device_token is required and in valid format.
+        $deviceToken = $request->request->get('device_token');
+        $errors = $this->validator->validateValue($deviceToken, array(
+            new NotBlank(),
+            new DeviceToken(),
+        ));
         if (count($errors) > 0) {
             throw new InvalidRequestException(array(
                 'error_description' => 'The request includes an invalid parameter value.',
             ));
         }
 
-        // Check if provided serviceId exists.
+        return $deviceToken;
+    }
+
+    protected function checkServiceId(Request $request, $clientId)
+    {
+        // service_id is required and in valid format.
+        $serviceId = $request->request->get('service_id');
+        $errors = $this->validator->validateValue($serviceId, array(
+            new NotBlank(),
+            new ServiceId(),
+        ));
+        if (count($errors) > 0) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
+        }
+
+        // Check if service_id belongs to corresponding client_id.
         $serviceManager = $this->modelManagerFactory->getModelManager('service');
         $service = $serviceManager->readModelOneBy(array(
-            'serviceId' => $device->getServiceId(),
+            'clientId' => $clientId,
+            'serviceId' => $serviceId,
         ));
         if ($service === null) {
             throw new InvalidRequestException(array(
@@ -131,23 +214,6 @@ class PushController
             ));
         }
 
-        return $device;
-    }
-
-    protected function checkServiceType(Request $request)
-    {
-        // Fetch service_type from POST
-        $serviceType = $request->request->get('service_type');
-        $errors = $this->validator->validateValue($serviceType, array(
-            new NotBlank(),
-            new ServiceType(),
-        ));
-        if (count($errors) > 0) {
-            throw new InvalidRequestException(array(
-                'error_description' => 'The request includes an invalid parameter value.',
-            ));
-        }
-
-        return $serviceType;
+        return $serviceId;
     }
 }
