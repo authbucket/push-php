@@ -11,7 +11,8 @@
 
 namespace AuthBucket\Push\ServiceType;
 
-use Symfony\Component\HttpFoundation\Request;
+use Authbucket\Push\Model\MessageInterface;
+use Authbucket\Push\Model\ServiceInterface;
 
 /**
  * Push service type handler interface.
@@ -20,5 +21,5 @@ use Symfony\Component\HttpFoundation\Request;
  */
 interface ServiceTypeHandlerInterface
 {
-    public function send(Request $request);
+    public function send(ServiceInterface $service, MessageInterface $message);
 }

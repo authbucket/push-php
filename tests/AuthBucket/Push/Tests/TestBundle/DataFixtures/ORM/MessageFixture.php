@@ -22,12 +22,7 @@ class MessageFixture implements FixtureInterface
         $model = new Message();
         $model->setMessageId('4ac2842c963da2983a83e91c2a59f0b1')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
-            ->setServiceId(array(
-                'f2ee1d163e9c9b633efca95fb9733f35',
-            ))
-            ->setUsername(array(
-                'demousername1',
-            ))
+            ->setUsername('demousername1')
             ->setScope(array(
                 'demoscope1',
                 'demoscope2',
@@ -44,12 +39,7 @@ class MessageFixture implements FixtureInterface
         $model = new Message();
         $model->setMessageId('c555754aebec3ce37585ff784348662f')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
-            ->setServiceId(array(
-                '78b67c04bfd60ddfc8c90895d36e1e05',
-            ))
-            ->setUsername(array(
-                'demousername1',
-            ))
+            ->setUsername('demousername1')
             ->setScope(array(
                 'demoscope1',
                 'demoscope2',

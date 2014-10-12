@@ -25,6 +25,7 @@ class MessageControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'username' => 'demousername1',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
@@ -41,6 +42,7 @@ class MessageControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'username' => 'demousername1',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
@@ -80,6 +82,7 @@ class MessageControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'username' => 'demousername1',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
@@ -109,6 +112,7 @@ class MessageControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'username' => 'demousername1',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
@@ -138,6 +142,7 @@ class MessageControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'username' => 'demousername1',
         ), 'json');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
@@ -166,6 +171,7 @@ class MessageControllerTest extends WebTestCase
         $content = $this->app['serializer']->encode(array(
             'messageId' => $messageId,
             'clientId' => '6b44c21ef7bc8ca7380bb5b8276b3f97',
+            'username' => 'demousername1',
         ), 'xml');
         $client = $this->createClient();
         $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);

@@ -11,12 +11,13 @@
 
 namespace AuthBucket\Push\Tests\ServiceType;
 
+use AuthBucket\Push\Model\MessageInterface;
+use AuthBucket\Push\Model\ServiceInterface;
 use AuthBucket\Push\ServiceType\ServiceTypeHandlerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class BarServiceTypeHandler implements ServiceTypeHandlerInterface
 {
-    public function send(Request $request)
+    public function send(ServiceInterface $service, MessageInterface $message)
     {
     }
 }
