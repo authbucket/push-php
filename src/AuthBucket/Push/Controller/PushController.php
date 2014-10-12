@@ -108,19 +108,17 @@ class PushController
 
         // Remove all legacy record for this device_token.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $devices = $deviceManager->readModelBy(array(
+        $device = $deviceManager->readModelOneBy(array(
             'deviceToken' => $deviceToken,
             'serviceId' => $serviceId,
         ));
-        foreach ($devices as $device) {
-            $deviceManager->deleteModel($device);
-        }
-
-        // Prepare parameters for JSON response.
         $parameters = array(
-            'device_token' => $deviceToken,
-            'service_id' => $serviceId,
+            'device_token' => $device->getDeviceToken(),
+            'service_id' => $device->getServiceId(),
+            'username' => $device->getUsername(),
+            'scope' => implode(' ', (array) $device->getScope()),
         );
+        $deviceManager->deleteModel($device);
 
         return JsonResponse::create($parameters, 200, array(
             'Cache-Control' => 'no-store',
@@ -165,7 +163,7 @@ class PushController
             'message_id' => $message->getMessageId(),
             'client_id' => $message->getClientId(),
             'username' => $message->getUsername(),
-            'scope' => $message->getScope(),
+            'scope' => implode(' ', (array) $message->getScope()),
             'payload' => $message->getPayload(),
         );
 
