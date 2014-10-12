@@ -48,14 +48,7 @@ class Message implements MessageInterface
     /**
      * @var array
      *
-     * @ORM\Column(name="service_id", type="array")
-     */
-    protected $serviceId;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="username", type="array")
+     * @ORM\Column(name="username", type="string", length=255)
      */
     protected $username;
 
@@ -132,33 +125,9 @@ class Message implements MessageInterface
     }
 
     /**
-     * Set serviceId
-     *
-     * @param array $serviceId
-     *
-     * @return Message
-     */
-    public function setServiceId($serviceId)
-    {
-        $this->serviceId = $serviceId;
-
-        return $this;
-    }
-
-    /**
-     * Get serviceId
-     *
-     * @return array
-     */
-    public function getServiceId()
-    {
-        return $this->serviceId;
-    }
-
-    /**
      * Set username
      *
-     * @param array $username
+     * @param string $username
      *
      * @return Message
      */
@@ -172,7 +141,7 @@ class Message implements MessageInterface
     /**
      * Get username
      *
-     * @return array
+     * @return string
      */
     public function getUsername()
     {

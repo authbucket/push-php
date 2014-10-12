@@ -130,14 +130,49 @@ class PushController
 
     public function sendAction(Request $request)
     {
-        $response = array();
-        foreach ($this->serviceTypeHandlerFactory->getServiceTypeHandlers() as $key => $value) {
-            $response[$key] = $this->serviceTypeHandlerFactory
-                ->getServiceTypeHandler($key)
-                ->send($request);
+        $clientId = $this->checkClientId();
+
+        $username = $this->checkUsername();
+
+        $scope = $this->checkScope();
+
+        $payload = $this->checkPayload($request);
+
+        // Save the raw message.
+        $messageManager = $this->modelManagerFactory->getModelManager('message');
+        $class = $messageManager->getClassName();
+        $message = new $class();
+        $message->setMessageId(md5(uniqid(null, true)))
+            ->setClientId($clientId)
+            ->setUsername($username)
+            ->setScope($scope)
+            ->setPayload($payload);
+        $message = $messageManager->createModel($message);
+
+        // Send out message per service_id.
+        $serviceManager = $this->modelManagerFactory->getModelManager('service');
+        $services = $serviceManager->readModelBy(array(
+            'clientId' => $clientId,
+        ));
+        foreach ($services as $service) {
+            $this->serviceTypeHandlerFactory
+                ->getServiceTypeHandler($service->getServiceType())
+                ->send($service, $message);
         }
 
-        return new Response(json_encode($response));
+        // Prepare parameters for JSON response.
+        $parameters = array(
+            'message_id' => $message->getMessageId(),
+            'client_id' => $message->getClientId(),
+            'username' => $message->getUsername(),
+            'scope' => $message->getScope(),
+            'payload' => $message->getPayload(),
+        );
+
+        return JsonResponse::create($parameters, 200, array(
+            'Cache-Control' => 'no-store',
+            'Pragma' => 'no-cache',
+        ));
     }
 
     protected function checkClientId()
@@ -220,5 +255,19 @@ class PushController
         }
 
         return $serviceId;
+    }
+
+    protected function checkPayload(Request $request)
+    {
+        $payload = $request->request->get('payload');
+
+        $payload = json_decode($payload, true);
+        if ($payload === null) {
+            throw new InvalidRequestException(array(
+                'error_description' => 'The request includes an invalid parameter value.',
+            ));
+        }
+
+        return (array) $payload;
     }
 }

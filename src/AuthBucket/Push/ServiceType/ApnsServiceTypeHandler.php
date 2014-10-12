@@ -11,8 +11,8 @@
 
 namespace AuthBucket\Push\ServiceType;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use AuthBucket\Push\Model\MessageInterface;
+use AuthBucket\Push\Model\ServiceInterface;
 
 /**
  * APNs service type implementation.
@@ -21,33 +21,42 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 {
-    public function send(Request $request)
+    public function send(ServiceInterface $service, MessageInterface $message)
     {
-        $clientId = $this->checkClientId();
+        $option = array_merge(array(
+            'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
+            'local_cert' => '',
+            'passphrase' => '',
+        ), $service->getOption());
+        $payload = array_merge(array(
+            'alert' => '',
+            'sound' => 'default',
+            'badge' => 1,
+            'expire_in' => 60*60*24*7,
+            'content-available' => 1,
+            'action-category' => '',
+        ), $message->getPayload());
 
-        $username = $this->checkUsername();
-
-        $data = $this->checkData($request);
-
-        $serviceManager = $this->modelManagerFactory->getModelManager('service');
-        $service = $serviceManager->readModelOneBy(array(
-            'serviceType' => 'apns',
-            'clientId' => $clientId,
-        ));
-        $options = $service->getOptions();
-
+        // Fetch all device belong to this service_id.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'serviceType' => 'apns',
-            'clientId' => $clientId,
-            'username' => $username,
+            'serviceId' => $service->getServiceId(),
         ));
 
+        // Prepare a list of device_token.
         $deviceTokens = array();
         foreach ($devices as $device) {
-            if ($device->getExpires() > new \DateTime()) {
-                $deviceTokens[$device->getDeviceToken()] = $device->getDeviceToken();
+            // If belongs to named access_token, only send to that username.
+            if ($message->getUsername() && $device->getUsername() !== $message->getUsername()) {
+                continue;
             }
+
+            // Must match at least one scope.
+            if (!array_intersect($device->getScope(), $message->getScope())) {
+                continue;
+            }
+
+            $deviceTokens[] = $device->getDeviceToken();
         }
 
         // PHP SSL implementation need local_cert as physical file.
@@ -55,46 +64,42 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         $local_cert = tempnam(sys_get_temp_dir(), 'PEM');
         register_shutdown_function('unlink', $local_cert);
         $handler = fopen($local_cert, 'w');
-        fwrite($handler, $options['local_cert']);
+        fwrite($handler, $option['local_cert']);
         fclose($handler);
 
-        $response = array();
         foreach ($deviceTokens as $deviceToken) {
             // Prepare the payload in JSON format.
-            $payload = json_encode(array(
+            $_payload = json_encode(array(
                 'aps' => array(
-                    'alert' => $data['message'],
-                    'badge' => 1,
-                    'sound' => 'default',
+                    'alert' => $payload['alert'],
+                    'badge' => $payload['badge'],
+                    'sound' => $payload['sound'],
+                    'content-available' => $payload['content-available'],
                 ),
             ));
 
             // Build the message.
-            $message = pack('CnH*', 1, 32, $deviceToken);
-            $message .= pack('Cn', 2, strlen($payload)).$payload;
-            $message .= pack('CnN', 3, 4, md5(uniqid(null, true)));
-            $message .= pack('CnN', 4, 4, 60*60*24*7);
-            $message .= pack('CnC', 5, 1, 10);
-            $message = pack('CN', 2, strlen($message)).$message;
+            $_message = pack('CnH*', 1, 32, $deviceToken);
+            $_message .= pack('Cn', 2, strlen($_payload)).$_payload;
+            $_message .= pack('CnN', 3, 4, $message->getMessageId());
+            $_message .= pack('CnN', 4, 4, $payload['expire_in']);
+            $_message .= pack('CnC', 5, 1, 10);
+            $_message = pack('CN', 2, strlen($_message)).$_message;
 
             // Create and write to the stream.
-            $context = stream_context_create();
-            stream_context_set_option($context, 'ssl', 'local_cert', $local_cert);
-            stream_context_set_option($context, 'ssl', 'passphrase', $options['passphrase']);
-            $handler = stream_socket_client(
-                $options['host'],
+            $_context = stream_context_create();
+            stream_context_set_option($_context, 'ssl', 'local_cert', $local_cert);
+            stream_context_set_option($_context, 'ssl', 'passphrase', $option['passphrase']);
+            $_handler = stream_socket_client(
+                $option['host'],
                 $error,
                 $errorString,
                 10,
                 STREAM_CLIENT_ASYNC_CONNECT,
-                $context
+                $_context
             );
-            fwrite($handler, $message);
-            fclose($handler);
-
-            $response[] = $errorString;
+            fwrite($_handler, $_message);
+            fclose($_handler);
         }
-
-        return $response;
     }
 }

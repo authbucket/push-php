@@ -11,9 +11,9 @@
 
 namespace AuthBucket\Push\ServiceType;
 
+use AuthBucket\Push\Model\MessageInterface;
+use AuthBucket\Push\Model\ServiceInterface;
 use Guzzle\Http\Client;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * GCM service type handler implementation.
@@ -22,52 +22,61 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 {
-    public function send(Request $request)
+    public function send(ServiceInterface $service, MessageInterface $message)
     {
-        $clientId = $this->checkClientId();
+        $option = array_merge(array(
+            'host' => 'https://android.googleapis.com/gcm/send',
+            'key' => '',
+        ), $service->getOption());
+        $payload = array_merge(array(
+            'alert' => '',
+            'sound' => 'default',
+            'badge' => 1,
+            'expire_in' => 60*60*24*7,
+            'content-available' => '',
+            'action-category' => '',
+        ), $message->getPayload());
 
-        $username = $this->checkUsername();
-
-        $data = $this->checkData($request);
-
-        $serviceManager = $this->modelManagerFactory->getModelManager('service');
-        $service = $serviceManager->readModelOneBy(array(
-            'serviceType' => 'gcm',
-            'clientId' => $clientId,
-        ));
-        $options = $service->getOptions();
-
+        // Fetch all device belong to this service_id.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
         $devices = $deviceManager->readModelBy(array(
-            'serviceType' => 'gcm',
-            'clientId' => $clientId,
-            'username' => $username,
+            'serviceId' => $service->getServiceId(),
         ));
 
+        // Prepare a list of device_token.
         $deviceTokens = array();
         foreach ($devices as $device) {
-            if ($device->getExpires() > new \DateTime()) {
-                $deviceTokens[$device->getDeviceToken()] = $device->getDeviceToken();
+            // If belongs to named access_token, only send to that username.
+            if ($message->getUsername() && $device->getUsername() !== $message->getUsername()) {
+                continue;
             }
+
+            // Must match at least one scope.
+            if (!array_intersect($device->getScope(), $message->getScope())) {
+                continue;
+            }
+
+            $deviceTokens[] = $device->getDeviceToken();
         }
 
-        $response = array();
         foreach ($deviceTokens as $deviceToken) {
             $client = new Client();
-            $crawler = $client->post($options['host'], array(), json_encode(array(
+            $crawler = $client->post($option['host'], array(), json_encode(array(
                 'registration_ids' => (array) $deviceToken,
-                'data' => $data,
+                'data' => array(
+                    'alert' => $payload['alert'],
+                    'sound' => $payload['sound'],
+                    'badge' => $payload['badge'],
+                ),
+                'time_to_live' => $payload['expire_in'],
             )), array(
                 'headers' => array(
-                    'Authorization' => 'key='.$options['key'],
+                    'Authorization' => 'key='.$option['key'],
                     'Content-Type' => 'application/json',
                 ),
                 'exceptions' => false,
                 'verify' => false,
             ));
-            $response[] = json_decode($crawler->send()->getBody());
         }
-
-        return $response;
     }
 }

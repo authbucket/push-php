@@ -51,25 +51,9 @@ interface MessageInterface extends ModelInterface
     public function getClientId();
 
     /**
-     * Set serviceId
-     *
-     * @param array $serviceId
-     *
-     * @return Message
-     */
-    public function setServiceId($serviceId);
-
-    /**
-     * Get serviceId
-     *
-     * @return array
-     */
-    public function getServiceId();
-
-    /**
      * Set username
      *
-     * @param array $username
+     * @param string $username
      *
      * @return Message
      */
@@ -78,7 +62,7 @@ interface MessageInterface extends ModelInterface
     /**
      * Get username
      *
-     * @return array
+     * @return string
      */
     public function getUsername();
 
