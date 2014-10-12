@@ -259,14 +259,7 @@ class PushController
 
     protected function checkPayload(Request $request)
     {
-        $payload = $request->request->get('payload');
-
-        $payload = json_decode($payload, true);
-        if ($payload === null) {
-            throw new InvalidRequestException(array(
-                'error_description' => 'The request includes an invalid parameter value.',
-            ));
-        }
+        $payload = $request->request->all();
 
         return (array) $payload;
     }

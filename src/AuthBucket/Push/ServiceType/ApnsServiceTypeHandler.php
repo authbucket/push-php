@@ -33,8 +33,6 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             'sound' => 'default',
             'badge' => 1,
             'expire_in' => 60*60*24*7,
-            'content-available' => 1,
-            'action-category' => '',
         ), $message->getPayload());
 
         // Fetch all device belong to this service_id.
@@ -74,7 +72,6 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
                     'alert' => $payload['alert'],
                     'badge' => $payload['badge'],
                     'sound' => $payload['sound'],
-                    'content-available' => $payload['content-available'],
                 ),
             ));
 

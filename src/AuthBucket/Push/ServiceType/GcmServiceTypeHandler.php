@@ -33,8 +33,6 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
             'sound' => 'default',
             'badge' => 1,
             'expire_in' => 60*60*24*7,
-            'content-available' => '',
-            'action-category' => '',
         ), $message->getPayload());
 
         // Fetch all device belong to this service_id.
@@ -77,6 +75,7 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
                 'exceptions' => false,
                 'verify' => false,
             ));
+            $response = json_decode($crawler->send()->getBody());
         }
     }
 }
