@@ -30,7 +30,7 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         ), $service->getOption());
         $payload = array_merge(array(
             'alert' => '',
-            'sound' => 'default',
+            'sound' => 'default.wav',
             'badge' => 1,
             'expire_in' => 60*60*24*7,
         ), $message->getPayload());
