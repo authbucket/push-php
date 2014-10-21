@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
 
@@ -35,20 +34,17 @@ class PushController
 {
     protected $securityContext;
     protected $validator;
-    protected $serializer;
     protected $modelManagerFactory;
     protected $serviceTypeHandlerFactory;
 
     public function __construct(
         SecurityContextInterface $securityContext,
         ValidatorInterface $validator,
-        SerializerInterface $serializer,
         ModelManagerFactoryInterface $modelManagerFactory,
         ServiceTypeHandlerFactoryInterface $serviceTypeHandlerFactory
     ) {
         $this->securityContext = $securityContext;
         $this->validator = $validator;
-        $this->serializer = $serializer;
         $this->modelManagerFactory = $modelManagerFactory;
         $this->serviceTypeHandlerFactory = $serviceTypeHandlerFactory;
     }
