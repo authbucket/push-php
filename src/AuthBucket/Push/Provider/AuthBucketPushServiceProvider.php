@@ -58,7 +58,6 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
             return new PushController(
                 $app['security'],
                 $app['validator'],
-                $app['serializer'],
                 $app['authbucket_push.model_manager.factory'],
                 $app['authbucket_push.service_handler.factory']
             );

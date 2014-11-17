@@ -36,26 +36,11 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         ), $message->getPayload());
 
         // Fetch all device belong to this service_id.
-        $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $devices = $deviceManager->readModelBy(array(
-            'serviceId' => $service->getServiceId(),
-        ));
-
-        // Prepare a list of device_token.
-        $deviceTokens = array();
-        foreach ($devices as $device) {
-            // If belongs to named access_token, only send to that username.
-            if ($message->getUsername() && $device->getUsername() !== $message->getUsername()) {
-                continue;
-            }
-
-            // Must match at least one scope.
-            if (!array_intersect($device->getScope(), $message->getScope())) {
-                continue;
-            }
-
-            $deviceTokens[] = $device->getDeviceToken();
-        }
+        $deviceTokens = $this->getDeviceTokens(
+            $service->getServiceId(),
+            $message->getUsername(),
+            $message->getScope()
+        );
 
         // PHP SSL implementation need local_cert as physical file.
         // @see http://stackoverflow.com/a/11403788
