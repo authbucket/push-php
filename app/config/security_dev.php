@@ -9,10 +9,4 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__.'/orm.php';
-
-$app['debug'] = true;
-
-$app['twig.path'] = array(
-    __DIR__.'/../../tests/AuthBucket/Push/Tests/TestBundle/Resources/views',
-);
+require __DIR__.'/security.php';
