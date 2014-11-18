@@ -28,9 +28,8 @@ $provider = new AuthBucket\Push\Provider\AuthBucketPushServiceProvider();
 $app->register($provider);
 $app->mount('/', $provider);
 
-require __DIR__.'/config/orm.php';
-require __DIR__.'/config/security_'.$app['env'].'.php';
 require __DIR__.'/config/config_'.$app['env'].'.php';
+require __DIR__.'/config/security_'.$app['env'].'.php';
 require __DIR__.'/config/routing_'.$app['env'].'.php';
 
 $app->before(function (Request $request) use ($app) {
