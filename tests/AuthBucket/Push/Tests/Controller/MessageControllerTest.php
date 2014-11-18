@@ -28,7 +28,7 @@ class MessageControllerTest extends WebTestCase
             'username' => 'demousername1',
         ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/message.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($messageId, $response['messageId']);
     }
@@ -45,7 +45,7 @@ class MessageControllerTest extends WebTestCase
             'username' => 'demousername1',
         ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/message.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($messageId, $response['messageId']);
     }
@@ -56,7 +56,7 @@ class MessageControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/message/1.json', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/message/1.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response['messageId']);
     }
@@ -67,7 +67,7 @@ class MessageControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/message/1.xml', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/message/1.xml', array(), array(), $server);
         $response = simplexml_load_string($client->getResponse()->getContent());
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response['messageId']);
@@ -85,7 +85,7 @@ class MessageControllerTest extends WebTestCase
             'username' => 'demousername1',
         ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/message.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($messageId, $response['messageId']);
 
@@ -93,12 +93,12 @@ class MessageControllerTest extends WebTestCase
         $messageIdUpdated = md5(uniqid(null, true));
         $content = $this->app['serializer']->encode(array('messageId' => $messageIdUpdated), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('PUT', "/api/v1.0/message/${id}.json", array(), array(), $server, $content);
+        $crawler = $client->request('PUT', "/dummy/v1.0/message/${id}.json", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($messageIdUpdated, $response['messageId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/message/${id}.json", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/message/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($messageIdUpdated, $response['messageId']);
     }
@@ -115,7 +115,7 @@ class MessageControllerTest extends WebTestCase
             'username' => 'demousername1',
         ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/message.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($messageId, $response['messageId']);
 
@@ -123,12 +123,12 @@ class MessageControllerTest extends WebTestCase
         $messageIdUpdated = md5(uniqid(null, true));
         $content = $this->app['serializer']->encode(array('messageId' => $messageIdUpdated), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('PUT', "/api/v1.0/message/${id}.xml", array(), array(), $server, $content);
+        $crawler = $client->request('PUT', "/dummy/v1.0/message/${id}.xml", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($messageIdUpdated, $response['messageId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/message/${id}.xml", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/message/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($messageIdUpdated, $response['messageId']);
     }
@@ -145,19 +145,19 @@ class MessageControllerTest extends WebTestCase
             'username' => 'demousername1',
         ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/message.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/message.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($messageId, $response['messageId']);
 
         $id = $response['id'];
         $client = $this->createClient();
-        $crawler = $client->request('DELETE', "/api/v1.0/message/${id}.json", array(), array(), $server);
+        $crawler = $client->request('DELETE', "/dummy/v1.0/message/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals(null, $response['id']);
         $this->assertEquals($messageId, $response['messageId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/message/${id}.json", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/message/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals(null, $response);
     }
@@ -174,19 +174,19 @@ class MessageControllerTest extends WebTestCase
             'username' => 'demousername1',
         ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/message.xml', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/message.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($messageId, $response['messageId']);
 
         $id = $response['id'];
         $client = $this->createClient();
-        $crawler = $client->request('DELETE', "/api/v1.0/message/${id}.xml", array(), array(), $server);
+        $crawler = $client->request('DELETE', "/dummy/v1.0/message/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals(null, $response['id']);
         $this->assertEquals($messageId, $response['messageId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/message/${id}.xml", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/message/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals(null, $response);
     }
@@ -197,7 +197,7 @@ class MessageControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/message.json', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/message.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response[0]['messageId']);
     }
@@ -208,7 +208,7 @@ class MessageControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/message.xml', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/message.xml', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals('4ac2842c963da2983a83e91c2a59f0b1', $response[0]['messageId']);
     }

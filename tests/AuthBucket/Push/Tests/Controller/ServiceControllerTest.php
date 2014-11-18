@@ -29,7 +29,7 @@ class ServiceControllerTest extends WebTestCase
             'options' => array(),
         ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/service.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/service.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($serviceId, $response['serviceId']);
     }
@@ -47,7 +47,7 @@ class ServiceControllerTest extends WebTestCase
             'options' => array(),
         ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/service.xml', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/service.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($serviceId, $response['serviceId']);
     }
@@ -58,7 +58,7 @@ class ServiceControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/service/1.json', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/service/1.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals('f2ee1d163e9c9b633efca95fb9733f35', $response['serviceId']);
     }
@@ -69,7 +69,7 @@ class ServiceControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/service/1.xml', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/service/1.xml', array(), array(), $server);
         $response = simplexml_load_string($client->getResponse()->getContent());
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals('f2ee1d163e9c9b633efca95fb9733f35', $response['serviceId']);
@@ -88,7 +88,7 @@ class ServiceControllerTest extends WebTestCase
             'options' => array(),
         ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/service.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/service.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($serviceId, $response['serviceId']);
 
@@ -96,12 +96,12 @@ class ServiceControllerTest extends WebTestCase
         $serviceIdUpdated = md5(uniqid(null, true));
         $content = $this->app['serializer']->encode(array('serviceId' => $serviceIdUpdated), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('PUT', "/api/v1.0/service/${id}.json", array(), array(), $server, $content);
+        $crawler = $client->request('PUT', "/dummy/v1.0/service/${id}.json", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($serviceIdUpdated, $response['serviceId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/service/${id}.json", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/service/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($serviceIdUpdated, $response['serviceId']);
     }
@@ -119,7 +119,7 @@ class ServiceControllerTest extends WebTestCase
             'options' => array(),
         ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/service.xml', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/service.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($serviceId, $response['serviceId']);
 
@@ -127,12 +127,12 @@ class ServiceControllerTest extends WebTestCase
         $serviceIdUpdated = md5(uniqid(null, true));
         $content = $this->app['serializer']->encode(array('serviceId' => $serviceIdUpdated), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('PUT', "/api/v1.0/service/${id}.xml", array(), array(), $server, $content);
+        $crawler = $client->request('PUT', "/dummy/v1.0/service/${id}.xml", array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($serviceIdUpdated, $response['serviceId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/service/${id}.xml", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/service/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($serviceIdUpdated, $response['serviceId']);
     }
@@ -150,19 +150,19 @@ class ServiceControllerTest extends WebTestCase
             'options' => array(),
         ), 'json');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/service.json', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/service.json', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals($serviceId, $response['serviceId']);
 
         $id = $response['id'];
         $client = $this->createClient();
-        $crawler = $client->request('DELETE', "/api/v1.0/service/${id}.json", array(), array(), $server);
+        $crawler = $client->request('DELETE', "/dummy/v1.0/service/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals(null, $response['id']);
         $this->assertEquals($serviceId, $response['serviceId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/service/${id}.json", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/service/${id}.json", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals(null, $response);
     }
@@ -180,19 +180,19 @@ class ServiceControllerTest extends WebTestCase
             'options' => array(),
         ), 'xml');
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/v1.0/service.xml', array(), array(), $server, $content);
+        $crawler = $client->request('POST', '/dummy/v1.0/service.xml', array(), array(), $server, $content);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals($serviceId, $response['serviceId']);
 
         $id = $response['id'];
         $client = $this->createClient();
-        $crawler = $client->request('DELETE', "/api/v1.0/service/${id}.xml", array(), array(), $server);
+        $crawler = $client->request('DELETE', "/dummy/v1.0/service/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals(null, $response['id']);
         $this->assertEquals($serviceId, $response['serviceId']);
 
         $client = $this->createClient();
-        $crawler = $client->request('GET', "/api/v1.0/service/${id}.xml", array(), array(), $server);
+        $crawler = $client->request('GET', "/dummy/v1.0/service/${id}.xml", array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals(null, $response);
     }
@@ -203,7 +203,7 @@ class ServiceControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/service.json', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/service.json', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'json');
         $this->assertEquals('f2ee1d163e9c9b633efca95fb9733f35', $response[0]['serviceId']);
     }
@@ -214,7 +214,7 @@ class ServiceControllerTest extends WebTestCase
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
         );
         $client = $this->createClient();
-        $crawler = $client->request('GET', '/api/v1.0/service.xml', array(), array(), $server);
+        $crawler = $client->request('GET', '/dummy/v1.0/service.xml', array(), array(), $server);
         $response = $this->app['serializer']->decode($client->getResponse()->getContent(), 'xml');
         $this->assertEquals('f2ee1d163e9c9b633efca95fb9733f35', $response[0]['serviceId']);
     }
