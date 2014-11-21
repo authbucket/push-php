@@ -10,4 +10,5 @@
  */
 
 $app->match('/dummy/v1.0/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
-    ->bind('dummy_oauth2_debug');
+    ->bind('dummy_oauth2_debug')
+    ->method('GET|POST');
