@@ -21,9 +21,6 @@ $app->get('/demo', 'authbucket_push.tests.demo_controller:indexAction')
 $app->get('/push', 'authbucket_push.tests.push_controller:indexAction')
     ->bind('push');
 
-$app->get('/push/login', 'authbucket_push.tests.push_controller:loginAction')
-    ->bind('push_login');
-
 $app->match('/dummy/v1.0/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
     ->bind('dummy_oauth2_debug')
     ->method('GET|POST');

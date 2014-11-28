@@ -20,19 +20,4 @@ class PushController
     {
         return $app['twig']->render('push/index.html.twig');
     }
-
-    public function loginAction(Request $request, Application $app)
-    {
-        $session = $request->getSession();
-
-        $error = $app['security.last_error']($request);
-        $_username = $session->get('_username');
-        $_password = $session->get('_password');
-
-        return $app['twig']->render('push/login.html.twig', array(
-            'error' => $error,
-            '_username' => $_username,
-            '_password' => $_password,
-        ));
-    }
 }

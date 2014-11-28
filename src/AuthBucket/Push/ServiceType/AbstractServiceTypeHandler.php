@@ -54,7 +54,7 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
             }
 
             // Must match at least one scope.
-            if (!array_intersect($device->getScope(), $scope)) {
+            if ($scope && !array_intersect($device->getScope(), $scope)) {
                 continue;
             }
 
