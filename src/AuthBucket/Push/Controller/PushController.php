@@ -66,6 +66,7 @@ class PushController
         $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceToken,
             'serviceId' => $serviceId,
+            'username' => $username,
         ));
         foreach ($devices as $device) {
             $deviceManager->deleteModel($device);
