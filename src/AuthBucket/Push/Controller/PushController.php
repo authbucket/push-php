@@ -62,32 +62,10 @@ class PushController
         $scope = $this->checkScope();
 
         // Remove all legacy record for this device_token.
-        $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $devices = $deviceManager->readModelBy(array(
-            'deviceToken' => $deviceToken,
-            'serviceId' => $serviceId,
-            'username' => $username,
-        ));
-        foreach ($devices as $device) {
-            $deviceManager->deleteModel($device);
-        }
+        $this->deleteDeviceToken($deviceToken, $serviceId, $username);
 
         // Recreate record with new supplied values.
-        $class = $deviceManager->getClassName();
-        $device = new $class();
-        $device->setDeviceToken($deviceToken)
-            ->setServiceId($serviceId)
-            ->setUsername($username)
-            ->setScope((array) $scope);
-        $device = $deviceManager->createModel($device);
-
-        // Prepare parameters for JSON response.
-        $parameters = array(
-            'device_token' => $device->getDeviceToken(),
-            'service_id' => $device->getServiceId(),
-            'username' => $device->getUsername(),
-            'scope' => implode(' ', (array) $device->getScope()),
-        );
+        $parameters = $this->createDeviceToken($deviceToken, $serviceId, $username, $scope);
 
         return JsonResponse::create($parameters, 200, array(
             'Cache-Control' => 'no-store',
@@ -103,19 +81,10 @@ class PushController
 
         $deviceToken = $this->checkDeviceToken($request);
 
+        $username = $this->checkUsername();
+
         // Remove all legacy record for this device_token.
-        $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $device = $deviceManager->readModelOneBy(array(
-            'deviceToken' => $deviceToken,
-            'serviceId' => $serviceId,
-        ));
-        $parameters = array(
-            'device_token' => $device->getDeviceToken(),
-            'service_id' => $device->getServiceId(),
-            'username' => $device->getUsername(),
-            'scope' => implode(' ', (array) $device->getScope()),
-        );
-        $deviceManager->deleteModel($device);
+        $parameters = $this->deleteDeviceToken($deviceToken, $serviceId, $username);
 
         return JsonResponse::create($parameters, 200, array(
             'Cache-Control' => 'no-store',
@@ -257,5 +226,52 @@ class PushController
         $payload = $request->request->all();
 
         return (array) $payload;
+    }
+
+    protected function createDeviceToken($deviceToken, $serviceId, $username, $scope)
+    {
+        // Create the new record.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $class = $deviceManager->getClassName();
+        $device = new $class();
+        $device->setDeviceToken($deviceToken)
+            ->setServiceId($serviceId)
+            ->setUsername($username)
+            ->setScope((array) $scope);
+        $device = $deviceManager->createModel($device);
+
+        // Prepare parameters for JSON response.
+        $parameters = array(
+            'device_token' => $device->getDeviceToken(),
+            'service_id' => $device->getServiceId(),
+            'username' => $device->getUsername(),
+            'scope' => implode(' ', (array) $device->getScope()),
+        );
+
+        return $parameters;
+    }
+
+    protected function deleteDeviceToken($deviceToken, $serviceId, $username)
+    {
+        // Fetch the legacy record for this device_token.
+        $deviceManager = $this->modelManagerFactory->getModelManager('device');
+        $device = $deviceManager->readModelOneBy(array(
+            'deviceToken' => $deviceToken,
+            'serviceId' => $serviceId,
+            'username' => $username,
+        ));
+
+        // Prepare parameters for JSON response.
+        $parameters = array(
+            'device_token' => $device->getDeviceToken(),
+            'service_id' => $device->getServiceId(),
+            'username' => $device->getUsername(),
+            'scope' => implode(' ', (array) $device->getScope()),
+        );
+
+        // Delete the legacy record.
+        $deviceManager->deleteModel($device);
+
+        return (array) $parameters;
     }
 }
