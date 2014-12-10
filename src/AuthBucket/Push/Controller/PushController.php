@@ -253,25 +253,26 @@ class PushController
 
     protected function deleteDeviceToken($deviceToken, $serviceId, $username)
     {
-        // Fetch the legacy record for this device_token.
+        // Fetch the legacy records for this device_token.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $device = $deviceManager->readModelOneBy(array(
+        $devices = $deviceManager->readModelBy(array(
             'deviceToken' => $deviceToken,
             'serviceId' => $serviceId,
             'username' => $username,
         ));
 
+        // Delete the legacy records.
+        foreach ($devices as $device) {
+            $deviceManager->deleteModel($device);
+        }
+
         // Prepare parameters for JSON response.
         $parameters = array(
-            'device_token' => $device->getDeviceToken(),
-            'service_id' => $device->getServiceId(),
-            'username' => $device->getUsername(),
-            'scope' => implode(' ', (array) $device->getScope()),
+            'device_token' => $deviceToken,
+            'service_id' => $serviceId,
+            'username' => $username,
         );
 
-        // Delete the legacy record.
-        $deviceManager->deleteModel($device);
-
-        return (array) $parameters;
+        return $parameters;
     }
 }
