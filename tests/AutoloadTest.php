@@ -24,5 +24,6 @@ class AutoloadTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(class_exists('AuthBucket\Push\Exception\InvalidRequestException'));
         $this->assertTrue(class_exists('AuthBucket\Push\Exception\ServerErrorException'));
         $this->assertTrue(class_exists('AuthBucket\Push\Exception\TemporarilyUnavailableException'));
+        $this->assertTrue(class_exists('AuthBucket\Push\Exception\UnsupportedServiceTypeException'));
     }
 }

@@ -18,4 +18,5 @@ namespace AuthBucket\Push\Model;
  */
 interface ModelInterface
 {
+    public function getId();
 }
