@@ -16,7 +16,6 @@ use AuthBucket\Push\EventListener\ExceptionListener;
 use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactory;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Push service provider as plugin for Silex SecurityServiceProvider.
