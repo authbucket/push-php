@@ -25,7 +25,7 @@ class DefaultController
     {
         return $app['twig']->render('index.html.twig');
     }
-    
+
     public function gettingStartedIndexAction(Request $request, Application $app)
     {
         return $app['twig']->render('getting-started/index.html.twig');

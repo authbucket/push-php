@@ -14,7 +14,6 @@ namespace AuthBucket\Push\Tests\TestBundle;
 use AuthBucket\Push\Tests\TestBundle\Controller\DefaultController;
 use AuthBucket\Push\Tests\TestBundle\Controller\DemoController;
 use AuthBucket\Push\Tests\TestBundle\Controller\OAuth2Controller;
-use AuthBucket\Push\Tests\TestBundle\Controller\PushController;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
