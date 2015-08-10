@@ -38,10 +38,6 @@ class TestBundleServiceProvider implements ServiceProviderInterface
         $app['authbucket_push.tests.oauth2_controller'] = $app->share(function () {
             return new OAuth2Controller();
         });
-
-        $app['authbucket_push.tests.push_controller'] = $app->share(function () {
-            return new PushController();
-        });
     }
 
     public function boot(Application $app)

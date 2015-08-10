@@ -15,11 +15,11 @@ $app->get('/', 'authbucket_push.tests.default_controller:indexAction')
 $app->get('/admin/refresh_database', 'authbucket_push.tests.default_controller:adminRefreshDatabaseAction')
     ->bind('admin_refresh_database');
 
+$app->get('/getting-started', 'authbucket_push.tests.default_controller:gettingStartedIndexAction')
+    ->bind('getting-started');
+
 $app->get('/demo', 'authbucket_push.tests.demo_controller:indexAction')
     ->bind('demo');
-
-$app->get('/push', 'authbucket_push.tests.push_controller:indexAction')
-    ->bind('push');
 
 $app->match('/dummy/v1.0/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
     ->bind('dummy_oauth2_debug')

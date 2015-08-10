@@ -4,7 +4,7 @@ AuthBucket\\Push
 [![Build
 Status](https://travis-ci.org/authbucket/push-php.svg?branch=master)](https://travis-ci.org/authbucket/push-php)
 [![Coverage
-Status](https://img.shields.io/coveralls/authbucket/push-php.svg)](https://coveralls.io/r/authbucket/push-php?branch=master)
+Status](https://coveralls.io/repos/authbucket/push-php/badge.svg?branch=master&service=github)](https://coveralls.io/github/authbucket/push-php?branch=master)
 [![Dependency
 Status](https://www.versioneye.com/php/authbucket:push-php/dev-master/badge.svg)](https://www.versioneye.com/php/authbucket:push-php/dev-master)
 [![Latest Stable
@@ -19,7 +19,7 @@ devices; secondary goal would be develop corresponding wrapper [Symfony2
 Bundle](http://symfony.com) and [Drupal module](https://www.drupal.org).
 
 This library bundle with a [Silex](http://silex.sensiolabs.org/) based
-[AuthBucketPushServiceProvider](https://github.com/authbucket/push-php/blob/master/src/AuthBucket/Push/Provider/AuthBucketPushServiceProvider.php)
+[AuthBucketPushServiceProvider](https://github.com/authbucket/push-php/blob/master/src/Provider/AuthBucketPushServiceProvider.php)
 for unit test and demo purpose. Installation and usage can refer as
 below.
 
@@ -27,7 +27,7 @@ Demo
 ----
 
 The demo is based on [Silex](http://silex.sensiolabs.org/) and
-[AuthBucketPushServiceProvider](https://github.com/authbucket/push-php/blob/master/src/AuthBucket/Push/Provider/AuthBucketPushServiceProvider.php).
+[AuthBucketPushServiceProvider](https://github.com/authbucket/push-php/blob/master/src/Provider/AuthBucketPushServiceProvider.php).
 Read though [Demo](http://push-php.authbucket.com/demo) for more
 information.
 
@@ -35,12 +35,12 @@ You may also run the demo locally. Open a console and execute the
 following command to install the latest version in the `push-php`
 directory:
 
-    $ composer create-project authbucket/push-php push-php "~0.0"
+    $ composer create-project authbucket/push-php authbucket/push-php "~1.0"
 
 Then use the PHP built-in web server to run the demo application:
 
-    $ cd push-php
-    $ php app/console server:run
+    $ cd authbucket/push-php
+    $ app/console server:run
 
 If you get the error
 `There are no commands defined in the "server" namespace.`, then you are
@@ -65,7 +65,7 @@ Pages](http://authbucket.github.io/push-php).
 
 To built the documents locally, execute the following command:
 
-    $ vendor/bin/sami.php update .sami.php
+    $ composer sami
 
 Open `build/sami/index.html` with your browser for the documents.
 
@@ -79,7 +79,7 @@ be found from [Coveralls](https://coveralls.io/r/authbucket/push-php).
 
 To run the test suite locally, execute the following command:
 
-    $ vendor/bin/phpunit
+    $ composer phpunit
 
 Open `build/logs/html` with your browser for the coverage report.
 
@@ -98,5 +98,5 @@ License
 
 -   Code released under
     [MIT](https://github.com/authbucket/push-php/blob/master/LICENSE)
--   Docs released under [CC BY-NC-SA
-    3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/)
+-   Docs released under [CC BY
+    4.0](http://creativecommons.org/licenses/by/4.0/)
