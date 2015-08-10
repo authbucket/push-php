@@ -34,7 +34,7 @@
     "license": "MIT",
     "name": "authbucket/push-php",
     "require": {
-        "authbucket/oauth2-php": "~2.3",
+        "authbucket/oauth2-php": "~3.0",
         "guzzlehttp/guzzle": "~6.0",
         "php": ">=5.5.9",
         "psr/log": "~1.0",
