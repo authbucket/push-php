@@ -15,7 +15,6 @@ use AuthBucket\Push\Controller\PushController;
 use AuthBucket\Push\EventListener\ExceptionListener;
 use AuthBucket\Push\ServiceType\ServiceTypeHandlerFactory;
 use Silex\Application;
-use Silex\ControllerProviderInterface;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -24,7 +23,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  *
  * @author Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
  */
-class AuthBucketPushServiceProvider implements ServiceProviderInterface, ControllerProviderInterface
+class AuthBucketPushServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
@@ -38,8 +37,10 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
             'gcm' => 'AuthBucket\\Push\\ServiceType\\GcmServiceTypeHandler',
         );
 
-        $app['authbucket_push.exception_listener'] = $app->share(function () {
-            return new ExceptionListener();
+        $app['authbucket_push.exception_listener'] = $app->share(function ($app) {
+            return new ExceptionListener(
+                $app['logger']
+            );
         });
 
         $app['authbucket_push.service_handler.factory'] = $app->share(function ($app) {
@@ -61,24 +62,8 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface, Control
         });
     }
 
-    public function connect(Application $app)
-    {
-        $controllers = $app['controllers_factory'];
-
-        $app->post('/api/v1.0/push/register', 'authbucket_push.push_controller:registerAction')
-            ->bind('api_push_register');
-
-        $app->post('/api/v1.0/push/unregister', 'authbucket_push.push_controller:unregisterAction')
-            ->bind('api_push_unregister');
-
-        $app->post('/api/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
-            ->bind('api_push_send');
-
-        return $controllers;
-    }
-
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::EXCEPTION, array($app['authbucket_push.exception_listener'], 'onKernelException'), -8);
+        $app['dispatcher']->addSubscriber($app['authbucket_push.exception_listener']);
     }
 }

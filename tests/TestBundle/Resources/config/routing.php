@@ -21,15 +21,15 @@ $app->get('/getting-started', 'authbucket_push.tests.default_controller:gettingS
 $app->get('/demo', 'authbucket_push.tests.demo_controller:indexAction')
     ->bind('demo');
 
-$app->match('/dummy/v1.0/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
-    ->bind('dummy_oauth2_debug')
+$app->match('/api/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
+    ->bind('api_oauth2_debug')
     ->method('GET|POST');
 
-$app->post('/dummy/v1.0/push/register', 'authbucket_push.push_controller:registerAction')
-    ->bind('dummy_push_register');
+$app->post('/api/push/register', 'authbucket_push.push_controller:registerAction')
+    ->bind('api_push_register');
 
-$app->post('/dummy/v1.0/push/unregister', 'authbucket_push.push_controller:unregisterAction')
-    ->bind('dummy_push_unregister');
+$app->post('/api/push/unregister', 'authbucket_push.push_controller:unregisterAction')
+    ->bind('api_push_unregister');
 
-$app->post('/dummy/v1.0/push/send', 'authbucket_push.push_controller:sendAction')
-    ->bind('dummy_push_send');
+$app->post('/api/push/send', 'authbucket_push.push_controller:sendAction')
+    ->bind('api_push_send');
