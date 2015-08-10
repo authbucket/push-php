@@ -13,7 +13,6 @@ namespace AuthBucket\Push\ServiceType;
 
 use AuthBucket\Push\Model\MessageInterface;
 use AuthBucket\Push\Model\ServiceInterface;
-use Guzzle\Http\Client;
 
 /**
  * GCM service type handler implementation.
@@ -43,24 +42,23 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
         );
 
         foreach ($deviceTokens as $deviceToken) {
-            $client = new Client();
-            $crawler = $client->post($option['host'], array(), json_encode(array(
-                'registration_ids' => (array) $deviceToken,
-                'data' => array(
-                    'alert' => $payload['alert'],
-                    'sound' => $payload['sound'],
-                    'badge' => $payload['badge'],
-                ),
-                'time_to_live' => $payload['expire_in'],
-            )), array(
+            $client = new \GuzzleHttp\Client();
+            $crawler = $client->post($option['host'], array(
                 'headers' => array(
                     'Authorization' => 'key='.$option['key'],
                     'Content-Type' => 'application/json',
                 ),
-                'exceptions' => false,
-                'verify' => false,
+                'body' => json_encode(array(
+                    'registration_ids' => (array) $deviceToken,
+                    'data' => array(
+                        'alert' => $payload['alert'],
+                        'sound' => $payload['sound'],
+                        'badge' => $payload['badge'],
+                    ),
+                    'time_to_live' => $payload['expire_in'],
+                )),
             ));
-            $response = json_decode($crawler->send()->getBody());
+            $response = json_decode($crawler->getBody());
         }
     }
 }

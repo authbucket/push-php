@@ -35,19 +35,17 @@
     "name": "authbucket/push-php",
     "require": {
         "authbucket/oauth2-php": "~2.3",
-        "guzzle/guzzle": "~3.9",
+        "guzzlehttp/guzzle": "~6.0",
         "php": ">=5.5.9",
         "psr/log": "~1.0",
         "symfony/http-foundation": "~2.7",
         "symfony/http-kernel": "~2.7",
         "symfony/security": "~2.7",
-        "symfony/serializer": "~2.7",
         "symfony/validator": "~2.7"
     },
     "require-dev": {
         "doctrine/data-fixtures": "~1.0",
         "doctrine/orm": "~2.2",
-        "ext-openssl": "*",
         "ext-pdo_sqlite": "*",
         "fabpot/php-cs-fixer": "@stable",
         "monolog/monolog": "~1.4",
