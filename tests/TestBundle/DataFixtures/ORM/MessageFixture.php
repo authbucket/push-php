@@ -23,34 +23,34 @@ class MessageFixture implements FixtureInterface
         $model->setMessageId('4ac2842c963da2983a83e91c2a59f0b1')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setUsername('demousername1')
-            ->setScope(array(
+            ->setScope([
                 'demoscope1',
                 'demoscope2',
                 'demoscope3',
-            ))
-            ->setPayload(array(
+            ])
+            ->setPayload([
                 'alert' => 'demoalert1',
                 'sound' => 'default',
                 'badge' => '1',
                 'democustomkey1' => 'democustomvalue1',
-            ));
+            ]);
         $manager->persist($model);
 
         $model = new Message();
         $model->setMessageId('c555754aebec3ce37585ff784348662f')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setUsername('demousername1')
-            ->setScope(array(
+            ->setScope([
                 'demoscope1',
                 'demoscope2',
                 'demoscope3',
-            ))
-            ->setPayload(array(
+            ])
+            ->setPayload([
                 'alert' => 'demoalert2',
                 'sound' => 'default',
                 'badge' => '2',
                 'democustomkey2' => 'democustomvalue2',
-            ));
+            ]);
         $manager->persist($model);
 
         $manager->flush();

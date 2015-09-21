@@ -32,7 +32,7 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
         SecurityContextInterface $securityContext,
         ValidatorInterface $validator,
         ModelManagerFactoryInterface $modelManagerFactory,
-        array $classes = array()
+        array $classes = []
     ) {
         $this->securityContext = $securityContext;
         $this->validator = $validator;
@@ -40,16 +40,16 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
 
         foreach ($classes as $class) {
             if (!class_exists($class)) {
-                throw new UnsupportedServiceTypeException(array(
+                throw new UnsupportedServiceTypeException([
                     'error_description' => 'The authorization server does not support obtaining an authorization code using this method.',
-                ));
+                ]);
             }
 
             $reflection = new \ReflectionClass($class);
             if (!$reflection->implementsInterface('AuthBucket\\Push\\ServiceType\\ServiceTypeHandlerInterface')) {
-                throw new UnsupportedServiceTypeException(array(
+                throw new UnsupportedServiceTypeException([
                     'error_description' => 'The authorization server does not support obtaining an authorization code using this method.',
-                ));
+                ]);
             }
         }
 
@@ -61,9 +61,9 @@ class ServiceTypeHandlerFactory implements ServiceTypeHandlerFactoryInterface
         $type = $type ?: current(array_keys($this->classes));
 
         if (!isset($this->classes[$type]) || !class_exists($this->classes[$type])) {
-            throw new UnsupportedServiceTypeException(array(
+            throw new UnsupportedServiceTypeException([
                 'error_description' => 'The authorization server does not support obtaining an authorization code using this method.',
-            ));
+            ]);
         }
 
         $class = $this->classes[$type];

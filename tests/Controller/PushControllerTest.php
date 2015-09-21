@@ -18,48 +18,48 @@ class PushControllerTest extends WebTestCase
 {
     public function testGoodRegisterAction()
     {
-        $parameters = array(
+        $parameters = [
             'device_token' => '0027956241e3ca5090de548fe468334d',
             'service_id' => 'f2ee1d163e9c9b633efca95fb9733f35',
-        );
-        $server = array(
+        ];
+        $server = [
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
-        );
+        ];
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/push/register', $parameters, array(), $server);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('POST', '/api/push/register', $parameters, [], $server);
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
         $response = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['device_token']);
+        $this->assertSame('0027956241e3ca5090de548fe468334d', $response['device_token']);
     }
 
     public function testGoodUnrgisterAction()
     {
-        $parameters = array(
+        $parameters = [
             'device_token' => '0027956241e3ca5090de548fe468334d',
             'service_id' => 'f2ee1d163e9c9b633efca95fb9733f35',
-        );
-        $server = array(
+        ];
+        $server = [
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
-        );
+        ];
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/push/unregister', $parameters, array(), $server);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('POST', '/api/push/unregister', $parameters, [], $server);
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
         $response = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('0027956241e3ca5090de548fe468334d', $response['device_token']);
+        $this->assertSame('0027956241e3ca5090de548fe468334d', $response['device_token']);
     }
 
     public function testGoodSendAction()
     {
-        $parameters = array(
+        $parameters = [
             'alert' => '6fb577c6fce866c7c06a95c7f9010d85',
-        );
-        $server = array(
+        ];
+        $server = [
             'HTTP_Authorization' => 'Bearer 18cdaa6481c0d5f323351ea1029fc065',
-        );
+        ];
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/api/push/send', $parameters, array(), $server);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $crawler = $client->request('POST', '/api/push/send', $parameters, [], $server);
+        $this->assertSame(200, $client->getResponse()->getStatusCode());
         $response = json_decode($client->getResponse()->getContent(), true);
-        $this->assertEquals('6fb577c6fce866c7c06a95c7f9010d85', $response['payload']['alert']);
+        $this->assertSame('6fb577c6fce866c7c06a95c7f9010d85', $response['payload']['alert']);
     }
 }

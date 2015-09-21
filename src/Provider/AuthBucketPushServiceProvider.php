@@ -31,10 +31,10 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface
         $app['authbucket_push.model_manager.factory'] = null;
 
         // Add default service type handler.
-        $app['authbucket_push.service_handler'] = array(
+        $app['authbucket_push.service_handler'] = [
             'apns' => 'AuthBucket\\Push\\ServiceType\\ApnsServiceTypeHandler',
             'gcm' => 'AuthBucket\\Push\\ServiceType\\GcmServiceTypeHandler',
-        );
+        ];
 
         $app['authbucket_push.exception_listener'] = $app->share(function ($app) {
             return new ExceptionListener(

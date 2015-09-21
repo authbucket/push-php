@@ -67,10 +67,10 @@ class PushController
         // Recreate record with new supplied values.
         $parameters = $this->createDeviceToken($deviceToken, $serviceId, $username, $scope);
 
-        return JsonResponse::create($parameters, 200, array(
+        return JsonResponse::create($parameters, 200, [
             'Cache-Control' => 'no-store',
             'Pragma' => 'no-cache',
-        ));
+        ]);
     }
 
     public function unregisterAction(Request $request)
@@ -86,10 +86,10 @@ class PushController
         // Remove all legacy record for this device_token.
         $parameters = $this->deleteDeviceToken($deviceToken, $serviceId, $username);
 
-        return JsonResponse::create($parameters, 200, array(
+        return JsonResponse::create($parameters, 200, [
             'Cache-Control' => 'no-store',
             'Pragma' => 'no-cache',
-        ));
+        ]);
     }
 
     public function sendAction(Request $request)
@@ -115,9 +115,9 @@ class PushController
 
         // Send out message per service_id.
         $serviceManager = $this->modelManagerFactory->getModelManager('service');
-        $services = $serviceManager->readModelBy(array(
+        $services = $serviceManager->readModelBy([
             'clientId' => $clientId,
-        ));
+        ]);
         foreach ($services as $service) {
             $this->serviceTypeHandlerFactory
                 ->getServiceTypeHandler($service->getServiceType())
@@ -125,27 +125,27 @@ class PushController
         }
 
         // Prepare parameters for JSON response.
-        $parameters = array(
+        $parameters = [
             'message_id' => $message->getMessageId(),
             'client_id' => $message->getClientId(),
             'username' => $message->getUsername(),
             'scope' => implode(' ', (array) $message->getScope()),
             'payload' => $message->getPayload(),
-        );
+        ];
 
-        return JsonResponse::create($parameters, 200, array(
+        return JsonResponse::create($parameters, 200, [
             'Cache-Control' => 'no-store',
             'Pragma' => 'no-cache',
-        ));
+        ]);
     }
 
     protected function checkClientId()
     {
         $token = $this->securityContext->getToken();
         if ($token === null || !$token instanceof AccessTokenToken) {
-            throw new ServerErrorException(array(
+            throw new ServerErrorException([
                 'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
-            ));
+            ]);
         }
 
         return $token->getClientId();
@@ -155,9 +155,9 @@ class PushController
     {
         $token = $this->securityContext->getToken();
         if ($token === null || !$token instanceof AccessTokenToken) {
-            throw new ServerErrorException(array(
+            throw new ServerErrorException([
                 'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
-            ));
+            ]);
         }
 
         return $token->getUsername();
@@ -167,9 +167,9 @@ class PushController
     {
         $token = $this->securityContext->getToken();
         if ($token === null || !$token instanceof AccessTokenToken) {
-            throw new ServerErrorException(array(
+            throw new ServerErrorException([
                 'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
-            ));
+            ]);
         }
 
         return $token->getScope();
@@ -179,14 +179,14 @@ class PushController
     {
         // device_token is required and in valid format.
         $deviceToken = $request->request->get('device_token');
-        $errors = $this->validator->validateValue($deviceToken, array(
+        $errors = $this->validator->validateValue($deviceToken, [
             new NotBlank(),
             new DeviceToken(),
-        ));
+        ]);
         if (count($errors) > 0) {
-            throw new InvalidRequestException(array(
+            throw new InvalidRequestException([
                 'error_description' => 'The request includes an invalid parameter value.',
-            ));
+            ]);
         }
 
         return $deviceToken;
@@ -196,26 +196,26 @@ class PushController
     {
         // service_id is required and in valid format.
         $serviceId = $request->request->get('service_id');
-        $errors = $this->validator->validateValue($serviceId, array(
+        $errors = $this->validator->validateValue($serviceId, [
             new NotBlank(),
             new ServiceId(),
-        ));
+        ]);
         if (count($errors) > 0) {
-            throw new InvalidRequestException(array(
+            throw new InvalidRequestException([
                 'error_description' => 'The request includes an invalid parameter value.',
-            ));
+            ]);
         }
 
         // Check if service_id belongs to corresponding client_id.
         $serviceManager = $this->modelManagerFactory->getModelManager('service');
-        $service = $serviceManager->readModelOneBy(array(
+        $service = $serviceManager->readModelOneBy([
             'clientId' => $clientId,
             'serviceId' => $serviceId,
-        ));
+        ]);
         if ($service === null) {
-            throw new InvalidRequestException(array(
+            throw new InvalidRequestException([
                 'error_description' => 'The request includes an invalid parameter value.',
-            ));
+            ]);
         }
 
         return $serviceId;
@@ -241,12 +241,12 @@ class PushController
         $device = $deviceManager->createModel($device);
 
         // Prepare parameters for JSON response.
-        $parameters = array(
+        $parameters = [
             'device_token' => $device->getDeviceToken(),
             'service_id' => $device->getServiceId(),
             'username' => $device->getUsername(),
             'scope' => implode(' ', (array) $device->getScope()),
-        );
+        ];
 
         return $parameters;
     }
@@ -255,11 +255,11 @@ class PushController
     {
         // Fetch the legacy records for this device_token.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $devices = $deviceManager->readModelBy(array(
+        $devices = $deviceManager->readModelBy([
             'deviceToken' => $deviceToken,
             'serviceId' => $serviceId,
             'username' => $username,
-        ));
+        ]);
 
         // Delete the legacy records.
         foreach ($devices as $device) {
@@ -267,11 +267,11 @@ class PushController
         }
 
         // Prepare parameters for JSON response.
-        $parameters = array(
+        $parameters = [
             'device_token' => $deviceToken,
             'service_id' => $serviceId,
             'username' => $username,
-        );
+        ];
 
         return $parameters;
     }

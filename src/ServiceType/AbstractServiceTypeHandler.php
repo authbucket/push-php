@@ -36,15 +36,15 @@ abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
         $this->modelManagerFactory = $modelManagerFactory;
     }
 
-    protected function getDeviceTokens($serviceId, $username = '', $scope = array())
+    protected function getDeviceTokens($serviceId, $username = '', $scope = [])
     {
-        $deviceTokens = array();
+        $deviceTokens = [];
 
         // Fetch all device belong to this service_id.
         $deviceManager = $this->modelManagerFactory->getModelManager('device');
-        $devices = $deviceManager->readModelBy(array(
+        $devices = $deviceManager->readModelBy([
             'serviceId' => $serviceId,
-        ));
+        ]);
 
         // Prepare a list of device_token.
         foreach ($devices as $device) {

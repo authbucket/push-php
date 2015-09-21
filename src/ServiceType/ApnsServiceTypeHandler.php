@@ -23,17 +23,17 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 {
     public function send(ServiceInterface $service, MessageInterface $message)
     {
-        $option = array_merge(array(
+        $option = array_merge([
             'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
             'local_cert' => '',
             'passphrase' => '',
-        ), $service->getOption());
-        $payload = array_merge(array(
+        ], $service->getOption());
+        $payload = array_merge([
             'alert' => '',
             'sound' => 'default.wav',
             'badge' => 1,
             'expire_in' => 60 * 60 * 24 * 7,
-        ), $message->getPayload());
+        ], $message->getPayload());
 
         // Fetch all device belong to this service_id.
         $deviceTokens = $this->getDeviceTokens(
@@ -52,13 +52,13 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
 
         foreach ($deviceTokens as $deviceToken) {
             // Prepare the payload in JSON format.
-            $_payload = json_encode(array(
-                'aps' => array(
+            $_payload = json_encode([
+                'aps' => [
                     'alert' => $payload['alert'],
                     'badge' => $payload['badge'],
                     'sound' => $payload['sound'],
-                ),
-            ));
+                ],
+            ]);
 
             // Build the message.
             $_message = pack('CnH*', 1, 32, $deviceToken);

@@ -18,7 +18,7 @@ namespace AuthBucket\Push\Exception;
  */
 class AccessDeniedException extends \LogicException implements ExceptionInterface
 {
-    public function __construct($message = array(), $code = 403, Exception $previous = null)
+    public function __construct($message = [], $code = 403, Exception $previous = null)
     {
         $message['error'] = 'access_denied';
         parent::__construct(serialize($message), $code, $previous);

@@ -47,7 +47,7 @@ class DefaultController
             return 1;
         }
 
-        $classes = array();
+        $classes = [];
         foreach ($app['authbucket_push.model'] as $class) {
             $classes[] = $em->getClassMetadata($class);
         }

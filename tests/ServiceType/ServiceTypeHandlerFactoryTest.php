@@ -21,7 +21,7 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
      */
     public function testNonExistsServiceTypeHandler()
     {
-        $classes = array('foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\NonExistsServiceTypeHandler');
+        $classes = ['foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\NonExistsServiceTypeHandler'];
         $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
@@ -35,7 +35,7 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
      */
     public function testBadAddServiceTypeHandler()
     {
-        $classes = array('foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\FooServiceTypeHandler');
+        $classes = ['foo' => 'AuthBucket\\Push\\Tests\\ServiceType\\FooServiceTypeHandler'];
         $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
@@ -49,7 +49,7 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
      */
     public function testBadGetServiceTypeHandler()
     {
-        $classes = array('bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler');
+        $classes = ['bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler'];
         $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
@@ -61,7 +61,7 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
 
     public function testGoodGetServiceTypeHandler()
     {
-        $classes = array('bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler');
+        $classes = ['bar' => 'AuthBucket\\Push\\Tests\\ServiceType\\BarServiceTypeHandler'];
         $factory = new ServiceTypeHandlerFactory(
             $this->app['security'],
             $this->app['validator'],
@@ -69,6 +69,6 @@ class ServiceTypeHandlerFactoryTest extends WebTestCase
             $classes
         );
         $handler = $factory->getServiceTypeHandler('bar');
-        $this->assertEquals($factory->getServiceTypeHandlers(), $classes);
+        $this->assertSame($factory->getServiceTypeHandlers(), $classes);
     }
 }

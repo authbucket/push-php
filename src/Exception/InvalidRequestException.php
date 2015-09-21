@@ -18,7 +18,7 @@ namespace AuthBucket\Push\Exception;
  */
 class InvalidRequestException extends \InvalidArgumentException implements ExceptionInterface
 {
-    public function __construct($message = array(), $code = 400, Exception $previous = null)
+    public function __construct($message = [], $code = 400, Exception $previous = null)
     {
         $message['error'] = 'invalid_request';
         parent::__construct(serialize($message), $code, $previous);

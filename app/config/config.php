@@ -11,17 +11,17 @@ use Doctrine\ORM\Tools\Setup;
 $app['monolog.logfile'] = __DIR__.'/../logs/'.$app['env'].'.log';
 
 // Define SQLite DB path.
-$app['db.options'] = array(
+$app['db.options'] = [
     'driver' => 'pdo_sqlite',
     'path' => __DIR__.'/../cache/'.$app['env'].'/.ht.sqlite',
-);
+];
 
 // Return an instance of Doctrine ORM entity manager.
 $app['doctrine.orm.entity_manager'] = $app->share(function ($app) {
     $conn = $app['dbs']['default'];
     $em = $app['dbs.event_manager']['default'];
 
-    $driver = new AnnotationDriver(new AnnotationReader(), array(__DIR__.'/../../tests/TestBundle/Entity'));
+    $driver = new AnnotationDriver(new AnnotationReader(), [__DIR__.'/../../tests/TestBundle/Entity']);
     $cache = new FilesystemCache(__DIR__.'/../cache/'.$app['env']);
 
     $config = Setup::createConfiguration(false);
@@ -33,11 +33,11 @@ $app['doctrine.orm.entity_manager'] = $app->share(function ($app) {
 });
 
 // Return entity classes for model manager.
-$app['authbucket_push.model'] = array(
+$app['authbucket_push.model'] = [
     'device' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Device',
     'message' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Message',
     'service' => 'AuthBucket\\Push\\Tests\\TestBundle\\Entity\\Service',
-);
+];
 
 // Add model managers from ORM.
 $app['authbucket_push.model_manager.factory'] = $app->share(function ($app) {
@@ -52,6 +52,6 @@ require __DIR__.'/security.php';
 
 $app['debug'] = true;
 
-$app['twig.path'] = array(
+$app['twig.path'] = [
     __DIR__.'/../../tests/TestBundle/Resources/views',
-);
+];

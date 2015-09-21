@@ -23,16 +23,16 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 {
     public function send(ServiceInterface $service, MessageInterface $message)
     {
-        $option = array_merge(array(
+        $option = array_merge([
             'host' => 'https://android.googleapis.com/gcm/send',
             'key' => '',
-        ), $service->getOption());
-        $payload = array_merge(array(
+        ], $service->getOption());
+        $payload = array_merge([
             'alert' => '',
             'sound' => 'default.wav',
             'badge' => 1,
             'expire_in' => 60 * 60 * 24 * 7,
-        ), $message->getPayload());
+        ], $message->getPayload());
 
         // Fetch all device belong to this service_id.
         $deviceTokens = $this->getDeviceTokens(
@@ -43,21 +43,21 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
 
         foreach ($deviceTokens as $deviceToken) {
             $client = new \GuzzleHttp\Client();
-            $crawler = $client->post($option['host'], array(
-                'headers' => array(
+            $crawler = $client->post($option['host'], [
+                'headers' => [
                     'Authorization' => 'key='.$option['key'],
                     'Content-Type' => 'application/json',
-                ),
-                'body' => json_encode(array(
+                ],
+                'body' => json_encode([
                     'registration_ids' => (array) $deviceToken,
-                    'data' => array(
+                    'data' => [
                         'alert' => $payload['alert'],
                         'sound' => $payload['sound'],
                         'badge' => $payload['badge'],
-                    ),
+                    ],
                     'time_to_live' => $payload['expire_in'],
-                )),
-            ));
+                ]),
+            ]);
             $response = json_decode($crawler->getBody());
         }
     }
