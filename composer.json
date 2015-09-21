@@ -29,7 +29,12 @@
         "gcm",
         "notification",
         "oauth2",
-        "push"
+        "psr-1",
+        "psr-2",
+        "psr-3",
+        "psr-4",
+        "push",
+        "silex"
     ],
     "license": "MIT",
     "name": "authbucket/push-php",
