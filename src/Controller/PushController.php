@@ -21,7 +21,7 @@ use AuthBucket\Push\Validator\Constraints\ServiceId;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ValidatorInterface;
 
@@ -32,18 +32,18 @@ use Symfony\Component\Validator\ValidatorInterface;
  */
 class PushController
 {
-    protected $securityContext;
+    protected $tokenStorage;
     protected $validator;
     protected $modelManagerFactory;
     protected $serviceTypeHandlerFactory;
 
     public function __construct(
-        SecurityContextInterface $securityContext,
+        TokenStorageInterface $tokenStorage,
         ValidatorInterface $validator,
         ModelManagerFactoryInterface $modelManagerFactory,
         ServiceTypeHandlerFactoryInterface $serviceTypeHandlerFactory
     ) {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->validator = $validator;
         $this->modelManagerFactory = $modelManagerFactory;
         $this->serviceTypeHandlerFactory = $serviceTypeHandlerFactory;
@@ -141,7 +141,7 @@ class PushController
 
     protected function checkClientId()
     {
-        $token = $this->securityContext->getToken();
+        $token = $this->tokenStorage->getToken();
         if ($token === null || !$token instanceof AccessTokenToken) {
             throw new ServerErrorException([
                 'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
@@ -153,7 +153,7 @@ class PushController
 
     protected function checkUsername()
     {
-        $token = $this->securityContext->getToken();
+        $token = $this->tokenStorage->getToken();
         if ($token === null || !$token instanceof AccessTokenToken) {
             throw new ServerErrorException([
                 'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',
@@ -165,7 +165,7 @@ class PushController
 
     protected function checkScope()
     {
-        $token = $this->securityContext->getToken();
+        $token = $this->tokenStorage->getToken();
         if ($token === null || !$token instanceof AccessTokenToken) {
             throw new ServerErrorException([
                 'error_description' => 'The authorization server encountered an unexpected condition that prevented it from fulfilling the request.',

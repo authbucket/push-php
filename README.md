@@ -40,7 +40,7 @@ directory:
 Then use the PHP built-in web server to run the demo application:
 
     $ cd authbucket/push-php
-    $ app/console server:run
+    $ ./app/console server:run
 
 If you get the error
 `There are no commands defined in the "server" namespace.`, then you are

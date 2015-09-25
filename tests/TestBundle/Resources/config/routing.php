@@ -21,10 +21,6 @@ $app->get('/getting-started', 'authbucket_push.tests.default_controller:gettingS
 $app->get('/demo', 'authbucket_push.tests.demo_controller:indexAction')
     ->bind('demo');
 
-$app->match('/api/oauth2/debug', 'authbucket_push.tests.oauth2_controller:debugAction')
-    ->bind('api_oauth2_debug')
-    ->method('GET|POST');
-
 $app->post('/api/push/register', 'authbucket_push.push_controller:registerAction')
     ->bind('api_push_register');
 

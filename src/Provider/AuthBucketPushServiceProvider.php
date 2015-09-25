@@ -44,7 +44,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface
 
         $app['authbucket_push.service_handler.factory'] = $app->share(function ($app) {
             return new ServiceTypeHandlerFactory(
-                $app['security'],
+                $app['security.token_storage'],
                 $app['validator'],
                 $app['authbucket_push.model_manager.factory'],
                 $app['authbucket_push.service_handler']
@@ -53,7 +53,7 @@ class AuthBucketPushServiceProvider implements ServiceProviderInterface
 
         $app['authbucket_push.push_controller'] = $app->share(function () use ($app) {
             return new PushController(
-                $app['security'],
+                $app['security.token_storage'],
                 $app['validator'],
                 $app['authbucket_push.model_manager.factory'],
                 $app['authbucket_push.service_handler.factory']
