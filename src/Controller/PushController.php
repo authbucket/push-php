@@ -179,7 +179,7 @@ class PushController
     {
         // device_token is required and in valid format.
         $deviceToken = $request->request->get('device_token');
-        $errors = $this->validator->validateValue($deviceToken, [
+        $errors = $this->validator->validate($deviceToken, [
             new NotBlank(),
             new DeviceToken(),
         ]);
@@ -196,7 +196,7 @@ class PushController
     {
         // service_id is required and in valid format.
         $serviceId = $request->request->get('service_id');
-        $errors = $this->validator->validateValue($serviceId, [
+        $errors = $this->validator->validate($serviceId, [
             new NotBlank(),
             new ServiceId(),
         ]);
