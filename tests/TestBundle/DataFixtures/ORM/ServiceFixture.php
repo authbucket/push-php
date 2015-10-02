@@ -60,8 +60,8 @@ wx5Psn+NbLq+nkxhgTRfYV5/UuXu3GTAxPaXORj3ig0kAxdQA5mnu0+i09A/5WI=
 -----END CERTIFICATE-----
 Bag Attributes
     friendlyName: PantaRei Design
-        localKeyID: 37 88 8E 46 AE 9C D6 D0 65 58 0C 08 57 FD 29 10 DC 1C 00 D8 
-        Key Attributes: <No Attributes>
+    localKeyID: 37 88 8E 46 AE 9C D6 D0 65 58 0C 08 57 FD 29 10 DC 1C 00 D8 
+Key Attributes: <No Attributes>
 -----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
 DEK-Info: DES-EDE3-CBC,33DEC333D3450708
