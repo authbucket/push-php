@@ -12,7 +12,7 @@
 namespace AuthBucket\Push\ServiceType;
 
 use AuthBucket\Push\Model\ModelManagerFactoryInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\ValidatorInterface;
 
 /**
@@ -22,16 +22,16 @@ use Symfony\Component\Validator\ValidatorInterface;
  */
 abstract class AbstractServiceTypeHandler implements ServiceTypeHandlerInterface
 {
-    protected $securityContext;
+    protected $tokenStorage;
     protected $validator;
     protected $modelManagerFactory;
 
     public function __construct(
-        SecurityContextInterface $securityContext,
+        TokenStorageInterface $tokenStorage,
         ValidatorInterface $validator,
         ModelManagerFactoryInterface $modelManagerFactory
     ) {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->validator = $validator;
         $this->modelManagerFactory = $modelManagerFactory;
     }
