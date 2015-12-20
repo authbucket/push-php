@@ -20,28 +20,14 @@ class DeviceFixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $model = new Device();
-        $model->setDeviceToken('0027956241e3ca5090de548fe468334d')
+        $model->setDeviceToken('3ab8eddd7005833619a733e9fb9d85698fc17c3549de3584099454559ba5b9bd')
             ->setServiceId('f2ee1d163e9c9b633efca95fb9733f35')
             ->setUsername('')
             ->setScope([]);
         $manager->persist($model);
 
         $model = new Device();
-        $model->setDeviceToken('9e0d8519fc205595bd895fbf70addcad')
-            ->setServiceId('78b67c04bfd60ddfc8c90895d36e1e05')
-            ->setUsername('')
-            ->setScope([]);
-        $manager->persist($model);
-
-        $model = new Device();
-        $model->setDeviceToken('d288ad9899d0e0fecaac1083d46121feba27b15b3d57cd0d666799168bc03639')
-            ->setServiceId('f2ee1d163e9c9b633efca95fb9733f35')
-            ->setUsername('')
-            ->setScope([]);
-        $manager->persist($model);
-
-        $model = new Device();
-        $model->setDeviceToken('APA91bE-hRR6MJ60PkTKLr-8x4u7nEV_R9aZSfqV4k4ceuOKw5Pr9sHsmBtgEg0OjFZAyZqFepel6goRrfUZfsR3Desr2Tea_tEnimT8y4qoPeJVLuFPbyS2Rs7qY35thHoZJjiM0eVrClPPVx5zAP_XlzavnDjsYW8VXDfiaUF6MNELmfWLMlw')
+        $model->setDeviceToken('APA91bHXkb3ZrIe1mTx-WJrM1ZokLIT-qhd_uKS1opvctnx8MiUi_i8GskNp0mfkvNwrwbUoswcEvo03KK6KqNcSlgdfKSN5eKhIIl5_kWcuXe7bd58G15tB_-oO9G9X3fDPXGoT1_YQ')
             ->setServiceId('78b67c04bfd60ddfc8c90895d36e1e05')
             ->setUsername('')
             ->setScope([]);
