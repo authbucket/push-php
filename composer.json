@@ -7,16 +7,20 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "AuthBucket\\Push": "src/",
-            "AuthBucket\\Push\\Tests": "tests/"
+        "psr-4": {
+            "AuthBucket\\Push\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AuthBucket\\Push\\Tests\\": "tests/"
         }
     },
     "description": "Push notifications for mobile devices based on the Symfony Components",
     "extra": {
         "branch-alias": {
-            "dev-develop": "0.x-dev",
-            "dev-master": "0.0.x-dev"
+            "dev-develop": "1.x-dev",
+            "dev-master": "1.0.x-dev"
         }
     },
     "homepage": "https://github.com/authbucket/push-php",
@@ -25,40 +29,46 @@
         "gcm",
         "notification",
         "oauth2",
-        "push"
+        "psr-1",
+        "psr-2",
+        "psr-3",
+        "psr-4",
+        "push",
+        "silex"
     ],
     "license": "MIT",
     "name": "authbucket/push-php",
     "require": {
-        "authbucket/oauth2-php": "~2.3",
-        "guzzle/guzzle": "~3.9",
-        "php": ">=5.3.9",
-        "symfony/http-foundation": "~2.3",
-        "symfony/http-kernel": "~2.3",
-        "symfony/security": "~2.3",
-        "symfony/serializer": "~2.3",
-        "symfony/validator": "~2.3"
+        "authbucket/oauth2-php": "~3.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "php": ">=5.5.9",
+        "psr/log": "~1.0",
+        "symfony/http-foundation": "~2.8",
+        "symfony/http-kernel": "~2.8",
+        "symfony/security": "~2.8",
+        "symfony/validator": "~2.8"
     },
     "require-dev": {
         "doctrine/data-fixtures": "~1.0",
         "doctrine/orm": "~2.2",
-        "ext-openssl": "*",
         "ext-pdo_sqlite": "*",
-        "fabpot/php-cs-fixer": "@stable",
-        "monolog/monolog": "~1.0",
-        "phpunit/phpunit": "@stable",
-        "sami/sami": "@stable",
-        "satooshi/php-coveralls": "dev-master",
-        "silex/silex": "~1.2",
-        "symfony/browser-kit": "~2.3",
-        "symfony/config": "~2.3",
-        "symfony/css-selector": "~2.3",
-        "symfony/form": "~2.3",
-        "symfony/locale": "~2.3",
-        "symfony/process": "~2.3",
-        "symfony/translation": "~2.3",
-        "symfony/twig-bridge": "~2.3",
+        "monolog/monolog": "~1.4",
+        "silex/silex": "~1.3",
+        "symfony/browser-kit": "~2.8",
+        "symfony/config": "~2.8",
+        "symfony/css-selector": "~2.8",
+        "symfony/form": "~2.8",
+        "symfony/phpunit-bridge": "~2.8",
+        "symfony/process": "~2.8",
+        "symfony/translation": "~2.8",
+        "symfony/twig-bridge": "~2.8",
         "twig/twig": "~1.8"
+    },
+    "scripts": {
+        "coveralls": "coveralls -v; exit 0",
+        "php-cs-fixer": "php-cs-fixer fix --config-file .php-cs-fixer.php; exit 0",
+        "phpunit": "phpunit -c phpunit.xml.dist; exit 0",
+        "sami": "sami.php update .sami.php; exit 0"
     },
     "type": "library"
 }
