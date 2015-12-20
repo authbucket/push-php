@@ -24,7 +24,7 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
     public function send(ServiceInterface $service, MessageInterface $message)
     {
         $option = array_merge([
-            'host' => 'https://android.googleapis.com/gcm/send',
+            'host' => 'https://gcm-http.googleapis.com/gcm/send',
             'key' => '',
         ], $service->getOption());
         $payload = array_merge([
@@ -49,7 +49,7 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
                     'Content-Type' => 'application/json',
                 ],
                 'body' => json_encode([
-                    'registration_ids' => (array) $deviceToken,
+                    'to' => $deviceToken,
                     'data' => [
                         'alert' => $payload['alert'],
                         'sound' => $payload['sound'],

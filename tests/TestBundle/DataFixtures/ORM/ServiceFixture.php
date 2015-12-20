@@ -103,7 +103,7 @@ EOF
             ->setServiceType('gcm')
             ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
             ->setOption([
-                'host' => 'https://android.googleapis.com/gcm/send',
+                'host' => 'https://gcm-http.googleapis.com/gcm/send',
                 'key' => 'AIzaSyBAC26lw1thmvfhlaCE7BOr24WhmqoLuTU',
             ]);
         $manager->persist($model);
