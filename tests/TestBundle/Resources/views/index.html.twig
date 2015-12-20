@@ -21,6 +21,36 @@
                 <p class="lead">The primary goal of <a href="http://push-php.authbucket.com/">AuthBucket\Push</a> is to develop a library for sending out push notifications to mobile devices; secondary goal would be develop corresponding wrapper <a href="http://symfony.com">Symfony2 Bundle</a> and <a href="https://www.drupal.org">Drupal module</a>.</p>
                 <p>This library bundle with a <a href="http://silex.sensiolabs.org/">Silex</a> based <a href="https://github.com/authbucket/push-php/blob/master/src/Provider/AuthBucketPushServiceProvider.php">AuthBucketPushServiceProvider</a> for unit test and demo purpose. Installation and usage can refer as below.</p>
 
+                <h2 id="installation" class="page-header">Installation</h2>
+                <p class="lead">Simply add a dependency on <code>authbucket/push-php</code> to your project's <code>composer.json</code> file if you use <a href="http://getcomposer.org/">Composer</a> to manage the dependencies of your project.</p>
+                <p>Here is a minimal example of a <code>composer.json</code>:</p>
+<pre><code class="json">{
+    &quot;require&quot;: {
+            &quot;authbucket/push-php&quot;: &quot;~3.0&quot;
+    }
+}</code></pre>
+
+                <h3 id="parameters">Parameters</h3>
+                <p>The bundled <a href="https://github.com/authbucket/push-php/blob/master/src/Provider/AuthBucketPushServiceProvider.php">AuthBucketPushServiceProvider</a> come with following parameters:</p>
+                <ul>
+                    <li><code>authbucket_push.model</code>: (Optional) Override this with your own model classes, default with in-memory AccessToken for using resource firewall with remote debug endpoint.</li>
+                    <li><code>authbucket_push.model_manager.factory</code>: (Optional) Override this with your backend model managers, e.g. Doctrine ORM EntityRepository, default with in-memory implementation for using resource firewall with remote debug endpoint.</li>
+                </ul>
+
+                <h3 id="services">Services</h3>
+                <p>The bundled <a href="https://github.com/authbucket/push-php/blob/master/src/Provider/AuthBucketPushServiceProvider.php">AuthBucketPushServiceProvider</a> come with following services controller which simplify the Push controller implementation overhead:</p>
+                <ul>
+                    <li><code>authbucket_push.push_controller</code>: Push endpoint controller.</li>
+                </ul>
+
+                <h3 id="registering">Registering</h3>
+                                                                                                                                                                                                                                        <p>If you are using <a href="http://silex.sensiolabs.org/">Silex</a>, register <a href="https://github.com/authbucket/push-php/blob/master/src/Provider/AuthBucketPushServiceProvider.php">AuthBucketPushServiceProvider</a> as below:</p><pre><code class="php">$app-&gt;register(new AuthBucket\Push\Provider\AuthBucketPushServiceProvider());</code></pre>
+                <p>Moreover, enable following service providers if that's not already the case:</p>
+<pre><code class="php">$app-&gt;register(new AuthBucket\OAuth2\Provider\AuthBucketOAuth2ServiceProvider());
+$app-&gt;register(new Silex\Provider\MonologServiceProvider());
+$app-&gt;register(new Silex\Provider\SecurityServiceProvider());
+$app-&gt;register(new Silex\Provider\ValidatorServiceProvider());</code></pre>
+
                 <h2 id="demo" class="page-header">Demo</h2>
                 <p class="lead">The demo is based on <a href="http://silex.sensiolabs.org/">Silex</a> and <a href="https://github.com/authbucket/push-php/blob/master/src/Provider/AuthBucketPushServiceProvider.php">AuthBucketPushServiceProvider</a>. Read though <a href="http://push-php.authbucket.com/demo">Demo</a> for more information.</p>
                 <p>You may also run the demo locally. Open a console and execute the following command to install the latest version in the <code>push-php</code> directory:</p>
