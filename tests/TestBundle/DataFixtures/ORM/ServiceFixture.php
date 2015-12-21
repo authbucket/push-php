@@ -60,7 +60,7 @@ wx5Psn+NbLq+nkxhgTRfYV5/UuXu3GTAxPaXORj3ig0kAxdQA5mnu0+i09A/5WI=
 -----END CERTIFICATE-----
 Bag Attributes
     friendlyName: PantaRei Design
-    localKeyID: 37 88 8E 46 AE 9C D6 D0 65 58 0C 08 57 FD 29 10 DC 1C 00 D8 
+    localKeyID: 37 88 8E 46 AE 9C D6 D0 65 58 0C 08 57 FD 29 10 DC 1C 00 D8
 Key Attributes: <No Attributes>
 -----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
@@ -105,6 +105,93 @@ EOF
             ->setOption([
                 'host' => 'https://gcm-http.googleapis.com/gcm/send',
                 'key' => 'AIzaSyBAC26lw1thmvfhlaCE7BOr24WhmqoLuTU',
+            ]);
+        $manager->persist($model);
+
+        $model = new Service();
+        $model->setServiceId('58016ff14ad63b5987751c18600e88d9')
+            ->setServiceType('apns')
+            ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
+            ->setOption([
+                'host' => 'ssl://gateway.sandbox.push.apple.com:2195',
+                'local_cert' => <<<EOF
+Bag Attributes
+    friendlyName: Apple Production IOS Push Services: hk.edu.polyucpce
+    localKeyID: 8D 65 BB A2 42 54 CD B6 C6 29 E4 5D 2E 90 29 5C 47 16 7B DB
+subject=/UID=hk.edu.polyucpce/CN=Apple Production IOS Push Services: hk.edu.polyucpce/OU=E5TG962G7J/C=US
+issuer=/C=US/O=Apple Inc./OU=Apple Worldwide Developer Relations/CN=Apple Worldwide Developer Relations Certification Authority
+-----BEGIN CERTIFICATE-----
+MIIFhDCCBGygAwIBAgIIEqtR91lZc9EwDQYJKoZIhvcNAQEFBQAwgZYxCzAJBgNV
+BAYTAlVTMRMwEQYDVQQKDApBcHBsZSBJbmMuMSwwKgYDVQQLDCNBcHBsZSBXb3Js
+ZHdpZGUgRGV2ZWxvcGVyIFJlbGF0aW9uczFEMEIGA1UEAww7QXBwbGUgV29ybGR3
+aWRlIERldmVsb3BlciBSZWxhdGlvbnMgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkw
+HhcNMTUxMDAyMDQyNTUxWhcNMTYxMDAxMDQyNTUxWjCBgzEgMB4GCgmSJomT8ixk
+AQEMEGhrLmVkdS5wb2x5dWNwY2UxPTA7BgNVBAMMNEFwcGxlIFByb2R1Y3Rpb24g
+SU9TIFB1c2ggU2VydmljZXM6IGhrLmVkdS5wb2x5dWNwY2UxEzARBgNVBAsMCkU1
+VEc5NjJHN0oxCzAJBgNVBAYTAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
+CgKCAQEAwJo48+wtQaGnIheuXPHMz9SxcAHvtvFJBq52wSjrYjFZAA0QdhGZFbUd
+oj7KwjScsWfhe1vJvQlzRqkFlDWlDLcld18ErmnhyrLVkQpS6fhD+30fdIIB3jfa
+QoN0d9emIiicUMpMzWm1X9O9EESL9sPwzoDfHK7Y8yPV1HCaz7EcVGj+qgT5JtO5
+14KV2Z23IBjGksSf1DMCby/NHrnrsEU/M4qSk8gUmHxf3/DWJLWggu2ZB7q9aU+4
+GCw1/1vo/nBaa1TwA0fbnxY6dwUR2tLQPAkf0AlsRQ7CBaHOlid7b/wOhDU4Ada2
+0AYYe7UeKyA0J6G4vFm2/GkeJPDJFQIDAQABo4IB5TCCAeEwHQYDVR0OBBYEFI1l
+u6JCVM22xinkXS6QKVxHFnvbMAkGA1UdEwQCMAAwHwYDVR0jBBgwFoAUiCcXCam2
+GGCL7Ou69kdZxVJUo7cwggEPBgNVHSAEggEGMIIBAjCB/wYJKoZIhvdjZAUBMIHx
+MIHDBggrBgEFBQcCAjCBtgyBs1JlbGlhbmNlIG9uIHRoaXMgY2VydGlmaWNhdGUg
+YnkgYW55IHBhcnR5IGFzc3VtZXMgYWNjZXB0YW5jZSBvZiB0aGUgdGhlbiBhcHBs
+aWNhYmxlIHN0YW5kYXJkIHRlcm1zIGFuZCBjb25kaXRpb25zIG9mIHVzZSwgY2Vy
+dGlmaWNhdGUgcG9saWN5IGFuZCBjZXJ0aWZpY2F0aW9uIHByYWN0aWNlIHN0YXRl
+bWVudHMuMCkGCCsGAQUFBwIBFh1odHRwOi8vd3d3LmFwcGxlLmNvbS9hcHBsZWNh
+LzBNBgNVHR8ERjBEMEKgQKA+hjxodHRwOi8vZGV2ZWxvcGVyLmFwcGxlLmNvbS9j
+ZXJ0aWZpY2F0aW9uYXV0aG9yaXR5L3d3ZHJjYS5jcmwwCwYDVR0PBAQDAgeAMBMG
+A1UdJQQMMAoGCCsGAQUFBwMCMBAGCiqGSIb3Y2QGAwIEAgUAMA0GCSqGSIb3DQEB
+BQUAA4IBAQCX5OvCCTjTZQvXfQ3I1Kr0UVDIbYzQhd25zp6U8/5bApEJ7muvcWOp
+4K6QeWByqYLctutTUNW+Kvs0GhfH7W+PdOslS4kEC81AHdsKSALJV2mBZACLzF/D
+/X0WQ3A6dKJ26xP7cEPYafCqcIq4RsHSLGeFcqVviGWJlSL522/EOcent9w+Kpdp
+0b5SqNNPl81Bbvz2Hd7EsTmO8w5lSgj26e/1DVDapPDVAEsfCFrplO9SPLjgQ8ph
+bFTggh4X+Wxdq8QZxR25nWNYUk1qs7RVVDlgtfh9LC4e0279t53xdV+Ihk6ZiYle
+FegTeKPmYBQXqrfId/P5ZuAq/oqXKY/M
+-----END CERTIFICATE-----
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAwJo48+wtQaGnIheuXPHMz9SxcAHvtvFJBq52wSjrYjFZAA0Q
+dhGZFbUdoj7KwjScsWfhe1vJvQlzRqkFlDWlDLcld18ErmnhyrLVkQpS6fhD+30f
+dIIB3jfaQoN0d9emIiicUMpMzWm1X9O9EESL9sPwzoDfHK7Y8yPV1HCaz7EcVGj+
+qgT5JtO514KV2Z23IBjGksSf1DMCby/NHrnrsEU/M4qSk8gUmHxf3/DWJLWggu2Z
+B7q9aU+4GCw1/1vo/nBaa1TwA0fbnxY6dwUR2tLQPAkf0AlsRQ7CBaHOlid7b/wO
+hDU4Ada20AYYe7UeKyA0J6G4vFm2/GkeJPDJFQIDAQABAoIBACmQXqANJMsYFphd
+4ev+5oMnVE9mq5OgSHEfr1MKAJoFKj6/kwDX1WCA4G9F+72jWvlSAK/9Y/DenDjw
+etq8JO00jOpQ4BK/mNGEfGA7iR8iy5D3NJWRBNQu23QlKDpAmIKgnvM0ZRSjLlgK
+uq9LC6VqLYpy9zMabIkz/45D6rTNFNhSkVCzitak9Y6VBdeicS9xTO96FNaAvy6T
+vMIyF8RdrMZeJhAp+54PbE5Ea7L18mD9A0gWIp0tXjUhGD3eDA6aWoH6co3y34Xv
+xyUxkdPa9HxJi0e1FEDFPmFxV+tMngB3O4wP9XsvKuYECDFlBQ6rHvIqYXyw8AGi
+mRgeyaECgYEA7F3mvooK5Xa1WE+NSUgSL+xo50VphTRP3CdblHIpeKtTEHKFWPEh
+6bdUj3sNN3J/j2AYg4Y061N0MZfUb+YCEagr8hAjP5xjCmJfNJg4i/h6kc7Ov7Bz
+DgkYZsWdtHUWCZ/Mk3BnSDL9LGXHeIc4BvtMMfGVXyE59yj5HWV+Gm0CgYEA0Jm3
+a08BYT8jEMFhsoAge6x7rkVkJhJh7vVmN3HGhGNHj8qwCOuc2Xq0QHGedQ6tN/IG
+gzH2SViYeRRiUeR0gUq/ZpgtNWGsTEo/uAmKRgjr53voQoYj4Y72tznd4nnAoxUJ
+ahyOW1ephIdoBIP4VLeZZ7cjLnPIgkEwowbgQEkCgYAXICjPQ5pFURP1C/N60/5T
+igHJftUQH0og9AjVwUWldL2vwkShqxXyU+mGEDf+0MkCMhiz5ZGP5J5dq8kxGYPi
+Tl3eVQ3dz2MxROajsrD1oN39HgrEXnMjUGh+xZ7kZQA++M9/LWQtgC+dBGg7tp8Y
+r8WIrWY75HhTYkLdSWzJEQKBgDVQdE6a3LFsH5wysLOch7DUPrAl0Bji7eDTG5Lk
+I2bGsQ2RMji1b1suP0+ROnyUibUYyI1TgazxVdbsXMytZRF+dzjTgAp6sjy1ZV+2
+IH8R3KlHQ+9stVL65RejVJCDqbaEs+lI7yFtYEgdC3rL9/Y/DpgxeG5w7ThNTQ79
+vObxAoGAbDpz24XkA3AeZpHRbDFvFHUnKRntUfERXkwZLigcN6u1uShzcVcQ9Nb2
+vtKnkytRfkkM46PCR3V3sbhebcGuem3v3OZLvedeimQTKw8Xs8+vU/knAQfY1Q0k
+FxyTucK7iEgH42FMeVr0obNzZeNki+v+Eh6Fb5uqqptdBov5jOs=
+-----END RSA PRIVATE KEY-----
+EOF
+        ,
+                'passphrase' => '1234',
+            ]);
+        $manager->persist($model);
+
+        $model = new Service();
+        $model->setServiceId('3e79432001c247fba8eb7b8af2eb8aee')
+            ->setServiceType('gcm')
+            ->setClientId('6b44c21ef7bc8ca7380bb5b8276b3f97')
+            ->setOption([
+                'host' => 'https://gcm-http.googleapis.com/gcm/send',
+                'key' => 'AIzaSyBGKBQLSaHfDZPRYs85iVHnOd4MWE0OKG4',
             ]);
         $manager->persist($model);
 
