@@ -50,6 +50,25 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
         fwrite($handler, $option['local_cert']);
         fclose($handler);
 
+        // Create the stream socket client.
+        $_context = stream_context_create();
+        stream_context_set_option($_context, 'ssl', 'local_cert', $local_cert);
+        stream_context_set_option($_context, 'ssl', 'passphrase', $option['passphrase']);
+        $_handler = stream_socket_client(
+            $option['host'],
+            $error,
+            $errorString,
+            10,
+            STREAM_CLIENT_ASYNC_CONNECT,
+            $_context
+        );
+        if ($_handler === false) {
+            throw new ServerErrorException([
+                'error_description' => sprintf("APNS: Can't connect to server, error message: %d %s", $error, $errorString),
+            ]);
+        }
+
+        // Send multiple messages within single SSL connection.
         foreach ($deviceTokens as $deviceToken) {
             // Prepare the payload in JSON format.
             $_payload = json_encode([
@@ -68,20 +87,16 @@ class ApnsServiceTypeHandler extends AbstractServiceTypeHandler
             $_message .= pack('CnC', 5, 1, 10);
             $_message = pack('CN', 2, strlen($_message)).$_message;
 
-            // Create and write to the stream.
-            $_context = stream_context_create();
-            stream_context_set_option($_context, 'ssl', 'local_cert', $local_cert);
-            stream_context_set_option($_context, 'ssl', 'passphrase', $option['passphrase']);
-            $_handler = stream_socket_client(
-                $option['host'],
-                $error,
-                $errorString,
-                10,
-                STREAM_CLIENT_ASYNC_CONNECT,
-                $_context
-            );
-            fwrite($_handler, $_message);
-            fclose($_handler);
+            // Write the message to stream socket client.
+            $response = fwrite($_handler, $_message);
+            if ($response === false) {
+                throw new ServerErrorException([
+                    'error_description' => sprintf("APNS: Message ID %d can't send to Device Token %s, error message: %s", $message->getMessageId(), $deviceToken, json_encode(error_get_last())),
+                ]);
+            }
         }
+
+        // Close the stream socket client.
+        fclose($_handler);
     }
 }
