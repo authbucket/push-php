@@ -58,7 +58,12 @@ class GcmServiceTypeHandler extends AbstractServiceTypeHandler
                     'time_to_live' => $payload['expire_in'],
                 ]),
             ]);
-            $response = json_decode($crawler->getBody());
+
+            if ($crawler->getStatusCode() !== 200) {
+                throw new ServerErrorException([
+                    'error_description' => sprintf("GCM: Message ID %d can't send to Device Token %s, error message: %s", $message->getMessageId(), $deviceToken, $crawler->getBody()),
+                ]);
+            }
         }
     }
 }
